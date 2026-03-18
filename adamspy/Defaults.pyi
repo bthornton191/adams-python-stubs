@@ -1,5 +1,5 @@
 import Object
-from typing import Any
+from typing import Any, Literal
 from Model import Model
 
 
@@ -17,20 +17,24 @@ class AdamsDefaults(Object.ObjectBase):
 
 class DefaultUnits(Object.ObjectSubBase):
     def __init__(self) -> None: ...
-    length: str
-    mass: str
-    time: str
-    angle: str
-    force: str
-    frequency: str
+    length: Literal['mm', 'cm', 'meter', 'km', 'inch', 'foot', 'mile', 'micrometer', 'nanometer', 'angstrom', 'microinch', 'mils', 'yard']
+    mass: Literal['kg', 'gram', 'pound_mass', 'kpound_mass', 'slug', 'slinch', 'ounce_mass', 'tonne', 'milligram', 'microgram', 'nanogram', 'us_ton']
+    time: Literal['second', 'millisecond', 'microsecond', 'nanosecond', 'minute', 'hour', 'day']
+    angle: Literal['degrees', 'radians', 'angular_minutes', 'angular_seconds', 'revolutions']
+    force: Literal['newton', 'knewton', 'dyne', 'pound_force', 'kpound_force', 'kg_force', 'ounce_force',
+                   'millinewton', 'centinewton', 'poundal', 'micronewton', 'nanonewton', 'meganewton']
+    frequency: Literal['hz', 'radians_sec']
 
     def setUnits(self,
-                 length: str | None = ...,
-                 mass: str | None = ...,
-                 time: str | None = ...,
-                 angle: str | None = ...,
-                 force: str | None = ...,
-                 frequency: str | None = ...) -> None:
+                 length: Literal['mm', 'cm', 'meter', 'km', 'inch', 'foot', 'mile', 'micrometer',
+                                 'nanometer', 'angstrom', 'microinch', 'mils', 'yard'] | None = ...,
+                 mass: Literal['kg', 'gram', 'pound_mass', 'kpound_mass', 'slug', 'slinch',
+                               'ounce_mass', 'tonne', 'milligram', 'microgram', 'nanogram', 'us_ton'] | None = ...,
+                 time: Literal['second', 'millisecond', 'microsecond', 'nanosecond', 'minute', 'hour', 'day'] | None = ...,
+                 angle: Literal['degrees', 'radians', 'angular_minutes', 'angular_seconds', 'revolutions'] | None = ...,
+                 force: Literal['newton', 'knewton', 'dyne', 'pound_force', 'kpound_force', 'kg_force', 'ounce_force',
+                                'millinewton', 'centinewton', 'poundal', 'micronewton', 'nanonewton', 'meganewton'] | None = ...,
+                 frequency: Literal['hz', 'radians_sec'] | None = ...) -> None:
         """Sets the model units
 
         Parameters

@@ -38,23 +38,25 @@ adamspy/          # Package stubs — matches the Adams Python module layout
 The Adams Python API is embedded in Adams View. Scripts always begin with:
 
 ```python
+# The `Adams` module (top-level) is the session entry point. Everything hangs off it:
 import Adams
-```
 
-The `Adams` module (top-level) is the session entry point. Everything hangs off it:
-
-```python
 # Create a model
-m = Adams.Models.create(name='MY_MODEL')
+mod = Adams.Models.create(name='MY_MODEL')
 
 # Set units
-Adams.defaults.units.length = 'mm'
-Adams.defaults.units.mass = 'kg'
-Adams.defaults.units.time = 'second'
-Adams.defaults.units.force = 'newton'
+Adams.defaults.units.setUnits(length='mm', mass='kg', time='second', force='newton')
 
 # Access the active/default model
-m = Adams.defaults.model
+mod = Adams.defaults.model
+
+# Create a part in the model
+part = mod.Parts.createRigidBody(name='PART_1')
+
+# Create a marker on the part
+mkr = part.Markers.create(name='MARKER_1')
+
+dv = mod.DesignVariables.createReal(name='DV_1', value=10.0)
 
 # String-to-object lookup
 marker = Adams.stoo('.MY_MODEL.PART_1.MARKER_1')
@@ -66,54 +68,6 @@ val = Adams.evaluate_exp('.MY_MODEL.DV_1')
 Adams.execute_cmd('simulation single_run transient end_time=5.0 number_of_steps=500 model_name=.MY_MODEL')
 ```
 
-## Key API Patterns
-
-### Manager-based creation
-
-All entities are created through manager objects on the parent:
-
-```python
-part   = m.Parts.createRigidBody(name='LINK_1', location=[0, 0, 0])
-marker = part.Markers.create(name='PIN', location=[100, 0, 0])
-joint  = m.Constraints.createRevolute(name='J1', i_marker=marker, j_marker=m.ground_part.Markers['GROUND_MKR'])
-spring = m.Forces.createTranslationalSpringDamper(name='SPR_1', i_marker_name='.MY_MODEL.LINK_1.PIN', j_marker_name='.MY_MODEL.ground.REF', stiffness=5000.0, damping=50.0)
-sim    = m.Simulations.create(name='SIM_1', end_time=2.0, number_of_steps=200)
-sim.simulate()
-```
-
-### Object references vs string names
-
-Most `create` methods accept **either** an object reference or a name string for related objects:
-
-```python
-# Equivalent:
-joint = m.Constraints.createRevolute(i_marker=marker_obj, j_marker=ground_marker_obj)
-joint = m.Constraints.createRevolute(i_marker_name='.MY_MODEL.LINK_1.PIN', j_marker_name='.MY_MODEL.ground.REF')
-```
-
-### Parameterization with expressions
-
-```python
-from Adams import expression
-
-dv = m.DesignVariables.createReal(name='LENGTH', value=250.0)
-marker.location = expression(f'{dv.full_name}')  # deferred — re-evaluates when DV changes
-```
-
-### Array property gotcha
-
-Array properties (location, orientation, stiffness, etc.) must be reassigned in full — in-place mutation doesn't propagate:
-
-```python
-loc = marker.location      # get a copy
-loc[0] += 50.0             # mutate the copy
-marker.location = loc      # reassign — THIS is what Adams sees
-# marker.location[0] += 50 # ← does NOT work
-```
-
-## Version
-
-These stubs target **MSC Adams 2023.1**. Some API surface may differ in earlier or later releases.
 
 ## Usage
 
