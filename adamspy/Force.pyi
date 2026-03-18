@@ -2,154 +2,8 @@ import Manager
 import Object
 import DataElement
 from Marker import _i_j_parts_from_markers as _i_j_parts, _loc_ori_provider as _loc_ori, Marker, FloatingMarker
-from Marker import FloatingMarker
 from typing import ItemsView, Iterable, KeysView, List, Literal, ValuesView
 from Part import Part, FlexBody
-
-
-class ForceManager(Manager.SubclassManager):
-    def items(self) -> ItemsView[str, Force]: ...
-    def values(self) -> ValuesView[Force]: ...
-    def keys(self) -> KeysView[str]: ...
-    def __getitem__(self, name) -> Force: ...
-    def __iter__(self, *args) -> Iterable[str]: ...
-
-    def createGravity(self,
-                      name: str = None,
-                      xyz_component_gravity: List[float] = None): ...
-
-    def createForceVector(self,
-                          name: str,
-                          adams_id: int,
-                          comments: str,
-                          i_marker: Marker = None,
-                          i_marker_name: str = None,
-                          j_floating_marker: Marker = None,
-                          j_floating_marker_name: str = None,
-                          j_part: Part = None,
-                          j_part_name: str = None,
-                          ref_marker: Marker = None,
-                          ref_marker_name: str = None,
-                          x_force_function: str = None,
-                          y_force_function: str = None,
-                          z_force_function: str = None,
-                          x_torque_function: str = None,
-                          y_torque_function: str = None,
-                          z_torque_function: str = None,
-                          xyz_force_function: str = None,
-                          xyz_torque_function: str = None,
-                          user_function: str = None,
-                          routine: str = None,
-                          **kwargs) -> GeneralForce: ...
-
-    def createTorqueVector(self, **kwargs): ...
-    def createRotationalSpringDamper(self, **kwargs): ...
-
-    def createTranslationalSpringDamper(self,
-                                        name: str = None,
-                                        i_marker: Marker = None,
-                                        j_marker: Marker = None,
-                                        i_marker_name: str = None,
-                                        j_marker_name: str = None,
-                                        force_preload: float = None,
-                                        stiffness: float = None,
-                                        damping: float = None,
-                                        displacement_at_preload: float = None,
-                                        **kwargs) -> TranslationalSpringDamper: ...
-
-    def createBushing(self,
-                      i_marker: Marker = None,
-                      j_marker: Marker = None,
-                      i_marker_name: str = None,
-                      j_marker_name: str = None,
-                      force_preload: List[float] = None,
-                      stiffness: List[float] = None,
-                      damping: List[float] = None,
-                      tdamping: List[float] = None,
-                      tstiffness: List[float] = None,
-                      torque_preload: List[float] = None,
-                      **kwargs) -> Bushing: ...
-
-    def createSingleComponentForce(self,
-                                   name: str,
-                                   function: str = '',
-                                   i_marker: Marker = None,
-                                   j_marker: Marker = None,
-                                   i_marker_name: str = None,
-                                   j_marker_name: str = None,
-                                   i_part: Part = None,
-                                   j_part: Part = None,
-                                   i_part_name: str = None,
-                                   j_part_name: str = None,
-                                   action_only: bool = None,
-                                   location: List[float] = None,
-                                   orientation: List[float] = None,
-                                   type_of_freedom: str = 'translational',
-                                   relative_to: Marker = None,
-                                   **kwargs) -> SingleComponentForce: ...
-
-    def createAppliedTorque(self, **kwargs): ...
-    def createAppliedForce(self, **kwargs): ...
-
-    def createBeam(self,
-                   name: str,
-                   i_marker: Marker = None,
-                   j_marker: Marker = None,
-                   i_marker_name: str = None,
-                   j_marker_name: str = None,
-                   length: float = None,
-                   damping_ratio: float = None,
-                   matrix_of_damping_terms: List[float] = None,
-                   shear_modulus: float = None,
-                   youngs_modulus: float = None,
-                   ixx: float = None,
-                   iyy: float = None,
-                   izz: float = None,
-                   area_of_cross_section: float = None,
-                   y_shear_area_ratio: float = None,
-                   z_shear_area_ratio: float = None,
-                   formulation: str = None,
-                   **kwargs) -> Beam: ...
-
-    def createField(self, **kwargs): ...
-    def createFriction(self, **kwargs): ...
-
-    def createModalForce(self,
-                         name: str = None,
-                         flexible_body: FlexBody = None,
-                         flexible_body_name: str = None,
-                         reaction_part: FloatingMarker = None,
-                         reaction_part_name: str = None,
-                         user_function: str = None,
-                         routine: str = None,
-                         scale_function: str = None,
-                         load_case=None,
-                         force_function: str = None,
-                         **kwargs) -> ModalForce: ...
-
-    def createGeneralForce(self,
-                           name: str,
-                           adams_id: int,
-                           comments: str,
-                           i_marker: Marker = None,
-                           i_marker_name: str = None,
-                           j_floating_marker: Marker = None,
-                           j_floating_marker_name: str = None,
-                           ref_marker: Marker = None,
-                           ref_marker_name: str = None,
-                           x_force_function: str = None,
-                           y_force_function: str = None,
-                           z_force_function: str = None,
-                           xyz_force_function: str = None,
-                           user_function: str = None,
-                           routine: str = None,
-                           **kwargs) -> ForceVector: ...
-
-    def createMultiPointForce(self, **kwargs): ...
-    def __getitem__(self, name) -> Force: ...
-    def __iter__(self, *args) -> Iterable[str]: ...
-    def items(self) -> ItemsView[str, Force]: ...
-    def values(self) -> ValuesView[Force]: ...
 
 
 class _force_i_j_parts(_i_j_parts):
@@ -463,3 +317,144 @@ class MultiPointForce(Force):
     """Length matrix data element object."""
     force_matrix: DataElement.Matrix
     """Force matrix data element object."""
+
+
+class ForceManager(Manager.SubclassManager):
+    def items(self) -> ItemsView[str, Force]: ...
+    def values(self) -> ValuesView[Force]: ...
+    def keys(self) -> KeysView[str]: ...
+    def __getitem__(self, name) -> Force: ...
+    def __iter__(self, *args) -> Iterable[str]: ...
+
+    def createGravity(self,
+                      name: str = None,
+                      xyz_component_gravity: List[float] = None): ...
+
+    def createForceVector(self,
+                          name: str,
+                          adams_id: int,
+                          comments: str,
+                          i_marker: Marker = None,
+                          i_marker_name: str = None,
+                          j_floating_marker: Marker = None,
+                          j_floating_marker_name: str = None,
+                          j_part: Part = None,
+                          j_part_name: str = None,
+                          ref_marker: Marker = None,
+                          ref_marker_name: str = None,
+                          x_force_function: str = None,
+                          y_force_function: str = None,
+                          z_force_function: str = None,
+                          x_torque_function: str = None,
+                          y_torque_function: str = None,
+                          z_torque_function: str = None,
+                          xyz_force_function: str = None,
+                          xyz_torque_function: str = None,
+                          user_function: str = None,
+                          routine: str = None,
+                          **kwargs) -> GeneralForce: ...
+
+    def createTorqueVector(self, **kwargs): ...
+    def createRotationalSpringDamper(self, **kwargs): ...
+
+    def createTranslationalSpringDamper(self,
+                                        name: str = None,
+                                        i_marker: Marker = None,
+                                        j_marker: Marker = None,
+                                        i_marker_name: str = None,
+                                        j_marker_name: str = None,
+                                        force_preload: float = None,
+                                        stiffness: float = None,
+                                        damping: float = None,
+                                        displacement_at_preload: float = None,
+                                        **kwargs) -> TranslationalSpringDamper: ...
+
+    def createBushing(self,
+                      i_marker: Marker = None,
+                      j_marker: Marker = None,
+                      i_marker_name: str = None,
+                      j_marker_name: str = None,
+                      force_preload: List[float] = None,
+                      stiffness: List[float] = None,
+                      damping: List[float] = None,
+                      tdamping: List[float] = None,
+                      tstiffness: List[float] = None,
+                      torque_preload: List[float] = None,
+                      **kwargs) -> Bushing: ...
+
+    def createSingleComponentForce(self,
+                                   name: str,
+                                   function: str = '',
+                                   i_marker: Marker = None,
+                                   j_marker: Marker = None,
+                                   i_marker_name: str = None,
+                                   j_marker_name: str = None,
+                                   i_part: Part = None,
+                                   j_part: Part = None,
+                                   i_part_name: str = None,
+                                   j_part_name: str = None,
+                                   action_only: bool = None,
+                                   location: List[float] = None,
+                                   orientation: List[float] = None,
+                                   type_of_freedom: str = 'translational',
+                                   relative_to: Marker = None,
+                                   **kwargs) -> SingleComponentForce: ...
+
+    def createAppliedTorque(self, **kwargs): ...
+    def createAppliedForce(self, **kwargs): ...
+
+    def createBeam(self,
+                   name: str,
+                   i_marker: Marker = None,
+                   j_marker: Marker = None,
+                   i_marker_name: str = None,
+                   j_marker_name: str = None,
+                   length: float = None,
+                   damping_ratio: float = None,
+                   matrix_of_damping_terms: List[float] = None,
+                   shear_modulus: float = None,
+                   youngs_modulus: float = None,
+                   ixx: float = None,
+                   iyy: float = None,
+                   izz: float = None,
+                   area_of_cross_section: float = None,
+                   y_shear_area_ratio: float = None,
+                   z_shear_area_ratio: float = None,
+                   formulation: str = None,
+                   **kwargs) -> Beam: ...
+
+    def createField(self, **kwargs): ...
+    def createFriction(self, **kwargs): ...
+
+    def createModalForce(self,
+                         name: str = None,
+                         flexible_body: FlexBody = None,
+                         flexible_body_name: str = None,
+                         reaction_part: FloatingMarker = None,
+                         reaction_part_name: str = None,
+                         user_function: str = None,
+                         routine: str = None,
+                         scale_function: str = None,
+                         load_case=None,
+                         force_function: str = None,
+                         **kwargs) -> ModalForce: ...
+
+    def createGeneralForce(self,
+                           name: str,
+                           adams_id: int,
+                           comments: str,
+                           i_marker: Marker = None,
+                           i_marker_name: str = None,
+                           j_floating_marker: Marker = None,
+                           j_floating_marker_name: str = None,
+                           ref_marker: Marker = None,
+                           ref_marker_name: str = None,
+                           x_force_function: str = None,
+                           y_force_function: str = None,
+                           z_force_function: str = None,
+                           xyz_force_function: str = None,
+                           user_function: str = None,
+                           routine: str = None,
+                           **kwargs) -> ForceVector: ...
+
+    def createMultiPointForce(self, **kwargs): ...

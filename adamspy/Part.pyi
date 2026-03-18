@@ -8,59 +8,6 @@ from Expression import AdamsExpr as AdamsExpr
 from typing import Any, ItemsView, Iterable, KeysView, List, Literal, Optional, ValuesView
 
 
-class PartManager(Manager.SubclassManager):
-    def createRigidBody(self, **kwargs) -> RigidBody: ...
-
-    def createFlexBody(self,
-                       name: str = None,
-                       vx: float = None,
-                       vy: float = None,
-                       vz: float = None,
-                       wx: float = None,
-                       wy: float = None,
-                       wz: float = None,
-                       vm: float = None,
-                       vm_name: str = None,
-                       wm: float = None,
-                       wm_name: str = None,
-                       md_db_file_name: str = None,
-                       index_in_database: int = None,
-                       damping_ratio: str = None,
-                       damping_user_function: List[float | int] = None,
-                       damping_routine: str = None,
-                       dynamic_limit: float = None,
-                       exact_x: float = None,
-                       exact_y: float = None,
-                       exact_z: float = None,
-                       exact_psi: float = None,
-                       exact_theta: float = None,
-                       exact_phi: float = None,
-                       invariants: List[bool] = None,
-                       characteristic_length: float = None,
-                       stability_factor: float = None,
-                       exact_coordinates: List[int] = None,
-                       selected_modes: List[int] = None,
-                       modal_exact_coordinates: List[int] = None,
-                       initial_modal_displacements: List[float] = None,
-                       initial_modal_velocities: List[float] = None,
-                       node_count: int = None,
-                       mode_count: int = None,
-                       modal_neutral_file_name: str = None,
-                       bdf_file_name: str = None,
-                       generalized_damping: Literal['off', 'full', 'internal_only'] = None,
-                       representation: Literal['rigid', 'modal', 'nonlinear', 'nforce'] = None,
-                       **kwargs) -> FlexBody: ...
-
-    def createPointMass(self, **kwargs) -> PointMass: ...
-    def createExternalSystem(self, **kwargs) -> ExternalSystem: ...
-    def createFEPart(self, **kwargs) -> FEPart: ...
-    def __getitem__(self, name) -> Part: ...
-    def __iter__(self, *args) -> Iterable[str]: ...
-    def items(self) -> ItemsView[str, Part]: ...
-    def values(self) -> ValuesView[Part]: ...
-    def keys(self) -> KeysView[str]: ...
-
-
 class Part(Object.Object):
     Markers: MarkerManager
     DesignPoints: DesignPointManager
@@ -320,3 +267,56 @@ class FEPart(Part):
     coordinates: List[float]
     Geometries: GeometryManager
     def __init__(self, _DBKey) -> None: ...
+
+
+class PartManager(Manager.SubclassManager):
+    def createRigidBody(self, **kwargs) -> RigidBody: ...
+
+    def createFlexBody(self,
+                       name: str = None,
+                       vx: float = None,
+                       vy: float = None,
+                       vz: float = None,
+                       wx: float = None,
+                       wy: float = None,
+                       wz: float = None,
+                       vm: float = None,
+                       vm_name: str = None,
+                       wm: float = None,
+                       wm_name: str = None,
+                       md_db_file_name: str = None,
+                       index_in_database: int = None,
+                       damping_ratio: str = None,
+                       damping_user_function: List[float | int] = None,
+                       damping_routine: str = None,
+                       dynamic_limit: float = None,
+                       exact_x: float = None,
+                       exact_y: float = None,
+                       exact_z: float = None,
+                       exact_psi: float = None,
+                       exact_theta: float = None,
+                       exact_phi: float = None,
+                       invariants: List[bool] = None,
+                       characteristic_length: float = None,
+                       stability_factor: float = None,
+                       exact_coordinates: List[int] = None,
+                       selected_modes: List[int] = None,
+                       modal_exact_coordinates: List[int] = None,
+                       initial_modal_displacements: List[float] = None,
+                       initial_modal_velocities: List[float] = None,
+                       node_count: int = None,
+                       mode_count: int = None,
+                       modal_neutral_file_name: str = None,
+                       bdf_file_name: str = None,
+                       generalized_damping: Literal['off', 'full', 'internal_only'] = None,
+                       representation: Literal['rigid', 'modal', 'nonlinear', 'nforce'] = None,
+                       **kwargs) -> FlexBody: ...
+
+    def createPointMass(self, **kwargs) -> PointMass: ...
+    def createExternalSystem(self, **kwargs) -> ExternalSystem: ...
+    def createFEPart(self, **kwargs) -> FEPart: ...
+    def __getitem__(self, name) -> Part: ...
+    def __iter__(self, *args) -> Iterable[str]: ...
+    def items(self) -> ItemsView[str, Part]: ...
+    def values(self) -> ValuesView[Part]: ...
+    def keys(self) -> KeysView[str]: ...

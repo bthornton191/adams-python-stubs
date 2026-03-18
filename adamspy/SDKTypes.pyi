@@ -1,5 +1,4 @@
-from SDKObjectIds import *
-from typing import Any
+from typing import Dict
 
-TypeMap: Any
-ReverseTypeMap: Any
+TypeMap: Dict[int, str | None]
+ReverseTypeMap: Dict[str, int]

@@ -3,6 +3,7 @@ class AnalysisIds:
     res_step_types: int
     term_status: int
 
+
 class AngleMeasureIds:
     comments: int
     create_measure_display: int
@@ -11,6 +12,7 @@ class AngleMeasureIds:
     legend: int
     middle_point: int
 
+
 class AppearanceSettingsIds:
     active: int
     color: int
@@ -18,20 +20,24 @@ class AppearanceSettingsIds:
     name_visibility: int
     visibility: int
 
+
 class CircularIds:
     cyl_radius: int
     cyl_thickness: int
     type: int
 
+
 class ColorIds:
     components: int
     rgb: int
+
 
 class ComputedMeasureIds:
     comments: int
     create_measure_display: int
     legend: int
     units: int
+
 
 class ContactIds:
     coulomb_friction: int
@@ -48,11 +54,14 @@ class ContactIds:
     no_friction: int
     type: int
 
+
 class CouplerConstraintIds:
     type_of_freedom: int
 
+
 class DefaultIds:
     naming_references: int
+
 
 class DesignVariableIds:
     delta_type: int
@@ -63,14 +72,17 @@ class DesignVariableIds:
     use_allowed_values: int
     use_range: int
 
+
 class DifferentialEquationIds:
     function: int
+
 
 class EllipseIds:
     end_angle: int
     major_radius: int
     minor_radius: int
     start_angle: int
+
 
 class ExternalIds:
     element: int
@@ -80,8 +92,10 @@ class ExternalIds:
     rm: int
     solid_id: int
 
+
 class FENodeIds:
     label: int
+
 
 class FEPartIds:
     by_coordinates: int
@@ -95,6 +109,7 @@ class FEPartIds:
     vm: int
     wm: int
 
+
 class FeatureBlendIds:
     chamfer: int
     locations: int
@@ -102,14 +117,17 @@ class FeatureBlendIds:
     radius2: int
     reference_marker: int
 
+
 class FeatureHoleIds:
     countersink: int
     depth: int
     radius: int
 
+
 class FeatureThinShellIds:
     locations: int
     thickness: int
+
 
 class FemdataIds:
     criterion: int
@@ -123,17 +141,20 @@ class FemdataIds:
     skip: int
     start: int
 
+
 class FlexBodyIds:
     generalized_damping: int
     mode_count: int
     node_count: int
     representation: int
 
+
 class ForceVectorIds:
     x_force_function: int
     xyz_force_function: int
     y_force_function: int
     z_force_function: int
+
 
 class FunctionMeasureIds:
     comments: int
@@ -144,8 +165,10 @@ class FunctionMeasureIds:
     units: int
     user_function: int
 
+
 class GeneralConstraintIds:
     function: int
+
 
 class GeneralForceIds:
     x_force_function: int
@@ -157,17 +180,21 @@ class GeneralForceIds:
     z_force_function: int
     z_torque_function: int
 
+
 class GeometryAppearanceSettingsIds:
     render: int
     transparency: int
 
+
 class GeometryArcIds:
     close: int
+
 
 class GeometryChainIds:
     adams_id: int
     comments: int
     object_in_chain: int
+
 
 class GeometryCsgIds:
     adams_id: int
@@ -175,6 +202,7 @@ class GeometryCsgIds:
     solid1: int
     solid2: int
     type: int
+
 
 class GeometryEllipseIds:
     adams_id: int
@@ -185,15 +213,18 @@ class GeometryEllipseIds:
     minor_radius: int
     start_angle: int
 
+
 class GeometryExtrusionIds:
     path: int
     profile: int
+
 
 class GeometryGContactIds:
     adams_id: int
     comments: int
     contact_element_name: int
     force_display: int
+
 
 class GeometryLinkIds:
     adams_id: int
@@ -202,6 +233,7 @@ class GeometryLinkIds:
     i_marker: int
     j_marker: int
     width: int
+
 
 class GeometryNurbCurveIds:
     comments: int
@@ -212,11 +244,13 @@ class GeometryNurbCurveIds:
     rational: int
     weights: int
 
+
 class GeometryPlateIds:
     comments: int
     markers: int
     radius: int
     width: int
+
 
 class GeometryPolylineIds:
     adams_id: int
@@ -224,11 +258,14 @@ class GeometryPolylineIds:
     comments: int
     points: int
 
+
 class GeometryRevolutionIds:
     number_of_sides: int
 
+
 class GeometrySheetIds:
     sheet_id: int
+
 
 class GeometryShellIds:
     comments: int
@@ -239,11 +276,14 @@ class GeometryShellIds:
     scale_factor: int
     wireframe_only: int
 
+
 class GeometrySolidIds:
     solid_id: int
 
+
 class GroupIds:
     comments: int
+
 
 class IBeamIds:
     ib_base: int
@@ -251,29 +291,37 @@ class IBeamIds:
     ib_height: int
     ib_web: int
 
+
 class JointIds:
     type: int
+
 
 class JointMotionIds:
     function: int
     type_of_freedom: int
 
+
 class JprimIds:
     type: int
+
 
 class MarkerIds:
     external_id: int
     external_id_loc: int
     external_id_ori: int
 
+
 class MatrixIds:
     units: int
+
 
 class MeasureIds:
     adams_id: int
 
+
 class ModalForceIds:
     scale: int
+
 
 class ObjectMeasureIds:
     characteristic: int
@@ -285,6 +333,7 @@ class ObjectMeasureIds:
     motion_rframe: int
     obj: int
 
+
 class OrientMeasureIds:
     characteristic: int
     comments: int
@@ -294,12 +343,15 @@ class OrientMeasureIds:
     legend: int
     to_frame: int
 
+
 class OutputSettingsIds:
     output_strain: int
     output_stress: int
 
+
 class PointMassIds:
     density: int
+
 
 class PointMeasureIds:
     characteristic: int
@@ -311,12 +363,15 @@ class PointMeasureIds:
     motion_rframe: int
     point: int
 
+
 class PointMotionIds:
     function: int
     type: int
 
+
 class PreferenceIds:
     ic_aerror: int
+
 
 class Pt2ptMeasureIds:
     characteristic: int
@@ -329,6 +384,7 @@ class Pt2ptMeasureIds:
     motion_rframe: int
     to_point: int
 
+
 class RangeMeasureIds:
     comments: int
     create_measure_display: int
@@ -336,15 +392,18 @@ class RangeMeasureIds:
     of_measure_name: int
     type: int
 
+
 class RectangularIds:
     rect_base: int
     rect_height: int
     rect_thickness: int
     type: int
 
+
 class RigidBodyIds:
     density: int
     planar_axes: int
+
 
 class SectionIds:
     area: int
@@ -354,6 +413,7 @@ class SectionIds:
     izz: int
     jxx: int
     moments: int
+
 
 class SensorIds:
     angular: int
@@ -369,6 +429,7 @@ class SensorIds:
     stepsize: int
     yydump: int
 
+
 class SimulationIds:
     commands: int
     comments: int
@@ -381,6 +442,7 @@ class SimulationIds:
     solver_commands: int
     step_size: int
     type: int
+
 
 class SimulationPreferenceIds:
     alert: int
@@ -434,10 +496,12 @@ class SimulationPreferenceIds:
     verify_first: int
     write_single_parasolid_file: int
 
+
 class SingleComponentForceIds:
     function: int
     translation: int
     translational: int
+
 
 class SplineIds:
     units: int
@@ -448,14 +512,17 @@ class SplineIds:
     z_units: int
     zs: int
 
+
 class StateVariableIds:
     function: int
+
 
 class TorqueVectorIds:
     x_torque_function: int
     xyz_torque_function: int
     y_torque_function: int
     z_torque_function: int
+
 
 class UserDefinedElementIds:
     assoc: int
@@ -466,6 +533,7 @@ class UserDefinedElementIds:
     output_parameters: int
     parameters: int
     udedef_name: int
+
 
 class UserDefinedInstanceIds:
     input_parameters: int

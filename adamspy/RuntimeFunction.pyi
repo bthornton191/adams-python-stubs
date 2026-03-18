@@ -1,7 +1,7 @@
 import Manager
 import Object
 from ctypes import POINTER as POINTER, c_bool as c_bool, c_double as c_double, c_int as c_int, cast as cast
-from typing import Any, List, Optional
+from typing import List, Optional
 
 BUFFER_SIZE: int
 

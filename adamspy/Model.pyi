@@ -1,15 +1,16 @@
+from __future__ import annotations
+
 import AppearanceSettings
 import Manager
 import Object
 import Settings
-from typing import Any, ItemsView, Iterable, KeysView, Literal, ValuesView
+from typing import ItemsView, Iterable, KeysView, Literal, ValuesView
 
 from DesignVariable import DesignVariableManager
 from SystemElement import SystemElementManager
 from Constraint import ConstraintManager
 from DataElement import DataElementManager
 from Force import ForceManager
-from Manager import AdamsManager
 from Measure import MeasureManager
 from Part import PartManager
 from Material import MaterialManager
@@ -24,17 +25,6 @@ from Part import Part
 from Simulation import SimulationManager
 from UDE import UserDefinedInstanceManager
 from Sensor import SensorManager
-
-
-class ModelManager(Manager.AdamsManager):
-    def create(self, **kwargs) -> Model: ...
-    @staticmethod
-    def newFromAdm(model_name, file_name): ...
-    def items(self) -> ItemsView[str, Model]: ...
-    def values(self) -> ValuesView[Model]: ...
-    def keys(self) -> KeysView[str]: ...
-    def __getitem__(self, name) -> Model: ...
-    def __iter__(self, *args) -> Iterable[str]: ...
 
 
 class Model(Object.ObjectComment, AppearanceSettings.GeometryAppearanceSettings):
@@ -68,3 +58,14 @@ class Model(Object.ObjectComment, AppearanceSettings.GeometryAppearanceSettings)
     num_parts: int
     title: str
     def mergeInto(self, into_model: int = ..., translation=..., orientation=..., add_to_group: int = ..., duplicate_parts: bool = ...) -> None: ...
+
+
+class ModelManager(Manager.AdamsManager):
+    def create(self, **kwargs) -> Model: ...
+    @staticmethod
+    def newFromAdm(model_name, file_name): ...
+    def items(self) -> ItemsView[str, Model]: ...
+    def values(self) -> ValuesView[Model]: ...
+    def keys(self) -> KeysView[str]: ...
+    def __getitem__(self, name) -> Model: ...
+    def __iter__(self, *args) -> Iterable[str]: ...

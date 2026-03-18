@@ -1,6 +1,6 @@
 import Manager
 import Object
-from typing import Any, List
+from typing import List
 
 
 class MaterialManager(Manager.AdamsManager):

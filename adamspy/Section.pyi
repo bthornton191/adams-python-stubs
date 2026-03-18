@@ -1,6 +1,5 @@
 import Manager
 import Object
-from typing import Any
 
 
 class SectionManager(Manager.SubclassManager):

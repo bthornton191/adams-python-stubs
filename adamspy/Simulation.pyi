@@ -1,55 +1,8 @@
+from __future__ import annotations
 from typing import Any, ItemsView, Iterable, KeysView, List, ValuesView
 
 import Manager
 import Object
-
-
-class SimulationManager(Manager.AdamsManager):
-    def create(self,
-               name: str,
-               end_time: float = None,
-               duration: float = None,
-               initial_static: bool = False,
-               number_of_steps: int = None,
-               step_size: float = None,
-               script_type: str = 'simple',
-               script: str | List[str] = None,
-               **kwargs) -> Simulation:
-        """Creates a simulation object
-
-        Parameters
-        ----------
-        name : str
-            name of simulation object
-        end_time : float
-            end time duration of the simulation
-        duration : float
-            duration of the simulation
-        initial_static : bool
-            True if static analysis is to be performed first, False by default
-        number_of_steps : int
-            number of output steps
-        step_size : float
-            output step size
-        script_type : str
-            Options are 'simple' (default), 'commands', 'solver_commands'.
-        script : str
-            simulation script for a scripted simulation
-        **kwargs : dict
-            additional arguments for a simulation object
-
-        Returns
-        -------
-        Simulation
-            simulation object
-        """
-        ...
-
-    def items(self) -> ItemsView[str, Simulation]: ...
-    def values(self) -> ValuesView[Simulation]: ...
-    def keys(self) -> KeysView[str]: ...
-    def __getitem__(self, name) -> Simulation: ...
-    def __iter__(self, *args) -> Iterable[str]: ...
 
 
 class Simulation(Object.ObjectComment):
@@ -126,3 +79,51 @@ class Simulation(Object.ObjectComment):
         Method runs simulations based on Adams View Settings -> Solver -> Executable
         """
         ...
+
+
+class SimulationManager(Manager.AdamsManager):
+    def create(self,
+               name: str,
+               end_time: float = None,
+               duration: float = None,
+               initial_static: bool = False,
+               number_of_steps: int = None,
+               step_size: float = None,
+               script_type: str = 'simple',
+               script: str | List[str] = None,
+               **kwargs) -> Simulation:
+        """Creates a simulation object
+
+        Parameters
+        ----------
+        name : str
+            name of simulation object
+        end_time : float
+            end time duration of the simulation
+        duration : float
+            duration of the simulation
+        initial_static : bool
+            True if static analysis is to be performed first, False by default
+        number_of_steps : int
+            number of output steps
+        step_size : float
+            output step size
+        script_type : str
+            Options are 'simple' (default), 'commands', 'solver_commands'.
+        script : str
+            simulation script for a scripted simulation
+        **kwargs : dict
+            additional arguments for a simulation object
+
+        Returns
+        -------
+        Simulation
+            simulation object
+        """
+        ...
+
+    def items(self) -> ItemsView[str, Simulation]: ...
+    def values(self) -> ValuesView[Simulation]: ...
+    def keys(self) -> KeysView[str]: ...
+    def __getitem__(self, name) -> Simulation: ...
+    def __iter__(self, *args) -> Iterable[str]: ...

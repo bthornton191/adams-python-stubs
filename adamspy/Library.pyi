@@ -2,7 +2,10 @@ import Manager
 import Object
 from typing import Any
 
-class LibraryManager(Manager.AdamsManager): ...
+
+class LibraryManager(Manager.AdamsManager):
+    ...
+
 
 class Library(Object.ObjectBase):
     Libraries: Any
@@ -10,7 +13,10 @@ class Library(Object.ObjectBase):
     UserDefinedElements: Any
     def __init__(self, _DBKey) -> None: ...
 
-class AttributesLibraryManager(Manager.AdamsManager): ...
+
+class AttributesLibraryManager(Manager.AdamsManager):
+    ...
+
 
 class Attributes_Library(Object.ObjectBase):
     Colors: Any

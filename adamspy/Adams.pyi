@@ -9,7 +9,9 @@ from Settings import SessionPreferences
 
 DBRoot: Any
 
-class AdamsRoot(Object.Object): ...
+
+class AdamsRoot(Object.Object):
+    ...
 
 
 Models: ModelManager
@@ -21,8 +23,11 @@ AttributesLibraries: Any
 Colors: Any
 Materials: Any
 
-def getCurrentModel()->Model.Model: ...
-def execute_cmd(cmd : str) -> None: 
+
+def getCurrentModel() -> Model.Model: ...
+
+
+def execute_cmd(cmd: str) -> None:
     """Executs a Command Language(cmd) command though python. 
 
     Parameters
@@ -38,7 +43,8 @@ def execute_cmd(cmd : str) -> None:
     """
     ...
 
-def evaluate_exp(exp : str) -> Any:
+
+def evaluate_exp(exp: str) -> Any:
     """Evaluates and returns the value of the given expression. 
 
     Parameters
@@ -58,7 +64,9 @@ def evaluate_exp(exp : str) -> Any:
     ```
     """
     ...
-def evaluate_real_exp(exp : str) -> Any:
+
+
+def evaluate_real_exp(exp: str) -> Any:
     """Evaluates and returns the value of the given expression that results in an real value or an array of reals.
 
     Parameters
@@ -79,7 +87,9 @@ def evaluate_real_exp(exp : str) -> Any:
 
     """
     ...
-def write_binary_file(file_name : str) -> bool:
+
+
+def write_binary_file(file_name: str) -> bool:
     """Exports a Adams View binary database file.
 
     Parameters
@@ -91,7 +101,7 @@ def write_binary_file(file_name : str) -> bool:
     -------
     bool
         True
-    
+
     Example
     -------
     ```
@@ -100,7 +110,9 @@ def write_binary_file(file_name : str) -> bool:
 
     """
     ...
-def read_binary_file(file_name : str) -> bool:
+
+
+def read_binary_file(file_name: str) -> bool:
     """Reads a Adams View binary file.
 
     Parameters
@@ -112,16 +124,18 @@ def read_binary_file(file_name : str) -> bool:
     -------
     bool
         True
-    
+
     Example
     -------
     ``` 
     Adams.read_binary_file("model_test.bin") 
     ```
-    
+
     """
     ...
-def write_command_file(file_name : str, model : Model.Model) -> bool: 
+
+
+def write_command_file(file_name: str, model: Model.Model) -> bool:
     """Exports a Adams View command file. 
 
     Parameters
@@ -144,7 +158,9 @@ def write_command_file(file_name : str, model : Model.Model) -> bool:
 
     """
     ...
-def read_command_file(file_name : str) -> bool:
+
+
+def read_command_file(file_name: str) -> bool:
     """Reads a command file and execute commands contained within. 
 
     Parameters
@@ -165,8 +181,10 @@ def read_command_file(file_name : str) -> bool:
 
     """
     ...
+
+
 def read_geometry_file(
-    type_of_geometry : Literal[
+    type_of_geometry: Literal[
         'catiav4',
         'catiav5',
         'catiav6',
@@ -181,8 +199,8 @@ def read_geometry_file(
         'dxf',
         'dwg'
     ],
-    file_name : str,
-    **kwargs) -> None:
+    file_name: str,
+        **kwargs) -> None:
     """Reads a geometry file given file name and type_of_geometry contained in the file. Must  provide either `part_name` or `model_name`.
 
     Parameters
@@ -192,10 +210,10 @@ def read_geometry_file(
 
     file_name : str
         Name of file to read.
-    
+
     model_name : str
         Name of model to read the geometry into
-    
+
     part_name : str
         Name of part to read the geometry into
 
@@ -206,8 +224,10 @@ def read_geometry_file(
     ```
     """
     ...
+
+
 def write_geometry_file(
-    type_of_geometry : Literal[
+    type_of_geometry: Literal[
         'catiav4',
         'catiav5',
         'catiav6',
@@ -222,8 +242,8 @@ def write_geometry_file(
         'dxf',
         'dwg'
     ],
-    file_name : str,
-    **kwargs) -> None:
+    file_name: str,
+        **kwargs) -> None:
     """Exports a geometry file given type_of_geometry, file_name, and one of model_name, part_name, or analysis_name and frame_number.  Must  provide either `part_name`, `model_name`, or `analysis_name` keyword arguments.
 
     Parameters
@@ -254,6 +274,8 @@ def write_geometry_file(
 
     """
     ...
+
+
 def undo_begin_block() -> None:
     """Signals the start of a new undo block in an existing nested set of undo blocks. 
     This allow you to group commands, as you issue them from the command window, into undo blocks. 
@@ -268,6 +290,8 @@ def undo_begin_block() -> None:
 
     """
     ...
+
+
 def undo_end_block() -> None:
     """Signals the end of the last undo block in the nested set of undo blocks. You can nest undo blocks to any level.
 
@@ -279,6 +303,8 @@ def undo_end_block() -> None:
 
     """
     ...
+
+
 def undo() -> None:
     """Allows you to reverse the action of the previous undo-block given to Adams View, so that Adams View appears as it did before the command was originally issued.
 
@@ -290,9 +316,11 @@ def undo() -> None:
 
     """
     ...
+
+
 def redo() -> None:
     """Allows you to reverse the action of the last undo backward command, and makes Adams View appear as it did before the reverse action was originally done.
-    
+
     Example
     -------
     ```
@@ -301,14 +329,16 @@ def redo() -> None:
 
     """
     ...
-def read_parasolid_file(file_name : str, **kwargs) -> None:
+
+
+def read_parasolid_file(file_name: str, **kwargs) -> None:
     """Reads a parasolid file given the file_name and one of model_name, part_name or fe_part_name.  Must  provide either `part_name`, `model_name`, or `fe_part_name` keyword arguments.
 
     Parameters
     ----------
     file_name : str
         Name of file to read
-    
+
 
     model_name : str, optional
         Name of model to read geometry into
@@ -327,6 +357,8 @@ def read_parasolid_file(file_name : str, **kwargs) -> None:
 
     """
     ...
+
+
 def write_parasolid_file(file_name: str, **kwargs) -> None:
     """Writes a parasolid file given the file_name and one of model_name, part_name or analysis_name.  
 
@@ -355,7 +387,9 @@ def write_parasolid_file(file_name: str, **kwargs) -> None:
 
     """
     ...
-def stoo(name : str) -> Object.Object:
+
+
+def stoo(name: str) -> Object.Object:
     """Returns python object of a given full name.
 
     Parameters
@@ -375,15 +409,17 @@ def stoo(name : str) -> Object.Object:
 
     """
     ...
+
+
 def switchToCmd() -> None:
     """Switches the active scripting language to the Adams CMD language in a cmd script having a mix of CMD & Python commands.
     To switch back to Python, use the CMD language command "language switch_to python".
-    
+
     Example
     -------
     ```
     Adams.switchToCmd()
     ```
-    
+
     """
     ...

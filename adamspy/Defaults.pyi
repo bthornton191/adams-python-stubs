@@ -3,18 +3,6 @@ from typing import Any, Literal
 from Model import Model
 
 
-class AdamsDefaults(Object.ObjectBase):
-    def __init__(self, _DBKey) -> None: ...
-    units: DefaultUnits
-    coordinate_system: Any
-    def get(self, type): ...
-    model: Model
-    IconName_type: Any
-    icon_naming: Any
-    @property
-    def info(self): ...
-
-
 class DefaultUnits(Object.ObjectSubBase):
     def __init__(self) -> None: ...
     length: Literal['mm', 'cm', 'meter', 'km', 'inch', 'foot', 'mile', 'micrometer', 'nanometer', 'angstrom', 'microinch', 'mils', 'yard']
@@ -108,3 +96,15 @@ class DefaultUnits(Object.ObjectSubBase):
             - 'radians_sec'
         """
         ...
+
+
+class AdamsDefaults(Object.ObjectBase):
+    def __init__(self, _DBKey) -> None: ...
+    units: DefaultUnits
+    coordinate_system: Any
+    def get(self, type): ...
+    model: Model
+    IconName_type: Any
+    icon_naming: Any
+    @property
+    def info(self): ...

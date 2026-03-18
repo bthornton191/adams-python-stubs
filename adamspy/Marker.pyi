@@ -1,3 +1,4 @@
+from __future__ import annotations
 import DataElement
 import Manager
 import Object

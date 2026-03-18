@@ -7,13 +7,6 @@ from typing import Any
 BUFFER_SIZE: Any
 __asita__: str
 
-class SessionPreferences(Object.ObjectSubBase):
-    def __init__(self, _DBKey) -> None: ...
-    general: GeneralPreferences
-    single_run: SinglerunPreferences
-    single_run_debugger: SinglerunDebuggerPreferences
-    multi_run: MultirunPreferences
-    optimization: OptimizationPreferences
 
 class ModelSettings(Object.ObjectSubBase):
     advanced: Any
@@ -29,8 +22,10 @@ class ModelSettings(Object.ObjectSubBase):
     solver: Any
     output: Any
 
+
 class AdvancedSettingManager(Manager.AdamsManager):
     def iterDBKeys(self) -> Generator[Any, None, None]: ...
+
 
 class SinglerunPreferences(Object.ObjectSubBase):
     icon_visibility: Any
@@ -40,6 +35,7 @@ class SinglerunPreferences(Object.ObjectSubBase):
     alert: Any
     save_analyses: Any
     analysis_prefix: Any
+
 
 class GeneralPreferences(Object.ObjectSubBase):
     file_prefix: Any
@@ -57,6 +53,7 @@ class GeneralPreferences(Object.ObjectSubBase):
     mdi_directory_remote: Any
     remote_directory: Any
 
+
 class SinglerunDebuggerPreferences(Object.ObjectSubBase):
     iterations_per_step_measure: Any
     integrator_order_measure: Any
@@ -66,6 +63,7 @@ class SinglerunDebuggerPreferences(Object.ObjectSubBase):
     track_maximum: Any
     show_table: Any
     highlight_objects: Any
+
 
 class MultirunPreferences(Object.ObjectSubBase):
     save_analyses: Any
@@ -78,6 +76,7 @@ class MultirunPreferences(Object.ObjectSubBase):
     show_summary: Any
     write_single_parasolid_file: Any
 
+
 class OptimizationPreferences(Object.ObjectSubBase):
     algorithm: Any
     maximum_iterations: Any
@@ -89,14 +88,17 @@ class OptimizationPreferences(Object.ObjectSubBase):
     slp_convergence_iter: Any
     debug: Any
 
+
 class SolverSettings(Object.ObjectSubBase):
     threads: Any
     library_path: Any
     status_message: Any
 
+
 class LinearSolverSettings(Object.ObjectSubBase):
     solver: Any
     stability: Any
+
 
 class IntegratorSettings(Object.ObjectSubBase):
     def __init__(self, _DBKey) -> None: ...
@@ -118,6 +120,7 @@ class IntegratorSettings(Object.ObjectSubBase):
     hratio: Any
     maxerror: Any
 
+
 class KinematicsSettings(Object.ObjectSubBase):
     def __init__(self, _DBKey) -> None: ...
     apattern: Any
@@ -130,6 +133,7 @@ class KinematicsSettings(Object.ObjectSubBase):
     amaxit: Any
     maxit: Any
 
+
 class InitialConditionsSettings(Object.ObjectSubBase):
     def __init__(self, _DBKey) -> None: ...
     aerror: Any
@@ -141,6 +145,7 @@ class InitialConditionsSettings(Object.ObjectSubBase):
     maxit: Any
     apattern: Any
     pattern: Any
+
 
 class EquilibriumSettings(Object.ObjectSubBase):
     def __init__(self, _DBKey) -> None: ...
@@ -158,16 +163,19 @@ class EquilibriumSettings(Object.ObjectSubBase):
     eta: Any
     pattern: Any
 
+
 class ContactSettings(Object.ObjectSubBase):
     def __init__(self, _DBKey) -> None: ...
     faceting_tolerance: Any
     geometry_library: Any
+
 
 class FlexBodySettings(Object.ObjectSubBase):
     def __init__(self, _DBKey) -> None: ...
     limit_check: Any
     limit_action: Any
     formulation: Any
+
 
 class DebugSettings(Object.ObjectSubBase):
     def __init__(self, _DBKey) -> None: ...
@@ -181,14 +189,25 @@ class DebugSettings(Object.ObjectSubBase):
     dof: Any
     topology: Any
 
+
 class AdvancedSetting(Object.ObjectSubBase):
     setting: Any
     value: Any
     deactivate: Any
     def destroy(self): ...
 
+
 class OutputSettings(Object.ObjectSubBase):
     Femdatas: Any
     def __init__(self, _DBKey) -> None: ...
     stress: Any
     strain: Any
+
+
+class SessionPreferences(Object.ObjectSubBase):
+    def __init__(self, _DBKey) -> None: ...
+    general: GeneralPreferences
+    single_run: SinglerunPreferences
+    single_run_debugger: SinglerunDebuggerPreferences
+    multi_run: MultirunPreferences
+    optimization: OptimizationPreferences

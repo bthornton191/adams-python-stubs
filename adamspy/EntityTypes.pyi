@@ -1,6 +1,8 @@
 from typing import Any
 
+
 def class_id_wrap(entType): ...
+
 
 ent_null: Any
 ent_assoc: Any

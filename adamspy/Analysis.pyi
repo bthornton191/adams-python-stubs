@@ -2,36 +2,15 @@ import Manager
 import Object
 from DBAccess import ObjectName as ObjectName, ObjectValue as ObjectValue, RealArrayValue as RealArrayValue, RealValue as RealValue
 from ctypes import byref as byref, c_double as c_double
-from typing import Any, ItemsView, Iterable, List, OrderedDict, Union, ValuesView
+from typing import ItemsView, Iterable, List, OrderedDict, Union, ValuesView
 
 BUFFER_SIZE: int
-
-class AnalysisManager(Manager.AdamsManager):
-    def createFromFile(self, *, file_name: str, name:str =None)->Analysis: 
-        """Create an analysis from a .res, .req or .gra file 
-        
-        Parameters
-        ----------
-        file_name : str
-            The name of the file to load
-        name : str, optional
-            The name to give the analysis, by default the base name of the file is used
-        
-        Returns
-        -------
-        Analysis
-            The analysis object
-        """
-    def create(self, name=None, **kwargs) -> Analysis: ...
-    def __getitem__(self, name: str) -> Analysis: ...
-    def __iter__(self, *args) -> Iterable[str]: ...
-    def items(self) -> ItemsView[str, Analysis]: ...
-    def values(self) -> ValuesView[Analysis]: ...
 
 
 class ResultComponent(Object.ObjectBase):
     values: List[float]
     unit: str
+
 
 class Analysis(Object.ObjectBase):
     def __init__(self, _DBKey) -> None: ...
@@ -65,3 +44,27 @@ class Analysis(Object.ObjectBase):
     """Read-only. Start time for the analysis."""
     end_time: float
     """Read-only. End time (terminal time) for the analysis."""
+
+
+class AnalysisManager(Manager.AdamsManager):
+    def createFromFile(self, *, file_name: str, name: str = None) -> Analysis:
+        """Create an analysis from a .res, .req or .gra file 
+
+        Parameters
+        ----------
+        file_name : str
+            The name of the file to load
+        name : str, optional
+            The name to give the analysis, by default the base name of the file is used
+
+        Returns
+        -------
+        Analysis
+            The analysis object
+        """
+
+    def create(self, name=None, **kwargs) -> Analysis: ...
+    def __getitem__(self, name: str) -> Analysis: ...
+    def __iter__(self, *args) -> Iterable[str]: ...
+    def items(self) -> ItemsView[str, Analysis]: ...
+    def values(self) -> ValuesView[Analysis]: ...

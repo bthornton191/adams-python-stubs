@@ -3,20 +3,7 @@ import Manager
 import Object
 from Libraries import amdlib as amdlib
 from ctypes import create_string_buffer as create_string_buffer
-from typing import Any, List
-
-
-class SystemElementManager(Manager.SubclassManager):
-    def createDifferentialEquation(self, name: str,
-                                   function: str = '',
-                                   initial_condition: float = 0.0,
-                                   implicit: bool = False,
-                                   static_hold: bool = False,
-                                   **kwargs) -> DifferentialEquation: ...
-
-    def createGeneralStateEquation(self, **kwargs): ...
-    def createLinearStateEquation(self, **kwargs): ...
-    def createTransferFunction(self, **kwargs): ...
+from typing import List
 
 
 class SystemElement(Object.Object):
@@ -154,3 +141,16 @@ class GeneralStateEquation(SystemElement):
     discrete_state_arrays: DataElement.XStateArray
     discrete_state_arrays_name: str
     set_equation_count: int
+
+
+class SystemElementManager(Manager.SubclassManager):
+    def createDifferentialEquation(self, name: str,
+                                   function: str = '',
+                                   initial_condition: float = 0.0,
+                                   implicit: bool = False,
+                                   static_hold: bool = False,
+                                   **kwargs) -> DifferentialEquation: ...
+
+    def createGeneralStateEquation(self, **kwargs): ...
+    def createLinearStateEquation(self, **kwargs): ...
+    def createTransferFunction(self, **kwargs): ...

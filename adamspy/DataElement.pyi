@@ -1,27 +1,11 @@
+from typing import ItemsView, List, Literal, Optional, ValuesView
+
 import Manager
 import Object
-from typing import ItemsView, List, Literal, Optional, ValuesView
 
 
 class DataElement(Object.Object):
     ...
-
-
-class CurveData(DataElement):
-    closed: bool
-    """Specifies if the curve is closed (meets at the ends)."""
-    fit_type: Literal['curve_points', 'control_points']
-    tension: float
-    user_function: List[float | int]
-    minimum_parameter: float
-    """Minimum value of the curve parameter. Only used for user-written curves."""
-    maximum_parameter: float
-    """Maximum value of the curve parameter. Only used for user-written curves."""
-    routine: str
-    matrix_name: str
-    """Name of an existing MATRIX data element containing the curve data."""
-    matrix: Matrix
-    """Existing MATRIX data element containing the curve data."""
 
 
 class Spline(DataElement):
@@ -73,6 +57,16 @@ class YOutputArray(Array):
     ...
 
 
+class StateVariable(DataElement):
+    initial_condition: float
+    """Initial value of the user-defined state variable."""
+    user_function: List[float]
+    """Up to 30 constant values for Adams to pass to the user-written subroutine."""
+    routine: str
+    function: str
+    """Function expression definition used to compute the value of this variable."""
+
+
 class UInputArray(Array):
     variables: List[StateVariable]
     """Array of state variable objects associated with this input array."""
@@ -111,14 +105,21 @@ class MatrixFile(Matrix):
     """Name of the MATRIX to be read from the file."""
 
 
-class StateVariable(DataElement):
-    initial_condition: float
-    """Initial value of the user-defined state variable."""
-    user_function: List[float]
-    """Up to 30 constant values for Adams to pass to the user-written subroutine."""
+class CurveData(DataElement):
+    closed: bool
+    """Specifies if the curve is closed (meets at the ends)."""
+    fit_type: Literal['curve_points', 'control_points']
+    tension: float
+    user_function: List[float | int]
+    minimum_parameter: float
+    """Minimum value of the curve parameter. Only used for user-written curves."""
+    maximum_parameter: float
+    """Maximum value of the curve parameter. Only used for user-written curves."""
     routine: str
-    function: str
-    """Function expression definition used to compute the value of this variable."""
+    matrix_name: str
+    """Name of an existing MATRIX data element containing the curve data."""
+    matrix: Matrix
+    """Existing MATRIX data element containing the curve data."""
 
 
 class String(DataElement):
