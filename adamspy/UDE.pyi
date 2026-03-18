@@ -3,7 +3,7 @@ import Object
 from DesignVariable import DesignVariable
 from typing import Any, ItemsView, Iterable, KeysView, List, ValuesView
 
-UdeModifyMacroDict: Any
+UdeModifyMacroDict: dict
 
 
 class UDEDesignVariableProps:
@@ -52,4 +52,4 @@ class UserDefinedInstance(Object.ObjectBase):
     orientation: List[float]
     params: Any
     def setProperties(self, **inDct) -> None: ...
-    update: Any
+    def update(self, **kwargs) -> None: ...

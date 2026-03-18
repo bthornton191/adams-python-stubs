@@ -1,8 +1,9 @@
 import Manager
 import Object
+import DataElement
 from Marker import _i_j_parts_from_markers as _i_j_parts, _loc_ori_provider as _loc_ori, Marker, FloatingMarker
 from Marker import FloatingMarker
-from typing import Any, ItemsView, Iterable, KeysView, List, ValuesView
+from typing import ItemsView, Iterable, KeysView, List, Literal, ValuesView
 from Part import Part, FlexBody
 
 
@@ -12,7 +13,8 @@ class ForceManager(Manager.SubclassManager):
     def keys(self) -> KeysView[str]: ...
     def __getitem__(self, name) -> Force: ...
     def __iter__(self, *args) -> Iterable[str]: ...
-    def createGravity(self, 
+
+    def createGravity(self,
                       name: str = None,
                       xyz_component_gravity: List[float] = None): ...
 
@@ -42,7 +44,8 @@ class ForceManager(Manager.SubclassManager):
 
     def createTorqueVector(self, **kwargs): ...
     def createRotationalSpringDamper(self, **kwargs): ...
-    def createTranslationalSpringDamper(self, 
+
+    def createTranslationalSpringDamper(self,
                                         name: str = None,
                                         i_marker: Marker = None,
                                         j_marker: Marker = None,
@@ -172,11 +175,15 @@ class ForceVector(Force):
     ref_marker_name: str
     ref_marker: Marker
     x_force_function: str
+    """Force function in the x direction."""
     y_force_function: str
+    """Force function in the y direction."""
     z_force_function: str
-    user_function: str
+    """Force function in the z direction."""
+    user_function: List[float | int]
     routine: str
     xyz_force_function: str
+    """Vector force function for the x, y, and z directions."""
 
 
 class TorqueVector(Force):
@@ -186,12 +193,16 @@ class TorqueVector(Force):
     j_floating_marker: Marker
     ref_marker_name: str
     ref_marker: Marker
-    x_torque_function: Any
-    y_torque_function: Any
-    z_torque_function: Any
-    user_function: Any
-    routine: Any
-    xyz_torque_function: Any
+    x_torque_function: str
+    """Torque function about the x axis."""
+    y_torque_function: str
+    """Torque function about the y axis."""
+    z_torque_function: str
+    """Torque function about the z axis."""
+    user_function: List[float | int]
+    routine: str
+    xyz_torque_function: str
+    """Vector torque function about the x, y, and z axes."""
 
 
 class RotationalSpringDamper(Force, _force_i_j_parts, _loc_ori):
@@ -199,11 +210,16 @@ class RotationalSpringDamper(Force, _force_i_j_parts, _loc_ori):
     j_marker: Marker
     i_marker_name: str
     j_marker_name: str
-    displacement_at_preload: Any
-    torque_preload: Any
-    angle: Any
-    r_damp: Any
-    r_stiff: Any
+    displacement_at_preload: float
+    """Angular displacement at the preload (degrees)."""
+    torque_preload: float
+    """Torque preload."""
+    angle: float
+    """Free angle (degrees)."""
+    r_damp: float
+    """Torsional damping coefficient."""
+    r_stiff: float
+    """Torsional stiffness coefficient."""
 
 
 class TranslationalSpringDamper(Force, _force_i_j_parts, _loc_ori):
@@ -211,10 +227,14 @@ class TranslationalSpringDamper(Force, _force_i_j_parts, _loc_ori):
     j_marker: Marker
     i_marker_name: str
     j_marker_name: str
-    force_preload: Any
-    stiffness: Any
-    damping: Any
-    displacement_at_preload: Any
+    force_preload: float
+    """Force preload."""
+    stiffness: float
+    """Translational stiffness coefficient."""
+    damping: float
+    """Translational damping coefficient."""
+    displacement_at_preload: float
+    """Translational displacement at preload."""
 
 
 class Bushing(Force, _force_i_j_parts, _loc_ori):
@@ -223,11 +243,17 @@ class Bushing(Force, _force_i_j_parts, _loc_ori):
     i_marker_name: str
     j_marker_name: str
     force_preload: List[float]
+    """List of force preloads in the x, y, and z directions."""
     stiffness: List[float]
+    """List of translational stiffness values in the x, y, and z directions."""
     damping: List[float]
+    """List of translational damping values about the x, y, and z axes."""
     tdamping: List[float]
+    """List of rotational damping values about the x, y, and z axes."""
     tstiffness: List[float]
+    """List of rotational stiffness values in the x, y, and z directions."""
     torque_preload: List[float]
+    """List of torque preloads about the x, y, and z axes."""
 
 
 class SingleComponentForce(Force, _force_i_j_parts, _loc_ori):
@@ -235,11 +261,14 @@ class SingleComponentForce(Force, _force_i_j_parts, _loc_ori):
     j_marker: Marker
     i_marker_name: str
     j_marker_name: str
-    user_function: str
+    user_function: List[float | int]
     function: str
+    """Function expression for the single-component force."""
     action_only: bool
+    """If True, the force is an action-only force (no reaction on the j part)."""
     routine: str
-    type_of_freedom: str
+    type_of_freedom: Literal['translational', 'rotational']
+    """Specifies whether the force is translational or rotational."""
 
 
 class Beam(Force, _force_i_j_parts, _loc_ori):
@@ -248,17 +277,29 @@ class Beam(Force, _force_i_j_parts, _loc_ori):
     i_marker_name: str
     j_marker_name: str
     length: float
+    """Beam length."""
     damping_ratio: float
+    """Damping ratio for the beam."""
     matrix_of_damping_terms: List[float]
+    """List of 21 damping matrix terms (upper triangle of the 6x6 matrix)."""
     shear_modulus: float
+    """Shear modulus for the beam."""
     youngs_modulus: float
+    """Young's modulus for the beam."""
     ixx: float
+    """Ixx second moment of area for the beam cross-section."""
     iyy: float
+    """Iyy second moment of area for the beam cross-section."""
     izz: float
+    """Izz second moment of area for the beam cross-section."""
     area_of_cross_section: float
+    """Cross-sectional area of the beam."""
     y_shear_area_ratio: float
+    """Y-direction shear area ratio for the beam."""
     z_shear_area_ratio: float
-    formulation: str
+    """Z-direction shear area ratio for the beam."""
+    formulation: Literal['linear', 'string', 'nonlinear']
+    """Beam formulation type."""
 
 
 class Field(Force, _force_i_j_parts, _loc_ori):
@@ -266,58 +307,110 @@ class Field(Force, _force_i_j_parts, _loc_ori):
     j_marker: Marker
     i_marker_name: str
     j_marker_name: str
-    force_preload: Any
-    torque_preload: Any
-    damping_ratio: Any
-    matrix_of_damping_terms: Any
-    stiffness_matrix: Any
-    user_function: Any
-    routine: Any
-    formulation: Any
-    length_tol: Any
-    translation_at_preload: Any
-    rotation_at_preload: Any
+    force_preload: List[float]
+    """List of force preloads in the x, y, and z directions."""
+    torque_preload: List[float]
+    """List of torque preloads about the x, y, and z axes."""
+    damping_ratio: float
+    """Scalar damping ratio; mutually exclusive with matrix_of_damping_terms."""
+    matrix_of_damping_terms: List[float]
+    """List of 36 terms in the 6x6 damping matrix; mutually exclusive with damping_ratio."""
+    stiffness_matrix: List[float]
+    """List of 36 terms in the 6x6 stiffness matrix."""
+    user_function: List[float | int]
+    routine: str
+    formulation: Literal['linear', 'nonlinear']
+    """Field force formulation type."""
+    length_tol: float
+    """When using formulation='nonlinear', the geometric stiffness uses the larger of the current length and this length tolerance."""
+    translation_at_preload: List[float]
+    """Nominal position [x, y, z] of the I marker with respect to the J marker at preload, resolved in the J marker coordinate system."""
+    rotation_at_preload: List[float]
+    """Rotational displacement [rx, ry, rz] of the I marker axes with respect to the J marker at preload, resolved in the J marker coordinate system."""
 
 
 class Friction(Force):
-    joint_types: Any
-    joint_name: Any
-    joint: Any
-    mu_static: Any
-    mu_dynamic: Any
-    yoke: Any
-    reaction_arm: Any
-    friction_arm: Any
-    bending_reaction_arm: Any
-    initial_overlap: Any
-    pin_radius: Any
-    ball_radius: Any
-    stiction_transition_velocity: Any
-    transition_velocity_coefficient: Any
-    max_stiction_deformation: Any
-    friction_force_preload: Any
-    friction_torque_preload: Any
-    max_friction_force: Any
-    max_friction_torque: Any
-    overlap_delta: Any
-    effect: Any
-    smooth: Any
-    torsional_moment: Any
-    bending_moment: Any
-    preload: Any
-    reaction_force: Any
-    inactive_during_static: Any
+    """Joint friction force. Create via ``model.Forces.createFriction()``."""
+    joint_types: List[str]
+    joint_name: str
+    joint: Object.Object
+    mu_static: float
+    """Coefficient of static friction."""
+    mu_dynamic: float
+    """Coefficient of dynamic friction."""
+    yoke: Literal['yoke_i', 'yoke_j']
+    """Specifies the i or j yoke in a Hooke or Universal joint."""
+    formulation: Literal['original', 'lugre']
+    """Friction formulation of the joint."""
+    reaction_arm: float
+    """Reaction arm length."""
+    friction_arm: float
+    """Effective moment arm used to compute the axial component of the friction torque in revolute, hooke, and universal joints."""
+    bending_reaction_arm: float
+    """Effective moment arm used to compute the contribution of the bending moment on the net friction torque in revolute, hooke, and universal joints."""
+    initial_overlap: float
+    """Initial overlap of the sliding parts in a translational or cylindrical joint."""
+    pin_radius: float
+    """Radius of the pin for a revolute, cylindrical, hooke, or universal joint."""
+    ball_radius: float
+    """Radius of the ball in a spherical joint, used in friction force and torque calculation."""
+    stiction_transition_velocity: float
+    """Absolute velocity threshold for the transition from dynamic friction to static friction."""
+    transition_velocity_coefficient: float
+    """Coefficient of velocity threshold for the transition from dynamic friction to static friction."""
+    max_stiction_deformation: float
+    """Maximum creep that can occur in a joint during the stiction regime."""
+    bristle_stiffness_coefficient: float
+    """Bristle stiffness coefficient in a joint friction model (LuGre only)."""
+    damping_coefficient: float
+    """Damping coefficient in a joint friction model (LuGre only)."""
+    viscous_friction_coefficient: float
+    """Viscous friction coefficient in a joint friction model (LuGre only)."""
+    velocity_threshold_stribeck: float
+    """Stribeck threshold velocity in a joint friction model (LuGre only)."""
+    decay_exponent_stribeck: float
+    """Stribeck decay exponent in a joint friction model (LuGre only)."""
+    friction_force_preload: float
+    """Joint preload frictional force, typically caused by mechanical interference in the assembly of the joint."""
+    friction_torque_preload: float
+    """Preload friction torque in the joint, typically caused by mechanical interference in the assembly of the joint."""
+    max_friction_force: float
+    """Maximum friction force, for use in translational or cylindrical joints."""
+    max_friction_torque: float
+    """Maximum friction torque, for use in revolute, universal, hooke, spherical, or cylindrical joints."""
+    overlap_delta: Literal['increase', 'decrease', 'constant']
+    """Change in overlap for a translational or cylindrical joint."""
+    effect: Literal['all', 'stiction', 'sliding']
+    """Frictional effects included in the friction model."""
+    smooth: float
+    """Smoothing coefficient for the friction model."""
+    torsional_moment: bool
+    """Whether to include torsional moment contribution in friction (for use with inputs)."""
+    bending_moment: bool
+    """Whether to include bending moment contribution in friction (for use with inputs)."""
+    preload: bool
+    """Whether to include preload contribution in friction (for use with inputs)."""
+    reaction_force: bool
+    """Whether to include reaction force contribution in friction (for use with inputs)."""
+    inactive_during_static: bool
+    """If True, frictional forces are not calculated during static or quasi-static solutions."""
 
 
 class ModalForce(Force):
     flexible_body: FlexBody
+    """Flexible body that this modal force acts on."""
     flexible_body_name: str
+    """Full name of the flexible body that this modal force acts on."""
     reaction_part: FloatingMarker
-    user_function: str
+    reaction_part_name: str
+    user_function: List[float | int]
     routine: str
     scale_function: str
-    load_case: str
-    force_function: str
+    """Expression for the scale factor applied to the load case referenced by load_case."""
+    load_case: int
+    """Modal load case number that defines the ModalForce."""
+    force_function: List[float]
+    """Function values specifying the ModalForce."""
 
 
 class GeneralForce(Force):
@@ -327,29 +420,46 @@ class GeneralForce(Force):
     i_marker: Marker
     j_floating_marker: Marker
     ref_marker: Marker
-    x_force_function: Any
-    y_force_function: Any
-    z_force_function: Any
-    x_torque_function: Any
-    y_torque_function: Any
-    z_torque_function: Any
-    user_function: Any
-    routine: Any
-    xyz_force_function: Any
-    xyz_torque_function: Any
+    x_force_function: str
+    """Force function expression in the x direction."""
+    y_force_function: str
+    """Force function expression in the y direction."""
+    z_force_function: str
+    """Force function expression in the z direction."""
+    x_torque_function: str
+    """Torque function expression about the x axis."""
+    y_torque_function: str
+    """Torque function expression about the y axis."""
+    z_torque_function: str
+    """Torque function expression about the z axis."""
+    user_function: List[float | int]
+    routine: str
+    xyz_force_function: str
+    """Vector force function expression for the x, y, and z directions."""
+    xyz_torque_function: str
+    """Vector torque function expression about the x, y, and z axes."""
 
 
 class MultiPointForce(Force):
-    i_marker_names: Any
+    i_marker_names: List[str]
     j_marker_name: str
-    i_markers: Any
+    i_markers: List[Marker]
     j_marker: Marker
-    stiffness_matrix_name: Any
-    damping_matrix_name: Any
-    stiffness_matrix: Any
-    damping_matrix: Any
-    damping_ratio: Any
-    length_matrix_name: Any
-    force_matrix_name: Any
-    length_matrix: Any
-    force_matrix: Any
+    stiffness_matrix_name: str
+    """Name of the stiffness matrix data element."""
+    damping_matrix_name: str
+    """Name of the damping matrix data element."""
+    stiffness_matrix: DataElement.Matrix
+    """Stiffness matrix data element object."""
+    damping_matrix: DataElement.Matrix
+    """Damping matrix data element object."""
+    damping_ratio: float
+    """Scalar damping ratio."""
+    length_matrix_name: str
+    """Name of the length matrix data element."""
+    force_matrix_name: str
+    """Name of the force matrix data element."""
+    length_matrix: DataElement.Matrix
+    """Length matrix data element object."""
+    force_matrix: DataElement.Matrix
+    """Force matrix data element object."""

@@ -1,7 +1,8 @@
 import AppearanceSettings
 import Manager
 import Object
-from typing import Any, ItemsView, Iterable, KeysView, ValuesView
+import Settings
+from typing import Any, ItemsView, Iterable, KeysView, Literal, ValuesView
 
 from DesignVariable import DesignVariableManager
 from SystemElement import SystemElementManager
@@ -37,9 +38,9 @@ class ModelManager(Manager.AdamsManager):
 
 
 class Model(Object.ObjectComment, AppearanceSettings.GeometryAppearanceSettings):
-    active: Any
-    render_mode: Any
-    renderStyle: Any
+    active: bool
+    render_mode: Literal['inherit', 'wireframe', 'filled', 'shaded']
+    renderStyle: Literal['inherit', 'wireframe', 'filled', 'shaded']
     Constraints: ConstraintManager
     DataElements: DataElementManager
     SystemElements: SystemElementManager
@@ -58,12 +59,12 @@ class Model(Object.ObjectComment, AppearanceSettings.GeometryAppearanceSettings)
     Analyses: AnalysisManager
     RuntimeFunctions: RuntimeFunctionManager
     Simulations: SimulationManager
-    settings: Any
+    settings: Settings.ModelSettings
     UserDefinedInstances: UserDefinedInstanceManager
     def __init__(self, _DBKey) -> None: ...
     ground_part: Part
     def exportAdmFile(self, file_name): ...
     def verify(self): ...
-    num_parts: Any
-    title: Any
+    num_parts: int
+    title: str
     def mergeInto(self, into_model: int = ..., translation=..., orientation=..., add_to_group: int = ..., duplicate_parts: bool = ...) -> None: ...

@@ -1,12 +1,15 @@
 import Manager
 import Object
-from typing import Any
+from typing import Any, List
 
-class MaterialManager(Manager.AdamsManager): ...
+
+class MaterialManager(Manager.AdamsManager):
+    ...
+
 
 class Material(Object.Object):
-    youngs_modulus: Any
-    poissons_ratio: Any
-    density: Any
-    orthotropic_constants: Any
-    anisotropic_constants: Any
+    youngs_modulus: float
+    poissons_ratio: float
+    density: float
+    orthotropic_constants: List[float]
+    anisotropic_constants: List[float]

@@ -1,25 +1,28 @@
+import DataElement
 import Manager
 import Marker
 import Object
-from typing import Any, ItemsView, Iterable, KeysView, List, ValuesView
+from typing import Dict, ItemsView, Iterable, KeysView, List, Literal, ValuesView
 from Part import Part
 
+
 class ConstraintManager(Manager.SubclassManager):
-    def createCoupler(self,name: str=None, **kwargs)->CouplerConstraint: ...
-    def createGear(self,name: str=None, **kwargs)->GearConstraint: ...
-    def createGeneral(self,name: str=None, **kwargs)->GeneralConstraint: ...
+    def createCoupler(self, name: str = None, **kwargs) -> CouplerConstraint: ...
+    def createGear(self, name: str = None, **kwargs) -> GearConstraint: ...
+    def createGeneral(self, name: str = None, **kwargs) -> GeneralConstraint: ...
+
     def createMotion(self,
-                     name: str=None, 
-                     joint: Joint=None, 
-                     joint_name: str=None, 
-                     i_marker: Marker.Marker=None,
-                     j_marker: Marker.Marker=None,
-                     i_marker_name: str=None,
-                     j_marker_name: str=None,
-                     time_derivative: str=None,
-                     function: str='',
-                     type_of_freedom: str=None, 
-                     **kwargs)->Motion: 
+                     name: str = None,
+                     joint: Joint = None,
+                     joint_name: str = None,
+                     i_marker: Marker.Marker = None,
+                     j_marker: Marker.Marker = None,
+                     i_marker_name: str = None,
+                     j_marker_name: str = None,
+                     time_derivative: Literal['displacement', 'velocity', 'acceleration'] = None,
+                     function: str = '',
+                     type_of_freedom: Literal['translational', 'rotational'] = None,
+                     **kwargs) -> Motion:
         """Creates a Motion constraint
 
         Parameters
@@ -29,15 +32,17 @@ class ConstraintManager(Manager.SubclassManager):
         time_derivative : str
             The time derivative of the constraint. Can be 'displacement' or 'velocity'.
         """
-    def createPointMotion(self,name: str=None, **kwargs)->PointMotion: ...
+
+    def createPointMotion(self, name: str = None, **kwargs) -> PointMotion: ...
+
     def createJointMotion(self,
-                          name: str = None, 
-                          joint: Joint = None, 
-                          joint_name: str = None, 
-                          time_derivative: str = None,
+                          name: str = None,
+                          joint: Joint = None,
+                          joint_name: str = None,
+                          time_derivative: Literal['displacement', 'velocity', 'acceleration'] = None,
                           function: str = '',
-                          type_of_freedom: str = None, 
-                          **kwargs) -> JointMotion: 
+                          type_of_freedom: Literal['unspecified', 'translational', 'rotational'] = None,
+                          **kwargs) -> JointMotion:
         """Creates a Motion constraint on a Joint
 
         Parameters
@@ -60,10 +65,11 @@ class ConstraintManager(Manager.SubclassManager):
         JointMotion
             The created joint motion object
         """
+
     def createMotionT(self, name: str = None, **kwargs): ...
     def createMotionR(self, name: str = None, **kwargs): ...
 
-    def createTranslational(self, 
+    def createTranslational(self,
                             name: str = None,
                             i_part: Part = None,
                             j_part: Part = None,
@@ -77,7 +83,7 @@ class ConstraintManager(Manager.SubclassManager):
                             along_axis_orientation: List[float] = None,
                             relative_to: Object.Object = None,
                             comments: str = None,
-                            adams_id: int = None, 
+                            adams_id: int = None,
                             maximum_deformation: float = None,
                             delta_v: float = None,
                             translational_ic: float = None,
@@ -89,7 +95,7 @@ class ConstraintManager(Manager.SubclassManager):
                             width: float = None,
                             preload_x: float = None,
                             preload_y: float = None,
-                            **kwargs) -> TranslationalJoint: 
+                            **kwargs) -> TranslationalJoint:
         ...
 
     def createRevolute(self,
@@ -114,7 +120,7 @@ class ConstraintManager(Manager.SubclassManager):
                        mu_dyn_rot: float = None,
                        mu_stat_rot: float = None,
                        max_fric_rot: float = None,
-                       **kwargs) -> RevoluteJoint: 
+                       **kwargs) -> RevoluteJoint:
         ...
 
     def createCylindrical(self,
@@ -136,7 +142,7 @@ class ConstraintManager(Manager.SubclassManager):
                           velocity_ic: float = None,
                           rotational_ic: float = None,
                           angular_velocity_ic: float = None,
-                          **kwargs) -> CylindricalJoint: 
+                          **kwargs) -> CylindricalJoint:
         ...
 
     def createUniversal(self,
@@ -154,7 +160,7 @@ class ConstraintManager(Manager.SubclassManager):
                         relative_to: Object.Object = None,
                         comments: str = None,
                         adams_id: int = None,
-                        **kwargs): 
+                        **kwargs):
         ...
 
     def createSpherical(self,
@@ -172,7 +178,7 @@ class ConstraintManager(Manager.SubclassManager):
                         relative_to: Object.Object = None,
                         comments: str = None,
                         adams_id: int = None,
-                        **kwargs): 
+                        **kwargs):
         ...
 
     def createPlanar(self,
@@ -190,7 +196,7 @@ class ConstraintManager(Manager.SubclassManager):
                      relative_to: Object.Object = None,
                      comments: str = None,
                      adams_id: int = None,
-                     **kwargs): 
+                     **kwargs):
         ...
 
     def createConvel(self,
@@ -208,7 +214,7 @@ class ConstraintManager(Manager.SubclassManager):
                      relative_to: Object.Object = None,
                      comments: str = None,
                      adams_id: int = None,
-                     **kwargs): 
+                     **kwargs):
         ...
 
     def createFixed(self,
@@ -226,7 +232,7 @@ class ConstraintManager(Manager.SubclassManager):
                     relative_to: Object.Object = None,
                     comments: str = None,
                     adams_id: int = None,
-                    **kwargs) -> FixedJoint: 
+                    **kwargs) -> FixedJoint:
         ...
 
     def createHooke(self,
@@ -386,12 +392,12 @@ class ConstraintManager(Manager.SubclassManager):
                          ic_ref_marker_name: str = None,
                          ic_ref_marker: Marker.Marker = None,
                          curve_name: str = None,
-                         curve: Any = None,
+                         curve: DataElement.CurveData = None,
                          **kwargs) -> PointCurveConstraint: ...
 
     def createCurveCurve(self,
                          name: str = None,
-                         i_curve: Any = None,
+                         i_curve: DataElement.CurveData = None,
                          i_curve_name: str = None,
                          i_floating_marker: Marker.Marker = None,
                          i_floating_marker_name: str = None,
@@ -401,7 +407,7 @@ class ConstraintManager(Manager.SubclassManager):
                          i_ic_ref_marker_name: str = None,
                          i_displacement_ic: float = None,
                          i_velocity_ic: float = None,
-                         j_curve: Any = None,
+                         j_curve: DataElement.CurveData = None,
                          j_curve_name: str = None,
                          j_floating_marker: Marker.Marker = None,
                          j_floating_marker_name: str = None,
@@ -412,8 +418,9 @@ class ConstraintManager(Manager.SubclassManager):
                          j_displacement_ic: float = None,
                          j_velocity_ic: float = None,
                          **kwargs) -> CurveCurveConstraint: ...
-    def createUserDefined(self,name: str=None, **kwargs): ...
-    def createAngle(self,name: str=None, **kwargs): ...
+
+    def createUserDefined(self, name: str = None, **kwargs) -> UserDefinedConstraint: ...
+    def createAngle(self, name: str = None, **kwargs) -> AngleConstraint: ...
     def switch_type(self, **kwargs): ...
     def items(self) -> ItemsView[str, Constraint]: ...
     def values(self) -> ValuesView[Constraint]: ...
@@ -421,7 +428,14 @@ class ConstraintManager(Manager.SubclassManager):
     def __getitem__(self, name) -> Constraint: ...
     def __iter__(self, *args) -> Iterable[str]: ...
 
-class Constraint(Object.Object): ...
+
+class Constraint(Object.Object):
+    ...
+
+
+class _i_j_m:
+    ...
+
 
 class _constraint_i_j_parts(_i_j_m):
     i_part: Part
@@ -429,13 +443,16 @@ class _constraint_i_j_parts(_i_j_m):
     i_part_name: str
     j_part_name: str
 
+
 class Joint(Constraint, _constraint_i_j_parts, Marker._loc_ori_provider):
     def setProperties(self, **kwargs) -> None: ...
-    update: Any
+    def update(self, **kwargs) -> None: ...
+
 
 class Jprim(Constraint, _constraint_i_j_parts, Marker._loc_ori_provider):
     def setProperties(self, **kwargs) -> None: ...
-    update: Any
+    def update(self, **kwargs) -> None: ...
+
 
 class TranslationalJoint(Joint):
     i_marker: Marker.Marker
@@ -443,29 +460,49 @@ class TranslationalJoint(Joint):
     i_marker_name: str
     j_marker_name: str
     maximum_deformation: float
+    """Maximum deformation allowed in the joint."""
     delta_v: float
+    """Velocity below which the joint is considered to be in static friction."""
     translational_ic: float
+    """Initial translational displacement."""
     velocity_ic: float
+    """Initial translational velocity."""
     mu_dyn_trans: float
+    """Dynamic friction coefficient for the translational direction."""
     mu_stat_trans: float
+    """Static friction coefficient for the translational direction."""
     max_fric_trans: float
+    """Maximum friction force allowed in the translational direction."""
     height: float
+    """Height of the translational joint (used in friction calculation)."""
     width: float
+    """Width of the translational joint (used in friction calculation)."""
     preload_x: float
+    """Preload force in the x direction."""
     preload_y: float
+    """Preload force in the y direction."""
+
 
 class RevoluteJoint(Joint):
     maximum_deformation: float
+    """Maximum deformation allowed in the joint."""
     delta_v: float
+    """Velocity below which the joint is considered to be in static friction."""
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
     rotational_ic: float
+    """Rotational displacement initial condition (degrees)."""
     angular_velocity_ic: float
+    """Angular velocity initial condition."""
     mu_dyn_rot: float
+    """Dynamic friction coefficient for the rotational direction."""
     mu_stat_rot: float
+    """Static friction coefficient for the rotational direction."""
     max_fric_rot: float
+    """Maximum torsional friction torque permitted in the joint."""
+
 
 class CylindricalJoint(Joint):
     i_marker: Marker.Marker
@@ -473,9 +510,14 @@ class CylindricalJoint(Joint):
     i_marker_name: str
     j_marker_name: str
     translational_ic: float
+    """Initial displacement in the joint."""
     velocity_ic: float
+    """Initial translational velocity in the joint."""
     rotational_ic: float
+    """Initial angle in the joint (degrees)."""
     angular_velocity_ic: float
+    """Initial angular velocity in the joint."""
+
 
 class UniversalJoint(Joint):
     i_marker: Marker.Marker
@@ -483,11 +525,13 @@ class UniversalJoint(Joint):
     i_marker_name: str
     j_marker_name: str
 
+
 class SphericalJoint(Joint):
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
+
 
 class PlanarJoint(Joint):
     i_marker: Marker.Marker
@@ -495,19 +539,26 @@ class PlanarJoint(Joint):
     i_marker_name: str
     j_marker_name: str
 
+
 class RackpinJoint(Joint):
+    """Rack and pinion joint. Create via ``model.Constraints.createRackpin()``."""
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
-    diameter_of_pitch: Any
+    diameter_of_pitch: float
+    """Pitch diameter that relates the rotational motion of the pinion to the translational motion of the rack."""
+
 
 class ScrewJoint(Joint):
+    """Screw joint. Create via ``model.Constraints.createScrew()``."""
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
-    pitch: Any
+    pitch: float
+    """Translational displacement that corresponds to one full revolution of the rotational displacement."""
+
 
 class ConvelJoint(Joint):
     i_marker: Marker.Marker
@@ -515,11 +566,13 @@ class ConvelJoint(Joint):
     i_marker_name: str
     j_marker_name: str
 
+
 class FixedJoint(Joint):
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
+
 
 class HookeJoint(Joint):
     i_marker: Marker.Marker
@@ -527,11 +580,13 @@ class HookeJoint(Joint):
     i_marker_name: str
     j_marker_name: str
 
+
 class AtPointJPrim(Jprim):
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
+
 
 class InLineJPrim(Jprim):
     i_marker: Marker.Marker
@@ -539,11 +594,13 @@ class InLineJPrim(Jprim):
     i_marker_name: str
     j_marker_name: str
 
+
 class InPlaneJPrim(Jprim):
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
+
 
 class OrientationJPrim(Jprim):
     i_marker: Marker.Marker
@@ -551,11 +608,13 @@ class OrientationJPrim(Jprim):
     i_marker_name: str
     j_marker_name: str
 
+
 class ParallelJPrim(Jprim):
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
+
 
 class PerpendicularJPrim(Jprim):
     i_marker: Marker.Marker
@@ -563,54 +622,70 @@ class PerpendicularJPrim(Jprim):
     i_marker_name: str
     j_marker_name: str
 
+
 class PointPointJPrim(Jprim):
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
-    offset: Any
+    offset: float
+    """Point-to-point distance offset."""
+
 
 class PointLineConstraint(Jprim):
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
-    offset: Any
+    offset: float
+    """Point-to-line distance offset."""
+
 
 class PointPlaneConstraint(Jprim):
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
-    offset: Any
+    offset: float
+    """Point-to-plane distance offset."""
+
 
 class LineLineConstraint(Jprim):
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
-    offset: Any
+    offset: float
+    """Line-to-line distance offset."""
+
 
 class LinePlaneConstraint(Jprim):
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
-    offset: Any
+    offset: float
+    """Line-to-plane distance offset."""
+
 
 class PlanePlaneConstraint(Jprim):
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
-    offset: Any
+    offset: float
+    """Plane-to-plane distance offset."""
+
 
 class AngleConstraint(Jprim):
+    """Angle constraint between two markers. Create via ``model.Constraints.createAngle()``."""
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
-    offset: Any
+    offset: float
+    """Angular offset (degrees)."""
+
 
 class PointCurveConstraint(Constraint):
     i_marker_name: str
@@ -620,15 +695,22 @@ class PointCurveConstraint(Constraint):
     ref_marker: Marker.Marker
     ref_marker_name: str
     displacement_ic: float
+    """Initial x, y, z coordinates of the point of contact on the curve."""
     velocity_ic: float
+    """Initial velocity along the curve."""
     ic_ref_marker_name: str
     ic_ref_marker: Marker.Marker
     curve_name: str
-    curve: Any
+    """Name of the curve data element."""
+    curve: DataElement.CurveData
+    """Curve data element object."""
+
 
 class CurveCurveConstraint(Constraint):
-    i_curve: Any
+    i_curve: DataElement.CurveData
+    """I-side curve data element object."""
     i_curve_name: str
+    """Name of the I-side curve data element."""
     i_floating_marker: Marker.Marker
     i_floating_marker_name: str
     i_ref_marker: Marker.Marker
@@ -636,9 +718,13 @@ class CurveCurveConstraint(Constraint):
     i_ic_ref_marker: Marker.Marker
     i_ic_ref_marker_name: str
     i_displacement_ic: float
+    """Initial x, y, z coordinates of the contact point on the I-side curve."""
     i_velocity_ic: float
-    j_curve: Any
+    """Initial velocity along the I-side curve."""
+    j_curve: DataElement.CurveData
+    """J-side curve data element object."""
     j_curve_name: str
+    """Name of the J-side curve data element."""
     j_floating_marker: Marker.Marker
     j_floating_marker_name: str
     j_ref_marker: Marker.Marker
@@ -646,63 +732,101 @@ class CurveCurveConstraint(Constraint):
     j_ic_ref_marker: Marker.Marker
     j_ic_ref_marker_name: str
     j_displacement_ic: float
+    """Initial x, y, z coordinates of the contact point on the J-side curve."""
     j_velocity_ic: float
+    """Velocity along the J-side curve."""
+
 
 class UserDefinedConstraint(Constraint):
-    user_function: str
-    routine: Any
+    """User-defined constraint via subroutine. Create via ``model.Constraints.createUserDefined()``."""
+    user_function: List[float | int]
+    routine: str
+
 
 class CouplerConstraint(Constraint):
-    tof_types: Any
-    tof_reverse: Any
+    """Coupler constraint linking two or three joints. Create via ``model.Constraints.createCoupler()``."""
+    tof_types: Dict[str, int]
+    tof_reverse: Dict[int, str]
     joints: List[Constraint]
+    """Joint objects coupled by this coupler."""
     joint_names: List[str]
-    scale_factor: float
-    user_function: str
-    type_of_freedom: Any
+    """Names of the joints coupled by this coupler."""
+    scale_factor: List[float]
+    """Scale factors between the coupler displacements."""
+    user_function: List[float | int]
+    type_of_freedom: List[Literal['translational', 'rotational', 'unknown']]
+    """List of freedom types per joint: 'translational', 'rotational', or 'unknown'."""
+
 
 class GearConstraint(Constraint):
     joint_1_name: str
+    """Name of the first joint in this gear constraint."""
     joint_2_name: str
+    """Name of the second joint in this gear constraint."""
     joint_1: Constraint
+    """First joint object in this gear constraint."""
     joint_2: Constraint
+    """Second joint object in this gear constraint."""
     common_velocity_marker: Marker.Marker
+    """Common velocity marker object."""
     common_velocity_marker_name: str
+    """Name of the common velocity marker."""
+
 
 class GeneralConstraint(Constraint):
     i_marker_name: str
     i_marker: Marker.Marker
     function: str
 
+
 class Motion(Constraint):
-    time_derivative: Any
+    time_derivative: Literal['displacement', 'velocity', 'acceleration']
     function: str
-    user_function: str
+    """Specifies an expression or defines and passes constants to a user-written subroutine to define the motion."""
+    user_function: List[float | int]
     routine: str
 
+
 class PointMotion(Motion):
+    """Motion constraint between two markers. Create via ``model.Constraints.createPointMotion()``."""
     i_marker: Marker.Marker
     j_marker: Marker.Marker
     i_marker_name: str
     j_marker_name: str
-    axis: Any
+    axis: Literal['x', 'y', 'z', 'b1', 'b2', 'b3']
+    """Direction or orientation axis for this motion."""
     displacement_ic: float
+    """Initial translational displacement if axis is 'x', 'y', or 'z'; else initial angular displacement."""
     velocity_ic: float
+    """Initial translational velocity if axis is 'x', 'y', or 'z'; else initial angular velocity."""
+
     def setProperties(self, **kwargs) -> None: ...
-    update: Any
+    update = setProperties
+
 
 class JointMotion(Motion):
-    __class__: Any
-    def setProperties(self, **kwargs): ...
-    update: Any
-    type_of_freedom: Any
+    """Motion constraint on a joint. Create via ``model.Constraints.createJointMotion()``."""
+
+    def setProperties(self, **kwargs) -> None: ...
+    update = setProperties
+    type_of_freedom: Literal['unspecified', 'translational', 'rotational']
     joint_name: str
     joint: Constraint
 
+
 class TranslationalJointMotion(JointMotion):
+    """Translational motion on a joint. Create via ``model.Constraints.createMotionT()`` or
+    ``model.Constraints.createJointMotion(type_of_freedom='translational')``."""
     displacement_ic: float
+    """Initial translational displacement."""
     velocity_ic: float
+    """Initial translational velocity."""
+
 
 class RotationalJointMotion(JointMotion):
+    """Rotational motion on a joint. Create via ``model.Constraints.createMotionR()`` or
+    ``model.Constraints.createJointMotion(type_of_freedom='rotational')``."""
     rotational_displacement_ic: float
+    """Initial angular displacement in degrees."""
     rotational_velocity_ic: float
+    """Initial angular velocity."""

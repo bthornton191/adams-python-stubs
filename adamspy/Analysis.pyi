@@ -31,22 +31,37 @@ class AnalysisManager(Manager.AdamsManager):
 
 class ResultComponent(Object.ObjectBase):
     values: List[float]
+    unit: str
 
 class Analysis(Object.ObjectBase):
     def __init__(self, _DBKey) -> None: ...
-    title: Any
-    date_time: Any
-    solver: Any
-    step_count: Any
-    results_steps: Any
-    results_file: Any
-    results_version: Any
-    graphics_steps: Any
-    request_steps: Any
-    step_type: Any
-    results_from_xrf: Any
-    terminal_status: Any
-    simulation_status: Any
+    title: str
+    date_time: str
+    """Read-only. Time and date for this analysis."""
+    solver: str
+    """Read-only. Solver for this analysis."""
+    step_count: int
+    """Read-only. Number of steps."""
+    results_steps: int
+    """Read-only. Number of result steps."""
+    results_file: str
+    results_version: int
+    """Read-only. Results version."""
+    graphics_steps: int
+    """Read-only. Number of graphics steps."""
+    request_steps: int
+    """Read-only. Number of request steps."""
+    step_type: int
+    """Read-only. Step type."""
+    results_from_xrf: bool
+    """Read-only. Results from XRF."""
+    terminal_status: str
+    """Read-only. Terminal status."""
+    simulation_status: List[int]
+    """Read-only. Simulation status."""
     results: OrderedDict[str, Union[ResultComponent, OrderedDict[str, ResultComponent]]]
-    start_time: Any
-    end_time: Any
+    """Read-only. Dictionary of results sets and components."""
+    start_time: float
+    """Read-only. Start time for the analysis."""
+    end_time: float
+    """Read-only. End time (terminal time) for the analysis."""

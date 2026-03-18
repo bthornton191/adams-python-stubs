@@ -1,34 +1,51 @@
 import Object
-from typing import Any, ItemsView, Iterable, KeysView, ValuesView
+from typing import ItemsView, Iterable, KeysView, List, Literal, ValuesView
 import Manager
 
 
 class Sensor(Object.Object):
-    compare: str
-    """'eq', 'ge' or 'le'
-    """
+    compare: Literal['eq', 'ge', 'le']
+    """Comparison operator used to trigger the sensor: 'eq' (equal), 'ge' (greater than or equal), or 'le' (less than or equal)."""
     codgen: bool
+    """If True, regenerates a new pivot sequence for matrix factorization when the sensor is triggered."""
     halt: bool
+    """If True, terminates Adams/Solver execution when the sensor is triggered."""
     sensor_print: bool
+    """If True, writes to the request, graphic, and results files when the sensor is triggered."""
     restart: bool
+    """If True, restarts the simulation (reinitializes step size and integration order) when the sensor is triggered."""
     sensor_return: bool
-    """returns to the command level when the sensor is triggered"""
+    """If True, returns to the command level when the sensor is triggered."""
     yydump: bool
-    bisection: float
+    """If True, dumps the state variable vector when the sensor is triggered."""
+    bisection: bool
+    """If True, uses a bisection search algorithm to isolate the sensor activation time."""
     time_error: float
+    """Temporal tolerance used to isolate the sensor activation time."""
     dt: float
+    """Redefines the output step interval when the sensor is triggered."""
     value: float
+    """Non-angular value compared against the function expression to determine if the sensor fires."""
     error: float
-    angular: float
+    """Allowable error region around ``value`` for the trigger comparison."""
+    angular: bool
+    """If True, indicates that the function being tracked is an angular quantity."""
     angular_value: float
+    """Angular value compared against the function expression (degrees)."""
     angular_error: float
+    """Allowable error region around ``angular_value`` (degrees)."""
     stepsize: float
+    """Resets the integration step size when the sensor is triggered."""
     function: str
-    user_function: str
+    """FUNCTION expression evaluated each time step to determine whether to trigger the sensor."""
+    user_function: List[float | int]
     routine: str
     evaluate: str
-    user_evaluate: str
+    """Expression evaluated and returned when the sensor is triggered."""
+    user_evaluate: float
+    """Up to 30 values passed to the EVALUATE user subroutine when the sensor triggers."""
     evaluate_routine: str
+    """Name of the user subroutine called for sensor evaluation."""
 
 
 class SensorManager(Manager.SubclassManager):
@@ -36,7 +53,7 @@ class SensorManager(Manager.SubclassManager):
                name: str = None,
                function: str = None,
                evaluate: str = None,
-               compare: str = None,
+               compare: Literal['eq', 'ge', 'le'] = None,
                value: float = None,
                error: float = None,
                angular_value: float = None,

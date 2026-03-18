@@ -1,8 +1,10 @@
+import DataElement
 import Manager
 import Object
+import Part
 from Geometry import Geometry, GeometrySolid
 from DBAccess import MultiTypeObjectName as MultiTypeObjectName, MultiTypeObjectValue as MultiTypeObjectValue
-from typing import Any, ItemsView, Iterable, List, ValuesView
+from typing import ItemsView, Iterable, List, Literal, Optional, ValuesView
 from Marker import Marker
 
 
@@ -36,52 +38,96 @@ class ContactManager(Manager.AdamsManager):
 
 
 class Contact(Object.Object):
-    solid_types: Any
-    curve_types: Any
-    flip_geom_types: Any
-    contact_type: Any
+    solid_types: List[str]
+    curve_types: List[str]
+    flip_geom_types: List[str]
+    contact_type: Literal['solid_to_solid', 'curve_to_curve', 'point_to_curve', 'point_to_plane', 'curve_to_plane', 'sphere_to_plane',
+                          'sphere_to_sphere', 'cylinder_to_cylinder', 'flex_to_flex', 'flex_edge_to_curve', 'flex_edge_to_plane', 'flex_edge_to_flex_edge', 'flex_to_solid']
     i_geometry: List[Geometry]
+    """I-side geometry objects participating in the contact."""
     i_geometry_name: List[str]
+    """Names of the I-side geometry objects participating in the contact."""
     j_geometry: List[Geometry]
+    """J-side geometry objects participating in the contact."""
     j_geometry_name: List[str]
+    """Names of the J-side geometry objects participating in the contact."""
     i_marker: List[Marker]
+    """I-side marker(s) indicating the geometry participating in the contact."""
     i_marker_name: List[str]
-    i_flex: Any
-    i_flex_name: List[str]
-    i_edge: Any
-    i_edge_name: List[str]
-    i_edge_index: Any
-    j_flex: Any
-    j_flex_name: List[str]
-    j_edge: Any
-    j_edge_name: List[str]
-    j_edge_index: Any
-    i_flip_normal: Any
-    j_flip_normal: Any
-    i_flip_geometry: Any
+    """Names of the I-side marker(s) indicating the geometry participating in the contact."""
+    i_flex: Optional[Part.FlexBody]
+    """First flexible body participating in the contact."""
+    i_flex_name: Optional[str]
+    """Name of the first flexible body participating in the contact."""
+    i_edge: Optional[DataElement.Matrix]
+    """Edge matrix on the first flexible body participating in the contact."""
+    i_edge_name: str
+    """Name of the edge matrix on the first flexible body participating in the contact."""
+    i_edge_index: int
+    """Index of the first edge participating in the contact."""
+    j_flex: Optional[Part.FlexBody]
+    """Second flexible body participating in the contact."""
+    j_flex_name: Optional[str]
+    """Name of the second flexible body participating in the contact."""
+    j_edge: Optional[DataElement.Matrix]
+    """Edge matrix on the second flexible body participating in the contact."""
+    j_edge_name: str
+    """Name of the edge matrix on the second flexible body participating in the contact."""
+    j_edge_index: int
+    """Index of the second edge participating in the contact."""
+    i_flip_normal: List[bool]
+    """Whether the surface normal is flipped for each I-side geometry."""
+    j_flip_normal: List[bool]
+    """Whether the surface normal is flipped for each J-side geometry."""
+    i_flip_geometry: List[Geometry]
+    """Geometries on the I body at which the contact normal direction is flipped."""
     i_flip_geometry_name: List[str]
-    j_flip_geometry: Any
+    """Names of geometries on the I body at which the contact normal direction is flipped."""
+    j_flip_geometry: List[Geometry]
+    """Geometries on the J body at which the contact normal direction is flipped."""
     j_flip_geometry_name: List[str]
-    geometry_routines: Any
+    """Names of geometries on the J body at which the contact normal direction is flipped."""
+    geometry_routines: str
     stiffness: float
+    """Material stiffness used to calculate the normal contact force."""
     damping: float
+    """Damping coefficient used with the IMPACT model for calculating normal forces."""
     dmax: float
+    """Boundary penetration depth used with the impact model for calculating normal forces."""
     exponent: float
-    penalty: Any
+    """Force exponent used with the impact model for calculating normal forces."""
+    penalty: float
+    """Penalty stiffness used with the restitution model for calculating normal forces."""
     restitution_coefficient: float
-    normal_function: str
+    """Coefficient of restitution modelling energy loss during contact."""
+    normal_function: List[float]
+    """Up to 30 user-defined constants passed to the normal force subroutine."""
     normal_routine: str
-    augmented_lagrangian_formulation: Any
-    friction_function: str
+    """Library and subroutine name for the user-written normal force computation."""
+    augmented_lagrangian_formulation: bool
+    """If True, refines the normal force between two sets of rigid geometries using augmented Lagrangian formulation."""
+    friction_function: List[float]
+    """Up to 30 user-defined constants passed to the friction force subroutine."""
     friction_routine: str
-    coulomb_friction_dict: Any
-    coulomb_friction: str
+    """Library and subroutine name for the user-written friction force computation."""
+    coulomb_friction_dict: dict
+    coulomb_friction: Literal['off', 'on', 'dynamics_only']
+    """Models friction using the Coulomb friction model at contact locations."""
     mu_static: float
+    """Coefficient of friction at a contact point when the slip velocity is below the stiction transition velocity."""
     mu_dynamic: float
+    """Coefficient of friction at a contact point when the slip velocity is above the friction transition velocity."""
     friction_transition_velocity: float
+    """Slip velocity above which the Coulomb friction model uses mu_dynamic."""
     stiction_transition_velocity: float
-    no_friction: Any
-    face_contact_top: Any
-    face_contact_bottom: Any
+    """Slip velocity below which the contact is considered in stiction."""
+    no_friction: bool
+    """If True, friction is not applied at the contact."""
+    face_contact_top: bool
+    """If True, enables face contact on the top face."""
+    face_contact_bottom: bool
+    """If True, enables face contact on the bottom face."""
     stiction: str
+    """Models friction effects using the Stiction and Sliding friction model."""
     max_stiction_deformation: float
+    """Maximum creep that can occur during the stiction regime."""

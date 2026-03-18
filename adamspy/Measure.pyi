@@ -1,7 +1,8 @@
 import Manager
 from Marker import Marker
 import Object
-from typing import Any, ItemsView, Iterable, ValuesView
+from typing import List, ItemsView, Iterable, ValuesView
+
 
 class MeasureManager(Manager.SubclassManager):
     def createObject(self,
@@ -97,94 +98,144 @@ class MeasureManager(Manager.SubclassManager):
     def createOrient(self, **kwargs): ...
     def createPoint(self, **kwargs): ...
     def createRange(self, **kwargs): ...
-    def createFunction(self, 
-                       name:str=None,
-                       function:str=None,
-                       user_function:str=None,
-                       routine:str=None,
-                       units:str=None,
-                       legend:str=None,
-                       create_measure_display:str=None,
-                       comments:str=None,
-                       **kwargs)->FunctionMeasure: ...
+
+    def createFunction(self,
+                       name: str = None,
+                       function: str = None,
+                       user_function: str = None,
+                       routine: str = None,
+                       units: str = None,
+                       legend: str = None,
+                       create_measure_display: str = None,
+                       comments: str = None,
+                       **kwargs) -> FunctionMeasure: ...
 
     def __getitem__(self, name) -> Measure: ...
     def __iter__(self, *args) -> Iterable[str]: ...
     def items(self) -> ItemsView[str, Measure]: ...
     def values(self) -> ValuesView[Measure]: ...
 
+
 class Measure(Object.ObjectComment):
     adams_id_id: int
 
-class ObjectMeasure(Measure):
-    comment_id: Any
-    legend: Any
-    characteristic: Any
-    component: Any
-    coordinate_rframe: Any
-    motion_rframe: Any
-    object: Any
-    create_measure_display: Any
 
-pt2pt_characteristics: Any
+class ObjectMeasure(Measure):
+    comment_id: int
+    legend: str
+    """Text that appears at the top of the measure plot."""
+    characteristic: str
+    """Object characteristic to be measured."""
+    component: str
+    """Component of the characteristic in which you are interested."""
+    coordinate_rframe: Marker
+    """Marker defining the reference frame for coordinate measurements."""
+    motion_rframe: Marker
+    """Marker defining the reference frame for motion measurements."""
+    object: Object.ObjectComment
+    from_first: bool
+    create_measure_display: bool
+
+
+pt2pt_characteristics: List[str]
+
 
 class Pt2ptMeasure(Measure):
-    comment_id: Any
-    legend: Any
-    characteristic: Any
-    component: Any
-    coordinate_rframe: Any
-    motion_rframe: Any
-    from_point: Any
-    to_point: Any
-    create_measure_display: Any
+    comment_id: int
+    legend: str
+    """Text that appears at the top of the measure plot."""
+    characteristic: str
+    """Kinematic characteristic to be measured."""
+    component: str
+    """Component of the characteristic in which you are interested."""
+    coordinate_rframe: Marker
+    """Marker defining the reference frame for coordinate measurements."""
+    motion_rframe: Marker
+    """Marker defining the reference frame for motion measurements."""
+    from_point: Marker
+    """Marker from which to measure."""
+    to_point: Marker
+    """Marker to which to measure."""
+    create_measure_display: bool
+
 
 class AngleMeasure(Measure):
-    comment_id: Any
-    legend: Any
-    first_point: Any
-    middle_point: Any
-    last_point: Any
-    create_measure_display: Any
+    comment_id: int
+    legend: str
+    """Text that appears at the top of the measure plot."""
+    first_point: Marker
+    """First marker on an entity."""
+    middle_point: Marker
+    """Middle (vertex) marker on an entity."""
+    last_point: Marker
+    """Last marker on an entity."""
+    create_measure_display: bool
+
 
 class ComputedMeasure(Measure):
-    comment_id: Any
-    legend: Any
-    text_of_expression: Any
-    units: Any
-    create_measure_display: Any
+    comment_id: int
+    legend: str
+    """Text that appears at the top of the measure plot."""
+    text_of_expression: str
+    """Computation to be performed by the function."""
+    units: str
+    """Type of units to be used for this measure."""
+    create_measure_display: bool
+
 
 class OrientMeasure(Measure):
-    comment_id: Any
-    legend: Any
-    characteristic: Any
-    component: Any
-    to_frame: Any
-    from_frame: Any
-    create_measure_display: Any
+    comment_id: int
+    legend: str
+    """Text that appears at the top of the measure plot."""
+    characteristic: str
+    """Characteristic convention with which to associate the component."""
+    component: str
+    """Rotational component to measure."""
+    to_frame: Object.ObjectComment
+    """Coordinate system to which to measure."""
+    from_frame: Object.ObjectComment
+    """Coordinate system from which to measure."""
+    create_measure_display: bool
+
 
 class PointMeasure(Measure):
-    comment_id: Any
-    legend: Any
-    characteristic: Any
-    component: Any
-    coordinate_rframe: Any
-    motion_rframe: Any
-    point: Any
-    create_measure_display: Any
+    comment_id: int
+    legend: str
+    """Text that appears at the top of the measure plot."""
+    characteristic: str
+    """Kinematic characteristic to be measured."""
+    component: str
+    """Component of the characteristic in which you are interested."""
+    coordinate_rframe: Marker
+    """Marker defining the reference frame for coordinate measurements."""
+    motion_rframe: Marker
+    """Marker defining the reference frame for motion measurements."""
+    point: Marker
+    """Marker or point to measure."""
+    create_measure_display: bool
+
 
 class RangeMeasure(Measure):
-    comment_id: Any
-    legend: Any
-    range_measure_type: Any
-    of_measure_name: Any
-    create_measure_display: Any
+    comment_id: int
+    legend: str
+    """Text that appears at the top of the measure plot."""
+    range_measure_type: str
+    """Type of the range measure."""
+    of_measure_name: str
+    """Existing, predefined measure to analyze."""
+    create_measure_display: bool
+
 
 class FunctionMeasure(Measure):
     comment_id: int
     legend: str
+    """Text that appears at the top of the measure plot."""
     function: str
+    """Function expression to be evaluated during the simulation."""
     user_function: str
+    """Up to 30 user-defined constants to be passed to the user-written subroutine."""
     routine: str
+    """Library and subroutine name for the user-written function measure."""
     units: str
-    create_measure_display: str
+    """Units to be associated with the function measure result."""
+    create_measure_display: bool
