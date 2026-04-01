@@ -275,7 +275,8 @@ class GeometryPolyline(Geometry):
     
     Note
     ----
-    When setting this variable, you must use global coordinates.
+    When setting this variable, you must use global coordinates. But, **when getting this variable, 
+    the coordinates are relative to the parent part**.
     """
     close: bool
     relative_to: Object.Object
