@@ -5,30 +5,29 @@ This repo contains Python type stubs (`.pyi` files) for the **MSC Adams Python A
 ## Repo structure
 
 ```
-adamspy/          # All stub files live here, matching Adams' module layout
-  Adams.pyi         # Top-level session object
-  Model.pyi
-  Part.pyi
-  Marker.pyi
-  Constraint.pyi
-  Force.pyi
-  Geometry.pyi
-  DataElement.pyi
-  Simulation.pyi
-  Analysis.pyi
-  Measure.pyi
-  Defaults.pyi
-  DesignVariable.pyi
-  Contact.pyi
-  SystemElement.pyi
-  Expression.pyi
-  Object.pyi        # Base class hierarchy
-  Manager.pyi       # AdamsManager / SubclassManager base classes
-  Material.pyi
-  Sensor.pyi
-  RuntimeFunction.pyi
-  Section.pyi
-  ... (other supporting modules)
+Adams.pyi         # Top-level session object
+Model.pyi
+Part.pyi
+Marker.pyi
+Constraint.pyi
+Force.pyi
+Geometry.pyi
+DataElement.pyi
+Simulation.pyi
+Analysis.pyi
+Measure.pyi
+Defaults.pyi
+DesignVariable.pyi
+Contact.pyi
+SystemElement.pyi
+Expression.pyi
+Object.pyi        # Base class hierarchy
+Manager.pyi       # AdamsManager / SubclassManager base classes
+Material.pyi
+Sensor.pyi
+RuntimeFunction.pyi
+Section.pyi
+... (other supporting modules)
 README.md
 AGENTS.md         # This file
 ```

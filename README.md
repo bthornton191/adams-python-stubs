@@ -7,30 +7,29 @@ These stubs provide IDE autocompletion, type checking, and inline documentation 
 ## Structure
 
 ```
-adamspy/          # Package stubs — matches the Adams Python module layout
-  Adams.pyi         # Top-level session: Models, defaults, execute_cmd(), stoo(), file I/O
-  Model.pyi         # Model class + ModelManager
-  Part.pyi          # RigidBody, PointMass, FlexBody, FEPart, ExternalSystem + PartManager
-  Marker.pyi        # Marker, FloatingMarker + MarkerManager
-  Constraint.pyi    # All joint types, motions, primitives, couplers, gears + ConstraintManager
-  Force.pyi         # All force types (spring, bushing, beam, SFORCE, GFORCE, etc.) + ForceManager
-  Geometry.pyi      # All geometry types + GeometryManager
-  DataElement.pyi   # Spline, Array, Matrix, StateVariable, PInput/POutput/PState + DataElementManager
-  Simulation.pyi    # Simulation, SimulationManager
-  Analysis.pyi      # Analysis, ResultComponent, AnalysisManager
-  Measure.pyi       # ObjectMeasure, Pt2ptMeasure, FunctionMeasure, etc. + MeasureManager
-  Defaults.pyi      # AdamsDefaults, DefaultUnits (unit string enums)
-  DesignVariable.pyi# IntegerDV, RealDV, StringDV, ObjectDV + DesignVariableManager
-  Contact.pyi       # Contact (solid-to-solid, curve-to-curve, etc.) + ContactManager
-  SystemElement.pyi # DifferentialEquation, TransferFunction, LinearStateEquation + manager
-  Expression.pyi    # expression(), eval(), AdamsExpr
-  Object.pyi        # Base classes: ObjectBase, ObjectComment, ObjectAdamsId
-  Manager.pyi       # AdamsManager, SubclassManager base classes
-  Material.pyi      # Material + MaterialManager
-  Sensor.pyi        # Sensor + SensorManager
-  RuntimeFunction.pyi
-  Section.pyi
-  ...               # Other supporting modules
+Adams.pyi         # Top-level session: Models, defaults, execute_cmd(), stoo(), file I/O
+Model.pyi         # Model class + ModelManager
+Part.pyi          # RigidBody, PointMass, FlexBody, FEPart, ExternalSystem + PartManager
+Marker.pyi        # Marker, FloatingMarker + MarkerManager
+Constraint.pyi    # All joint types, motions, primitives, couplers, gears + ConstraintManager
+Force.pyi         # All force types (spring, bushing, beam, SFORCE, GFORCE, etc.) + ForceManager
+Geometry.pyi      # All geometry types + GeometryManager
+DataElement.pyi   # Spline, Array, Matrix, StateVariable, PInput/POutput/PState + DataElementManager
+Simulation.pyi    # Simulation, SimulationManager
+Analysis.pyi      # Analysis, ResultComponent, AnalysisManager
+Measure.pyi       # ObjectMeasure, Pt2ptMeasure, FunctionMeasure, etc. + MeasureManager
+Defaults.pyi      # AdamsDefaults, DefaultUnits (unit string enums)
+DesignVariable.pyi# IntegerDV, RealDV, StringDV, ObjectDV + DesignVariableManager
+Contact.pyi       # Contact (solid-to-solid, curve-to-curve, etc.) + ContactManager
+SystemElement.pyi # DifferentialEquation, TransferFunction, LinearStateEquation + manager
+Expression.pyi    # expression(), eval(), AdamsExpr
+Object.pyi        # Base classes: ObjectBase, ObjectComment, ObjectAdamsId
+Manager.pyi       # AdamsManager, SubclassManager base classes
+Material.pyi      # Material + MaterialManager
+Sensor.pyi        # Sensor + SensorManager
+RuntimeFunction.pyi
+Section.pyi
+...               # Other supporting modules
 ```
 
 ## Adams Python API — Quick Overview
