@@ -61,7 +61,15 @@ class Model(Object.ObjectComment, AppearanceSettings.GeometryAppearanceSettings)
 
 
 class ModelManager(Manager.AdamsManager):
-    def create(self, **kwargs) -> Model: ...
+    def create(self, name: str = None, **kwargs) -> Model:
+        """Create a new Model.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the model.
+        """
+        ...
     @staticmethod
     def newFromAdm(model_name, file_name): ...
     def items(self) -> ItemsView[str, Model]: ...

@@ -12,9 +12,81 @@ from typing import ItemsView, Iterable, KeysView, List, Literal, Optional, Tuple
 class GeometryModelManager(Manager.SubclassManager):
     type_map: dict
     def __init__(self, managedClass, parent) -> None: ...
-    def createSpringDamper(self, **kwargs): ...
-    def createForce(self, **kwargs): ...
-    def createGContact(self, **kwargs): ...
+    def createSpringDamper(self,
+                           name: str = None,
+                           i_marker: Marker = None,
+                           i_marker_name: str = None,
+                           j_marker: Marker = None,
+                           j_marker_name: str = None,
+                           **kwargs) -> GeometrySpringDamper:
+        """Create a spring-damper graphic.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the spring-damper graphic.
+        i_marker : Marker, optional
+            First endpoint marker.
+        i_marker_name : str, optional
+            Full name of the first endpoint marker.
+        j_marker : Marker, optional
+            Second endpoint marker.
+        j_marker_name : str, optional
+            Full name of the second endpoint marker.
+        """
+        ...
+    def createForce(self,
+                    name: str = None,
+                    applied_at_marker: Marker = None,
+                    applied_at_marker_name: str = None,
+                    force_element = None,
+                    joint = None,
+                    jprim = None,
+                    point_curve = None,
+                    curve_curve = None,
+                    **kwargs) -> GeometryForce:
+        """Create a force graphic.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the force graphic.
+        applied_at_marker : Marker, optional
+            Marker at which the force is displayed.
+        applied_at_marker_name : str, optional
+            Full name of the marker.
+        force_element : Force, optional
+            Force element to visualize.
+        joint : Joint, optional
+            Joint to visualize forces for.
+        jprim : Jprim, optional
+            Jprim to visualize forces for.
+        point_curve : PointCurveConstraint, optional
+            Point-curve constraint to visualize.
+        curve_curve : CurveCurveConstraint, optional
+            Curve-curve constraint to visualize.
+        """
+        ...
+    def createGContact(self,
+                       name: str = None,
+                       contact_element = None,
+                       contact_element_name: str = None,
+                       adams_id: int = None,
+                       **kwargs) -> GeometryGContact:
+        """Create a general contact graphic.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact graphic.
+        contact_element : Contact, optional
+            Contact element to visualize.
+        contact_element_name : str, optional
+            Full name of the contact element.
+        adams_id : int, optional
+            Adams ID for the graphic.
+        """
+        ...
 
 
 class Geometry(Object.ObjectComment, AppearanceSettings.GeometryAppearanceSettings):

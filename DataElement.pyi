@@ -152,7 +152,20 @@ class DataElementManager(Manager.SubclassManager):
     def __getitem__(self, name) -> DataElement: ...
     def values(self, *args) -> ValuesView[DataElement]: ...
     def items(self, *args) -> ItemsView[str, DataElement]: ...
-    def createCurveData(self, **kwargs) -> CurveData: ...
+    def createCurveData(self,
+                        name: str = None,
+                        closed: bool = None,
+                        **kwargs) -> CurveData:
+        """Create a curve data element.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the curve data.
+        closed : bool, optional
+            Whether the curve is closed.
+        """
+        ...
 
     def createSpline(self,
                      name: str = None,
@@ -162,16 +175,62 @@ class DataElementManager(Manager.SubclassManager):
                      linear_extrapolate: bool = None,
                      **kwargs) -> Spline: ...
 
-    def createICArray(self, **kwargs) -> ICArray: ...
+    def createICArray(self,
+                      name: str = None,
+                      numbers: List = None,
+                      **kwargs) -> ICArray:
+        """Create an initial condition array.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the IC array.
+        numbers : list of float, optional
+            Initial condition values. Length determines array size.
+        """
+        ...
 
     def createGeneralArray(self,
                            name: str = None,
                            numbers: List = None,
                            **kwargs) -> GeneralArray: ...
 
-    def createXStateArray(self, **kwargs) -> XStateArray: ...
-    def createYOutputArray(self, **kwargs) -> YOutputArray: ...
-    def createUInputArray(self, **kwargs) -> UInputArray: ...
+    def createXStateArray(self,
+                          name: str = None,
+                          **kwargs) -> XStateArray:
+        """Create an X state array.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the X state array.
+        """
+        ...
+    def createYOutputArray(self,
+                           name: str = None,
+                           **kwargs) -> YOutputArray:
+        """Create a Y output array.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the Y output array.
+        """
+        ...
+    def createUInputArray(self,
+                          name: str = None,
+                          variables: List = None,
+                          **kwargs) -> UInputArray:
+        """Create a U input array.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the U input array.
+        variables : list of StateVariable, optional
+            State variables to include in the input array.
+        """
+        ...
 
     def createMatrixFull(self,
                          row_count: int,
@@ -199,8 +258,43 @@ class DataElementManager(Manager.SubclassManager):
         """
         ...
 
-    def createMatrixSparse(self, **kwargs) -> MatrixSparse: ...
-    def createMatrixFile(self, **kwargs) -> MatrixFile: ...
+    def createMatrixSparse(self,
+                           name: str = None,
+                           values: List[float] = None,
+                           row_index: List[int] = None,
+                           column_index: List[int] = None,
+                           **kwargs) -> MatrixSparse:
+        """Create a sparse matrix data element.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the sparse matrix.
+        values : list of float, optional
+            Non-zero element values.
+        row_index : list of int, optional
+            Row indices for each value.
+        column_index : list of int, optional
+            Column indices for each value.
+        """
+        ...
+    def createMatrixFile(self,
+                         name: str = None,
+                         file: str = None,
+                         name_of_matrix_in_file: str = None,
+                         **kwargs) -> MatrixFile:
+        """Create a matrix loaded from a file.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the matrix element.
+        file : str, optional
+            Path to the matrix file.
+        name_of_matrix_in_file : str, optional
+            Name of the matrix within the file.
+        """
+        ...
 
     def createStateVariable(self,
                             name: str = None,
@@ -210,7 +304,20 @@ class DataElementManager(Manager.SubclassManager):
                             user_function: str = '',
                             **kwargs) -> StateVariable: ...
 
-    def createString(self, **kwargs) -> String: ...
+    def createString(self,
+                     name: str = None,
+                     string: str = None,
+                     **kwargs) -> String:
+        """Create a string data element.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the string element.
+        string : str, optional
+            The string value.
+        """
+        ...
 
     def createPInput(self,
                      name: str = None,
@@ -218,5 +325,37 @@ class DataElementManager(Manager.SubclassManager):
                      variable_name: List[str] = None,
                      **kwargs) -> PInput: ...
 
-    def createPOutput(self, **kwargs) -> POutput: ...
-    def createPState(self, **kwargs) -> PState: ...
+    def createPOutput(self,
+                      name: str = None,
+                      variable: List = None,
+                      variable_name: List[str] = None,
+                      **kwargs) -> POutput:
+        """Create a plant output element.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the plant output.
+        variable : list of StateVariable, optional
+            State variable objects for this plant output.
+        variable_name : list of str, optional
+            Names of the state variables.
+        """
+        ...
+    def createPState(self,
+                     name: str = None,
+                     variable: List = None,
+                     variable_name: List[str] = None,
+                     **kwargs) -> PState:
+        """Create a plant state element.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the plant state.
+        variable : list of StateVariable, optional
+            State variable objects for this plant state.
+        variable_name : list of str, optional
+            Names of the state variables.
+        """
+        ...

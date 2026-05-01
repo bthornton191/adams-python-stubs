@@ -63,15 +63,91 @@ class DesignVariableManager(Manager.SubclassManager):
     rDv: str
     sDv: str
     oDv: str
-    def createInteger(self, **kwargs) -> IntegerDesignVariable: ...
-    def createReal(self, **kwargs) -> RealDesignVariable: ...
+    def createInteger(self,
+                      name: str = None,
+                      value: Union[int, List[int]] = None,
+                      range: List[int] = None,
+                      allowed_values: List[int] = None,
+                      use_range: bool = None,
+                      use_allowed_values: bool = None,
+                      **kwargs) -> IntegerDesignVariable:
+        """Create an integer design variable.
 
-    def createString(self, name: str = '', value: Union[str, List[str]] = '', **kwargs) -> StringDesignVariable:
-        """Creates a Design Variable of type `string`
+        Parameters
+        ----------
+        name : str, optional
+            Name of the design variable.
+        value : int or list of int, optional
+            Integer value(s).
+        range : list of int, optional
+            Allowed range [min, max].
+        allowed_values : list of int, optional
+            Discrete set of allowed values.
+        use_range : bool, optional
+            Whether to enforce the range constraint.
+        use_allowed_values : bool, optional
+            Whether to enforce the allowed values constraint.
+        """
+        ...
+    def createReal(self,
+                   name: str = None,
+                   value: Union[float, List[float]] = None,
+                   range: List[float] = None,
+                   allowed_values: List[float] = None,
+                   use_range: bool = None,
+                   use_allowed_values: bool = None,
+                   units: str = None,
+                   **kwargs) -> RealDesignVariable:
+        """Create a real design variable.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the design variable.
+        value : float or list of float, optional
+            Real value(s).
+        range : list of float, optional
+            Allowed range [min, max].
+        allowed_values : list of float, optional
+            Discrete set of allowed values.
+        use_range : bool, optional
+            Whether to enforce the range constraint.
+        use_allowed_values : bool, optional
+            Whether to enforce the allowed values constraint.
+        units : str, optional
+            Unit string for the design variable.
         """
         ...
 
-    def createObject(self, **kwargs) -> ObjectDesignVariable: ...
+    def createString(self, name: str = '', value: Union[str, List[str]] = '', **kwargs) -> StringDesignVariable:
+        """Create a string design variable.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the design variable.
+        value : str or list of str, optional
+            String value(s).
+        """
+        ...
+
+    def createObject(self,
+                     name: str = None,
+                     value: List[Object.Object] = None,
+                     value_name: List[str] = None,
+                     **kwargs) -> ObjectDesignVariable:
+        """Create an object design variable.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the design variable.
+        value : list of Object, optional
+            Object(s) stored in this variable.
+        value_name : list of str, optional
+            Full name(s) of the object(s).
+        """
+        ...
 
     def __getitem__(self, name) -> Union[IntegerDesignVariable, RealDesignVariable, StringDesignVariable, ObjectDesignVariable]: ...
     def __iter__(self, *args) -> Iterable[str]: ...

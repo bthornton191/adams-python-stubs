@@ -63,7 +63,15 @@ class AnalysisManager(Manager.AdamsManager):
             The analysis object
         """
 
-    def create(self, name=None, **kwargs) -> Analysis: ...
+    def create(self, name: str = None, **kwargs) -> Analysis:
+        """Create a new Analysis.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the analysis.
+        """
+        ...
     def __getitem__(self, name: str) -> Analysis: ...
     def __iter__(self, *args) -> Iterable[str]: ...
     def items(self) -> ItemsView[str, Analysis]: ...

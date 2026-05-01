@@ -410,9 +410,78 @@ class RotationalJointMotion(JointMotion):
 
 
 class ConstraintManager(Manager.SubclassManager):
-    def createCoupler(self, name: str = None, **kwargs) -> CouplerConstraint: ...
-    def createGear(self, name: str = None, **kwargs) -> GearConstraint: ...
-    def createGeneral(self, name: str = None, **kwargs) -> GeneralConstraint: ...
+    def createCoupler(self,
+                      name: str = None,
+                      joints: List = None,
+                      joint_names: List[str] = None,
+                      type_of_freedom: List[str] = None,
+                      **kwargs) -> CouplerConstraint:
+        """Create a coupler constraint between 2 or 3 joints.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the coupler.
+        joints : list of Joint, optional
+            List of 2-3 joint objects (Translational, Cylindrical, or Revolute).
+            Mutually exclusive with ``joint_names``.
+        joint_names : list of str, optional
+            List of 2-3 joint name strings. Mutually exclusive with ``joints``.
+        type_of_freedom : list of str, optional
+            Freedom type for each joint: ``'unknown'``, ``'translational'``, or
+            ``'rotational'``. Required if any joint is Cylindrical.
+        """
+        ...
+    def createGear(self,
+                   name: str = None,
+                   joint_1: Joint = None,
+                   joint_1_name: str = None,
+                   joint_2: Joint = None,
+                   joint_2_name: str = None,
+                   common_velocity_marker: Marker.Marker = None,
+                   common_velocity_marker_name: str = None,
+                   **kwargs) -> GearConstraint:
+        """Create a gear constraint between two joints.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the gear constraint.
+        joint_1 : Joint, optional
+            First joint object. Mutually exclusive with ``joint_1_name``.
+        joint_1_name : str, optional
+            Full name of the first joint.
+        joint_2 : Joint, optional
+            Second joint object. Mutually exclusive with ``joint_2_name``.
+        joint_2_name : str, optional
+            Full name of the second joint.
+        common_velocity_marker : Marker, optional
+            Marker defining the common velocity direction.
+            Mutually exclusive with ``common_velocity_marker_name``.
+        common_velocity_marker_name : str, optional
+            Full name of the common velocity marker.
+        """
+        ...
+    def createGeneral(self,
+                      name: str = None,
+                      i_marker: Marker.Marker = None,
+                      i_marker_name: str = None,
+                      function: str = None,
+                      **kwargs) -> GeneralConstraint:
+        """Create a general constraint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the general constraint.
+        i_marker : Marker, optional
+            Marker on which the constraint acts.
+        i_marker_name : str, optional
+            Full name of the i marker.
+        function : str, optional
+            Expression defining the constraint equation.
+        """
+        ...
 
     def createMotion(self,
                      name: str = None,
@@ -436,7 +505,39 @@ class ConstraintManager(Manager.SubclassManager):
             The time derivative of the constraint. Can be 'displacement' or 'velocity'.
         """
 
-    def createPointMotion(self, name: str = None, **kwargs) -> PointMotion: ...
+    def createPointMotion(self,
+                         name: str = None,
+                         i_marker: Marker.Marker = None,
+                         j_marker: Marker.Marker = None,
+                         i_marker_name: str = None,
+                         j_marker_name: str = None,
+                         axis: Literal['x', 'y', 'z', 'b1', 'b2', 'b3'] = None,
+                         time_derivative: Literal['displacement', 'velocity', 'acceleration'] = None,
+                         function: str = '',
+                         **kwargs) -> PointMotion:
+        """Create a point motion constraint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the point motion.
+        i_marker : Marker, optional
+            Action marker.
+        j_marker : Marker, optional
+            Reaction marker.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_marker_name : str, optional
+            Full name of the reaction marker.
+        axis : str, optional
+            Axis of motion: ``'x'``, ``'y'``, ``'z'`` (translational) or
+            ``'b1'``, ``'b2'``, ``'b3'`` (rotational).
+        time_derivative : str, optional
+            ``'displacement'``, ``'velocity'``, or ``'acceleration'``.
+        function : str, optional
+            Expression defining the motion.
+        """
+        ...
 
     def createJointMotion(self,
                           name: str = None,
@@ -469,8 +570,32 @@ class ConstraintManager(Manager.SubclassManager):
             The created joint motion object
         """
 
-    def createMotionT(self, name: str = None, **kwargs): ...
-    def createMotionR(self, name: str = None, **kwargs): ...
+    def createMotionT(self, name: str = None, **kwargs) -> JointMotion:
+        """Create a translational joint motion.
+
+        .. deprecated::
+            Use :meth:`createJointMotion` with
+            ``type_of_freedom='translational'`` instead.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the motion.
+        """
+        ...
+    def createMotionR(self, name: str = None, **kwargs) -> JointMotion:
+        """Create a rotational joint motion.
+
+        .. deprecated::
+            Use :meth:`createJointMotion` with
+            ``type_of_freedom='rotational'`` instead.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the motion.
+        """
+        ...
 
     def createTranslational(self,
                             name: str = None,
@@ -822,8 +947,49 @@ class ConstraintManager(Manager.SubclassManager):
                          j_velocity_ic: float = None,
                          **kwargs) -> CurveCurveConstraint: ...
 
-    def createUserDefined(self, name: str = None, **kwargs) -> UserDefinedConstraint: ...
-    def createAngle(self, name: str = None, **kwargs) -> AngleConstraint: ...
+    def createUserDefined(self,
+                          name: str = None,
+                          user_function: str = None,
+                          routine: str = None,
+                          **kwargs) -> UserDefinedConstraint:
+        """Create a user-defined constraint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        user_function : str, optional
+            Array of values passed to the user subroutine.
+        routine : str, optional
+            Name of the user subroutine.
+        """
+        ...
+    def createAngle(self,
+                    name: str = None,
+                    i_marker: Marker.Marker = None,
+                    j_marker: Marker.Marker = None,
+                    i_marker_name: str = None,
+                    j_marker_name: str = None,
+                    offset: float = None,
+                    **kwargs) -> AngleConstraint:
+        """Create an angle (JPRIM) constraint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the angle constraint.
+        i_marker : Marker, optional
+            Action marker.
+        j_marker : Marker, optional
+            Reaction marker.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_marker_name : str, optional
+            Full name of the reaction marker.
+        offset : float, optional
+            Angle offset in degrees.
+        """
+        ...
     def switch_type(self, **kwargs): ...
     def items(self) -> ItemsView[str, Constraint]: ...
     def values(self) -> ValuesView[Constraint]: ...

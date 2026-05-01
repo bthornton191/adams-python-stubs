@@ -270,7 +270,118 @@ class FEPart(Part):
 
 
 class PartManager(Manager.SubclassManager):
-    def createRigidBody(self, **kwargs) -> RigidBody: ...
+    def createRigidBody(self,
+                        name: str = None,
+                        location: List[float] = None,
+                        orientation: List[float] = None,
+                        along_axis_orientation: List[float] = None,
+                        in_plane_orientation: List[float] = None,
+                        relative_to: Object.Object = None,
+                        mass: float = None,
+                        cm: Marker = None,
+                        cm_name: str = None,
+                        im: Marker = None,
+                        im_name: str = None,
+                        vx: float = None,
+                        vy: float = None,
+                        vz: float = None,
+                        wx: float = None,
+                        wy: float = None,
+                        wz: float = None,
+                        vm: Marker = None,
+                        vm_name: str = None,
+                        wm: Marker = None,
+                        wm_name: str = None,
+                        ixx: float = None,
+                        iyy: float = None,
+                        izz: float = None,
+                        ixy: float = None,
+                        izx: float = None,
+                        iyz: float = None,
+                        exact_x: bool = None,
+                        exact_y: bool = None,
+                        exact_z: bool = None,
+                        exact_psi: bool = None,
+                        exact_theta: bool = None,
+                        exact_phi: bool = None,
+                        planar: bool = None,
+                        **kwargs) -> RigidBody:
+        """Create a rigid body part.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the rigid body.
+        location : List[float], optional
+            Global [x, y, z] location of the part origin.
+        orientation : List[float], optional
+            [psi, theta, phi] Euler angles in degrees.
+        along_axis_orientation : List[float], optional
+            Orientation defined by an axis direction vector. Mutually exclusive
+            with ``orientation`` and ``in_plane_orientation``.
+        in_plane_orientation : List[float], optional
+            Orientation defined by an in-plane vector. Mutually exclusive with
+            ``orientation`` and ``along_axis_orientation``.
+        relative_to : Object, optional
+            Reference frame for location and orientation.
+        mass : float, optional
+            Mass of the rigid body.
+        cm : Marker, optional
+            Center-of-mass marker.
+        cm_name : str, optional
+            Full name of the center-of-mass marker.
+        im : Marker, optional
+            Inertia reference marker.
+        im_name : str, optional
+            Full name of the inertia reference marker.
+        vx : float, optional
+            Initial translational velocity along the vm marker x axis.
+        vy : float, optional
+            Initial translational velocity along the vm marker y axis.
+        vz : float, optional
+            Initial translational velocity along the vm marker z axis.
+        wx : float, optional
+            Initial angular velocity about the wm marker x axis.
+        wy : float, optional
+            Initial angular velocity about the wm marker y axis.
+        wz : float, optional
+            Initial angular velocity about the wm marker z axis.
+        vm : Marker, optional
+            Marker along whose axes initial translational velocities are specified.
+        vm_name : str, optional
+            Full name of the translational velocity reference marker.
+        wm : Marker, optional
+            Marker about which initial angular velocities are specified.
+        wm_name : str, optional
+            Full name of the angular velocity reference marker.
+        ixx : float, optional
+            Moment of inertia about the x axis.
+        iyy : float, optional
+            Moment of inertia about the y axis.
+        izz : float, optional
+            Moment of inertia about the z axis.
+        ixy : float, optional
+            Product of inertia about the xy axes.
+        izx : float, optional
+            Product of inertia about the zx axes.
+        iyz : float, optional
+            Product of inertia about the yz axes.
+        exact_x : bool, optional
+            If True, x position is held fixed during IC computation.
+        exact_y : bool, optional
+            If True, y position is held fixed during IC computation.
+        exact_z : bool, optional
+            If True, z position is held fixed during IC computation.
+        exact_psi : bool, optional
+            If True, psi orientation is held fixed during IC computation.
+        exact_theta : bool, optional
+            If True, theta orientation is held fixed during IC computation.
+        exact_phi : bool, optional
+            If True, phi orientation is held fixed during IC computation.
+        planar : bool, optional
+            If True, the body is constrained to 3-DOF planar motion.
+        """
+        ...
 
     def createFlexBody(self,
                        name: str = None,
@@ -312,9 +423,87 @@ class PartManager(Manager.SubclassManager):
                        representation: Literal['rigid', 'modal', 'nonlinear', 'nforce'] = None,
                        **kwargs) -> FlexBody: ...
 
-    def createPointMass(self, **kwargs) -> PointMass: ...
-    def createExternalSystem(self, **kwargs) -> ExternalSystem: ...
-    def createFEPart(self, **kwargs) -> FEPart: ...
+    def createPointMass(self,
+                        name: str = None,
+                        location: List[float] = None,
+                        orientation: List[float] = None,
+                        relative_to: Object.Object = None,
+                        mass: float = None,
+                        **kwargs) -> PointMass:
+        """Create a point mass part.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the point mass.
+        location : List[float], optional
+            Global [x, y, z] location.
+        orientation : List[float], optional
+            [psi, theta, phi] Euler angles in degrees.
+        relative_to : Object, optional
+            Reference frame for location and orientation.
+        mass : float, optional
+            Mass of the point mass.
+        """
+        ...
+    def createExternalSystem(self,
+                             name: str = None,
+                             location: List[float] = None,
+                             orientation: List[float] = None,
+                             relative_to: Object.Object = None,
+                             **kwargs) -> ExternalSystem:
+        """Create an external system part.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the external system.
+        location : List[float], optional
+            Global [x, y, z] location.
+        orientation : List[float], optional
+            [psi, theta, phi] Euler angles in degrees.
+        relative_to : Object, optional
+            Reference frame for location and orientation.
+        """
+        ...
+    def createFEPart(self,
+                     name: str = None,
+                     i_location = None,
+                     j_location = None,
+                     ref_curve = None,
+                     coordinates: List[float] = None,
+                     cratiok: float = 1.0,
+                     cratiom: float = 1.0,
+                     material_type = None,
+                     section_label = None,
+                     **kwargs) -> FEPart:
+        """Create a finite element part.
+
+        Provide one of: (``i_location`` and ``j_location``), ``ref_curve``,
+        or ``coordinates``.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the FE part.
+        i_location : DesignPoint, optional
+            Start point of the beam.
+        j_location : DesignPoint, optional
+            End point of the beam.
+        ref_curve : Geometry, optional
+            Reference curve defining the beam path.
+        coordinates : List[float], optional
+            Node coordinates defining the beam path.
+        cratiok : float, optional
+            Stiffness ratio (default 1.0).
+        cratiom : float, optional
+            Mass ratio (default 1.0).
+        material_type : Material, optional
+            Material defining section properties.
+        section_label : Section, optional
+            Cross-section definition.
+        """
+        ...
     def __getitem__(self, name) -> Part: ...
     def __iter__(self, *args) -> Iterable[str]: ...
     def items(self) -> ItemsView[str, Part]: ...

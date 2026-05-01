@@ -113,20 +113,136 @@ class ContactManager(Manager.AdamsManager):
                            damping: float,
                            dmax: float,
                            exponent: float,
-                           **kwargs) -> Contact: ...
+                           **kwargs) -> Contact:
+        """Create a solid-to-solid contact.
 
-    def createCurveToCurve(self, **kwargs): ...
-    def createPointToCurve(self, **kwargs): ...
-    def createPointToPlane(self, **kwargs): ...
-    def createCurveToPlane(self, **kwargs): ...
-    def createSphereToPlane(self, **kwargs): ...
-    def createSphereToSphere(self, **kwargs): ...
-    def createCylinderToCylinder(self, **kwargs): ...
-    def createFlexToFlex(self, **kwargs): ...
-    def createFlexEdgeToCurve(self, **kwargs): ...
-    def createFlexEdgeToFlexEdge(self, **kwargs): ...
-    def createFlexEdgeToPlane(self, **kwargs): ...
-    def createFlexToSolid(self, **kwargs): ...
+        Parameters
+        ----------
+        name : str
+            Name of the contact.
+        i_geometry : GeometrySolid
+            First solid geometry.
+        j_geometry : GeometrySolid
+            Second solid geometry.
+        stiffness : float
+            Contact stiffness.
+        damping : float
+            Contact damping.
+        dmax : float
+            Maximum penetration depth for full damping.
+        exponent : float
+            Force exponent for the contact model.
+        """
+        ...
+
+    def createCurveToCurve(self, name: str = None, **kwargs) -> Contact:
+        """Create a curve-to-curve contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
+    def createPointToCurve(self, name: str = None, **kwargs) -> Contact:
+        """Create a point-to-curve contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
+    def createPointToPlane(self, name: str = None, **kwargs) -> Contact:
+        """Create a point-to-plane contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
+    def createCurveToPlane(self, name: str = None, **kwargs) -> Contact:
+        """Create a curve-to-plane contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
+    def createSphereToPlane(self, name: str = None, **kwargs) -> Contact:
+        """Create a sphere-to-plane contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
+    def createSphereToSphere(self, name: str = None, **kwargs) -> Contact:
+        """Create a sphere-to-sphere contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
+    def createCylinderToCylinder(self, name: str = None, **kwargs) -> Contact:
+        """Create a cylinder-to-cylinder contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
+    def createFlexToFlex(self, name: str = None, **kwargs) -> Contact:
+        """Create a flex-to-flex contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
+    def createFlexEdgeToCurve(self, name: str = None, **kwargs) -> Contact:
+        """Create a flex-edge-to-curve contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
+    def createFlexEdgeToFlexEdge(self, name: str = None, **kwargs) -> Contact:
+        """Create a flex-edge-to-flex-edge contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
+    def createFlexEdgeToPlane(self, name: str = None, **kwargs) -> Contact:
+        """Create a flex-edge-to-plane contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
+    def createFlexToSolid(self, name: str = None, **kwargs) -> Contact:
+        """Create a flex-to-solid contact.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the contact.
+        """
+        ...
     def __getitem__(self, name) -> Contact: ...
     def __iter__(self, *args) -> Iterable[str]: ...
     def items(self) -> ItemsView[str, Contact]: ...

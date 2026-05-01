@@ -217,12 +217,187 @@ class MeasureManager(Manager.SubclassManager):
         """
         ...
 
-    def createPt2pt(self, **kwargs): ...
-    def createAngle(self, **kwargs): ...
-    def createComputed(self, **kwargs): ...
-    def createOrient(self, **kwargs): ...
-    def createPoint(self, **kwargs): ...
-    def createRange(self, **kwargs): ...
+    def createPt2pt(self,
+                    name: str = None,
+                    characteristic: str = None,
+                    component: str = None,
+                    from_point = None,
+                    from_point_name: str = None,
+                    to_point = None,
+                    to_point_name: str = None,
+                    legend: str = None,
+                    create_measure_display: bool = True,
+                    **kwargs) -> Pt2ptMeasure:
+        """Create a point-to-point measure.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the measure.
+        characteristic : str, optional
+            Measurement characteristic, e.g. ``'translational_displacement'``,
+            ``'translational_velocity'``, ``'translational_acceleration'``.
+        component : str, optional
+            Component of the measurement.
+        from_point : Marker, optional
+            Start point marker.
+        from_point_name : str, optional
+            Full name of the start point marker.
+        to_point : Marker, optional
+            End point marker.
+        to_point_name : str, optional
+            Full name of the end point marker.
+        legend : str, optional
+            Display legend text.
+        create_measure_display : bool, optional
+            If True, creates a strip chart display (default True).
+        """
+        ...
+    def createAngle(self,
+                    name: str = None,
+                    first_point = None,
+                    first_point_name: str = None,
+                    middle_point = None,
+                    middle_point_name: str = None,
+                    last_point = None,
+                    last_point_name: str = None,
+                    legend: str = None,
+                    create_measure_display: bool = True,
+                    **kwargs) -> AngleMeasure:
+        """Create an angle measure.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the measure.
+        first_point : Marker, optional
+            First point marker.
+        first_point_name : str, optional
+            Full name of the first point marker.
+        middle_point : Marker, optional
+            Middle (vertex) point marker.
+        middle_point_name : str, optional
+            Full name of the middle point marker.
+        last_point : Marker, optional
+            Last point marker.
+        last_point_name : str, optional
+            Full name of the last point marker.
+        legend : str, optional
+            Display legend text.
+        create_measure_display : bool, optional
+            If True, creates a strip chart display (default True).
+        """
+        ...
+    def createComputed(self,
+                       name: str = None,
+                       text_of_expression: str = None,
+                       units: str = None,
+                       legend: str = None,
+                       create_measure_display: bool = True,
+                       **kwargs) -> ComputedMeasure:
+        """Create a computed measure.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the measure.
+        text_of_expression : str, optional
+            Adams expression defining the computed value.
+        units : str, optional
+            Unit string for the measure.
+        legend : str, optional
+            Display legend text.
+        create_measure_display : bool, optional
+            If True, creates a strip chart display (default True).
+        """
+        ...
+    def createOrient(self,
+                     name: str = None,
+                     characteristic: str = None,
+                     component: str = None,
+                     to_frame = None,
+                     to_frame_name: str = None,
+                     from_frame = None,
+                     from_frame_name: str = None,
+                     legend: str = None,
+                     create_measure_display: bool = True,
+                     **kwargs) -> OrientMeasure:
+        """Create an orientation measure.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the measure.
+        characteristic : str, optional
+            Measurement characteristic.
+        component : str, optional
+            Component of the measurement.
+        to_frame : Object, optional
+            Target coordinate frame (Model, Part, or Marker).
+        to_frame_name : str, optional
+            Full name of the target frame.
+        from_frame : Object, optional
+            Source coordinate frame.
+        from_frame_name : str, optional
+            Full name of the source frame.
+        legend : str, optional
+            Display legend text.
+        create_measure_display : bool, optional
+            If True, creates a strip chart display (default True).
+        """
+        ...
+    def createPoint(self,
+                    name: str = None,
+                    characteristic: str = None,
+                    component: str = None,
+                    point = None,
+                    point_name: str = None,
+                    legend: str = None,
+                    create_measure_display: bool = True,
+                    **kwargs) -> PointMeasure:
+        """Create a point measure.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the measure.
+        characteristic : str, optional
+            Measurement characteristic.
+        component : str, optional
+            Component of the measurement.
+        point : Marker, optional
+            Marker defining the measurement point.
+        point_name : str, optional
+            Full name of the marker.
+        legend : str, optional
+            Display legend text.
+        create_measure_display : bool, optional
+            If True, creates a strip chart display (default True).
+        """
+        ...
+    def createRange(self,
+                    name: str = None,
+                    range_measure_type: str = None,
+                    of_measure_name: str = None,
+                    legend: str = None,
+                    create_measure_display: bool = True,
+                    **kwargs) -> RangeMeasure:
+        """Create a range measure.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the measure.
+        range_measure_type : str, optional
+            Type of range measure.
+        of_measure_name : str, optional
+            Full name of the existing measure to analyze.
+        legend : str, optional
+            Display legend text.
+        create_measure_display : bool, optional
+            If True, creates a strip chart display (default True).
+        """
+        ...
 
     def createFunction(self,
                        name: str = None,

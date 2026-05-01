@@ -149,8 +149,114 @@ class SystemElementManager(Manager.SubclassManager):
                                    initial_condition: float = 0.0,
                                    implicit: bool = False,
                                    static_hold: bool = False,
-                                   **kwargs) -> DifferentialEquation: ...
+                                   **kwargs) -> DifferentialEquation:
+        """Create a differential equation (DIFF).
 
-    def createGeneralStateEquation(self, **kwargs): ...
-    def createLinearStateEquation(self, **kwargs): ...
-    def createTransferFunction(self, **kwargs): ...
+        Parameters
+        ----------
+        name : str
+            Name of the differential equation.
+        function : str, optional
+            Expression defining the differential equation.
+        initial_condition : float, optional
+            Initial condition value (default 0.0).
+        implicit : bool, optional
+            If True, use implicit formulation (default False).
+        static_hold : bool, optional
+            If True, hold state during static analysis (default False).
+        """
+        ...
+
+    def createGeneralStateEquation(self,
+                                   name: str = None,
+                                   output_equation_count: int = None,
+                                   user_function: List[float] = None,
+                                   **kwargs):
+        """Create a general state equation (GSE).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the GSE.
+        output_equation_count : int
+            Number of output equations.
+        user_function : list of float
+            Values passed to the user subroutine.
+        """
+        ...
+    def createLinearStateEquation(self,
+                                  name: str = None,
+                                  x_state_array = None,
+                                  x_state_array_name: str = None,
+                                  a_state_matrix = None,
+                                  a_state_matrix_name: str = None,
+                                  b_input_matrix = None,
+                                  c_output_matrix = None,
+                                  d_feedforward_matrix = None,
+                                  u_input_array = None,
+                                  y_output_array = None,
+                                  ic_array = None,
+                                  **kwargs):
+        """Create a linear state equation (LSE).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the LSE.
+        x_state_array : XStateArray, optional
+            X state array object. Mutually exclusive with ``x_state_array_name``.
+        x_state_array_name : str, optional
+            Full name of the X state array.
+        a_state_matrix : MatrixFull, optional
+            A state matrix. Mutually exclusive with ``a_state_matrix_name``.
+        a_state_matrix_name : str, optional
+            Full name of the A state matrix.
+        b_input_matrix : MatrixFull
+            B input matrix.
+        c_output_matrix : MatrixFull
+            C output matrix.
+        d_feedforward_matrix : MatrixFull
+            D feedforward matrix.
+        u_input_array : UInputArray
+            U input array.
+        y_output_array : YOutputArray
+            Y output array.
+        ic_array : ICArray
+            Initial condition array.
+        """
+        ...
+    def createTransferFunction(self,
+                               name: str = None,
+                               x_state_array = None,
+                               x_state_array_name: str = None,
+                               y_output_array = None,
+                               y_output_array_name: str = None,
+                               u_input_array = None,
+                               u_input_array_name: str = None,
+                               num_coeff: List[float] = None,
+                               den_coeff: List[float] = None,
+                               **kwargs):
+        """Create a transfer function (TFSISO).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the transfer function.
+        x_state_array : XStateArray, optional
+            X state array. Mutually exclusive with ``x_state_array_name``.
+        x_state_array_name : str, optional
+            Full name of the X state array.
+        y_output_array : YOutputArray, optional
+            Y output array. Mutually exclusive with ``y_output_array_name``.
+        y_output_array_name : str, optional
+            Full name of the Y output array.
+        u_input_array : UInputArray, optional
+            U input array. Mutually exclusive with ``u_input_array_name``.
+        u_input_array_name : str, optional
+            Full name of the U input array.
+        num_coeff : list of float
+            Numerator polynomial coefficients (max 30).
+        den_coeff : list of float
+            Denominator polynomial coefficients (min 2, max 30).
+        """
+        ...

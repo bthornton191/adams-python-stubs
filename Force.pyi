@@ -328,12 +328,22 @@ class ForceManager(Manager.SubclassManager):
 
     def createGravity(self,
                       name: str = None,
-                      xyz_component_gravity: List[float] = None): ...
+                      xyz_component_gravity: List[float] = None) -> Gravity:
+        """Create a gravity force.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the gravity force.
+        xyz_component_gravity : list of float, optional
+            Gravity acceleration components [x, y, z].
+        """
+        ...
 
     def createForceVector(self,
-                          name: str,
-                          adams_id: int,
-                          comments: str,
+                          name: str = None,
+                          adams_id: int = None,
+                          comments: str = None,
                           i_marker: Marker = None,
                           i_marker_name: str = None,
                           j_floating_marker: Marker = None,
@@ -352,10 +362,147 @@ class ForceManager(Manager.SubclassManager):
                           xyz_torque_function: str = None,
                           user_function: str = None,
                           routine: str = None,
-                          **kwargs) -> GeneralForce: ...
+                          **kwargs) -> GeneralForce:
+        """Create a force vector.
 
-    def createTorqueVector(self, **kwargs): ...
-    def createRotationalSpringDamper(self, **kwargs): ...
+        Specify either component functions (``x/y/z_force_function``) or a
+        single vector function (``xyz_force_function``), but not both.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the force vector.
+        adams_id : int, optional
+            Adams ID.
+        comments : str, optional
+            Comments for the force element.
+        i_marker : Marker, optional
+            Action marker.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_floating_marker : Marker, optional
+            Reaction floating marker.
+        j_floating_marker_name : str, optional
+            Full name of the reaction floating marker.
+        j_part : Part, optional
+            Reaction part (creates floating marker automatically).
+        j_part_name : str, optional
+            Full name of the reaction part.
+        ref_marker : Marker, optional
+            Reference frame marker.
+        ref_marker_name : str, optional
+            Full name of the reference marker.
+        x_force_function : str, optional
+            Expression for the x-component of force.
+        y_force_function : str, optional
+            Expression for the y-component of force.
+        z_force_function : str, optional
+            Expression for the z-component of force.
+        x_torque_function : str, optional
+            Expression for the x-component of torque.
+        y_torque_function : str, optional
+            Expression for the y-component of torque.
+        z_torque_function : str, optional
+            Expression for the z-component of torque.
+        xyz_force_function : str, optional
+            Single expression for the force vector.
+        xyz_torque_function : str, optional
+            Single expression for the torque vector.
+        user_function : str, optional
+            User function values.
+        routine : str, optional
+            Name of the user subroutine.
+        """
+        ...
+
+    def createTorqueVector(self,
+                           name: str = None,
+                           i_marker: Marker = None,
+                           i_marker_name: str = None,
+                           j_floating_marker: Marker = None,
+                           j_floating_marker_name: str = None,
+                           ref_marker: Marker = None,
+                           ref_marker_name: str = None,
+                           x_torque_function: str = None,
+                           y_torque_function: str = None,
+                           z_torque_function: str = None,
+                           xyz_torque_function: str = None,
+                           user_function: str = None,
+                           routine: str = None,
+                           **kwargs) -> TorqueVector:
+        """Create a torque vector force.
+
+        Specify either component functions (``x/y/z_torque_function``) or a
+        single vector function (``xyz_torque_function``), but not both.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the torque vector.
+        i_marker : Marker, optional
+            Action marker.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_floating_marker : Marker, optional
+            Reaction floating marker.
+        j_floating_marker_name : str, optional
+            Full name of the reaction floating marker.
+        ref_marker : Marker, optional
+            Reference frame marker.
+        ref_marker_name : str, optional
+            Full name of the reference marker.
+        x_torque_function : str, optional
+            Expression for the x-component of torque.
+        y_torque_function : str, optional
+            Expression for the y-component of torque.
+        z_torque_function : str, optional
+            Expression for the z-component of torque.
+        xyz_torque_function : str, optional
+            Single expression for the torque vector.
+        user_function : str, optional
+            User function values.
+        routine : str, optional
+            Name of the user subroutine.
+        """
+        ...
+    def createRotationalSpringDamper(self,
+                                     name: str = None,
+                                     i_marker: Marker = None,
+                                     j_marker: Marker = None,
+                                     i_marker_name: str = None,
+                                     j_marker_name: str = None,
+                                     torque_preload: float = None,
+                                     displacement_at_preload: float = None,
+                                     angle: float = None,
+                                     r_damp: float = None,
+                                     r_stiff: float = None,
+                                     **kwargs) -> RotationalSpringDamper:
+        """Create a rotational spring-damper force.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the rotational spring-damper.
+        i_marker : Marker, optional
+            Action marker.
+        j_marker : Marker, optional
+            Reaction marker.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_marker_name : str, optional
+            Full name of the reaction marker.
+        torque_preload : float, optional
+            Torque preload value.
+        displacement_at_preload : float, optional
+            Angular displacement at preload.
+        angle : float, optional
+            Free angle.
+        r_damp : float, optional
+            Torsional damping coefficient.
+        r_stiff : float, optional
+            Torsional stiffness coefficient.
+        """
+        ...
 
     def createTranslationalSpringDamper(self,
                                         name: str = None,
@@ -400,8 +547,52 @@ class ForceManager(Manager.SubclassManager):
                                    relative_to: Marker = None,
                                    **kwargs) -> SingleComponentForce: ...
 
-    def createAppliedTorque(self, **kwargs): ...
-    def createAppliedForce(self, **kwargs): ...
+    def createAppliedTorque(self,
+                           name: str = None,
+                           i_marker: Marker = None,
+                           j_marker: Marker = None,
+                           i_marker_name: str = None,
+                           j_marker_name: str = None,
+                           **kwargs) -> AppliedTorque:
+        """Create an applied torque force.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the applied torque.
+        i_marker : Marker, optional
+            Action marker.
+        j_marker : Marker, optional
+            Reaction marker.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_marker_name : str, optional
+            Full name of the reaction marker.
+        """
+        ...
+    def createAppliedForce(self,
+                           name: str = None,
+                           i_marker: Marker = None,
+                           j_marker: Marker = None,
+                           i_marker_name: str = None,
+                           j_marker_name: str = None,
+                           **kwargs) -> AppliedForce:
+        """Create an applied force.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the applied force.
+        i_marker : Marker, optional
+            Action marker.
+        j_marker : Marker, optional
+            Reaction marker.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_marker_name : str, optional
+            Full name of the reaction marker.
+        """
+        ...
 
     def createBeam(self,
                    name: str,
@@ -423,8 +614,91 @@ class ForceManager(Manager.SubclassManager):
                    formulation: str = None,
                    **kwargs) -> Beam: ...
 
-    def createField(self, **kwargs): ...
-    def createFriction(self, **kwargs): ...
+    def createField(self,
+                    name: str = None,
+                    i_marker: Marker = None,
+                    j_marker: Marker = None,
+                    i_marker_name: str = None,
+                    j_marker_name: str = None,
+                    force_preload: List[float] = None,
+                    torque_preload: List[float] = None,
+                    damping_ratio: float = None,
+                    matrix_of_damping_terms: List[float] = None,
+                    stiffness_matrix: List[float] = None,
+                    user_function: str = None,
+                    routine: str = None,
+                    formulation: str = None,
+                    length_tol: float = None,
+                    translation_at_preload: List[float] = None,
+                    rotation_at_preload: List[float] = None,
+                    **kwargs) -> Field:
+        """Create a field force element.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the field.
+        i_marker : Marker, optional
+            Action marker.
+        j_marker : Marker, optional
+            Reaction marker.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_marker_name : str, optional
+            Full name of the reaction marker.
+        force_preload : list of float, optional
+            Force preload [fx, fy, fz].
+        torque_preload : list of float, optional
+            Torque preload [tx, ty, tz].
+        damping_ratio : float, optional
+            Damping ratio. Mutually exclusive with ``matrix_of_damping_terms``.
+        matrix_of_damping_terms : list of float, optional
+            36-element damping matrix. Mutually exclusive with ``damping_ratio``.
+        stiffness_matrix : list of float, optional
+            36-element stiffness matrix.
+        user_function : str, optional
+            User function values.
+        routine : str, optional
+            Name of the user subroutine.
+        formulation : str, optional
+            ``'linear'`` or ``'nonlinear'``.
+        length_tol : float, optional
+            Geometric stiffness tolerance (default 1e-5).
+        translation_at_preload : list of float, optional
+            Translational preload offset [x, y, z].
+        rotation_at_preload : list of float, optional
+            Rotational preload offset [x, y, z] in degrees.
+        """
+        ...
+    def createFriction(self,
+                       name: str = None,
+                       joint: 'Constraint' = None,
+                       joint_name: str = None,
+                       mu_static: float = None,
+                       mu_dynamic: float = None,
+                       yoke: str = None,
+                       pin_radius: float = None,
+                       **kwargs) -> Friction:
+        """Create a friction force on a joint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the friction element.
+        joint : Joint, optional
+            Joint object to apply friction to.
+        joint_name : str, optional
+            Full name of the joint.
+        mu_static : float, optional
+            Coefficient of static friction.
+        mu_dynamic : float, optional
+            Coefficient of dynamic friction.
+        yoke : str, optional
+            ``'yoke_i'`` or ``'yoke_j'`` (for Hooke/Universal joints).
+        pin_radius : float, optional
+            Pin radius for friction calculation.
+        """
+        ...
 
     def createModalForce(self,
                          name: str = None,
@@ -457,4 +731,27 @@ class ForceManager(Manager.SubclassManager):
                            routine: str = None,
                            **kwargs) -> ForceVector: ...
 
-    def createMultiPointForce(self, **kwargs): ...
+    def createMultiPointForce(self,
+                              name: str = None,
+                              i_markers: List[Marker] = None,
+                              i_marker_names: List[str] = None,
+                              j_marker: Marker = None,
+                              j_marker_name: str = None,
+                              **kwargs) -> MultiPointForce:
+        """Create a multi-point force element.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the multi-point force.
+        i_markers : list of Marker, optional
+            List of action markers (1-350).
+            Mutually exclusive with ``i_marker_names``.
+        i_marker_names : list of str, optional
+            Full names of the action markers.
+        j_marker : Marker, optional
+            Reaction marker.
+        j_marker_name : str, optional
+            Full name of the reaction marker.
+        """
+        ...
