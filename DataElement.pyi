@@ -174,7 +174,24 @@ class DataElementManager(Manager.SubclassManager):
                      y: List[float] = None,
                      z: List[float] = None,
                      linear_extrapolate: bool = None,
-                     **kwargs) -> Spline: ...
+                     **kwargs) -> Spline:
+        """Create a 1D or 2D spline data element.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the spline.
+        x : list of float, optional
+            Independent variable values (abscissa).
+        y : list of float, optional
+            Dependent variable values for a 1D spline, or multiple rows of
+            dependent values for a 2D spline.
+        z : list of float, optional
+            Parameter values for a 2D spline (one per row of ``y``).
+        linear_extrapolate : bool, optional
+            If True, extrapolate linearly beyond the data range.
+        """
+        ...
 
     def createICArray(self,
                       name: str = None,
@@ -194,7 +211,17 @@ class DataElementManager(Manager.SubclassManager):
     def createGeneralArray(self,
                            name: str = None,
                            numbers: List = None,
-                           **kwargs) -> GeneralArray: ...
+                           **kwargs) -> GeneralArray:
+        """Create a general array data element.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the array.
+        numbers : list of float, optional
+            Initial values. Length determines the array size.
+        """
+        ...
 
     def createXStateArray(self,
                           name: str = None,
@@ -306,7 +333,23 @@ class DataElementManager(Manager.SubclassManager):
                             initial_condition: float = None,
                             routine: str = '',
                             user_function: str = '',
-                            **kwargs) -> StateVariable: ...
+                            **kwargs) -> StateVariable:
+        """Create a state variable (VARIABLE) data element.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the state variable.
+        function : str, optional
+            Expression defining the variable value.
+        initial_condition : float, optional
+            Initial value of the state variable.
+        routine : str, optional
+            Name of the user subroutine (``VARSUB``).
+        user_function : str, optional
+            Values passed to the user subroutine.
+        """
+        ...
 
     def createString(self,
                      name: str = None,
@@ -327,7 +370,20 @@ class DataElementManager(Manager.SubclassManager):
                      name: str = None,
                      variable: List[StateVariable] = None,
                      variable_name: List[str] = None,
-                     **kwargs) -> PInput: ...
+                     **kwargs) -> PInput:
+        """Create a plant input element.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the plant input.
+        variable : list of StateVariable, optional
+            State variable objects for this plant input.
+            Mutually exclusive with ``variable_name``.
+        variable_name : list of str, optional
+            Names of the state variables.
+        """
+        ...
 
     def createPOutput(self,
                       name: str = None,

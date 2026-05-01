@@ -627,6 +627,62 @@ class ConstraintManager(Manager.SubclassManager):
                             preload_x: float = None,
                             preload_y: float = None,
                             **kwargs) -> TranslationalJoint:
+        """Create a translational (prismatic) joint between two parts.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the joint.
+        i_part : Part, optional
+            I-part. When provided with ``j_part``, Adams auto-creates I/J markers
+            at ``location``. Mutually exclusive with ``i_marker``/``i_marker_name``.
+        j_part : Part, optional
+            J-part. Mutually exclusive with ``j_marker``/``j_marker_name``.
+        i_marker : Marker, optional
+            Explicit I-marker. Mutually exclusive with ``i_part``.
+        j_marker : Marker, optional
+            Explicit J-marker. Mutually exclusive with ``j_part``.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        location : list of float, optional
+            [x, y, z] coordinates for auto-generated markers (used with ``i_part``/``j_part``).
+        orientation : list of float, optional
+            [psi, theta, phi] Euler angles defining the joint axis orientation.
+        in_plane_orientation : list of float, optional
+            Three-component vector defining a vector in the joint plane.
+        along_axis_orientation : list of float, optional
+            Three-component vector along the joint axis.
+        relative_to : Object, optional
+            Reference object for ``location`` and orientation vectors.
+        comments : str, optional
+            Descriptive comments.
+        adams_id : int, optional
+            Adams numeric ID.
+        maximum_deformation : float, optional
+            Maximum deformation allowed before joint locks.
+        delta_v : float, optional
+            Velocity threshold below which friction model switches to static.
+        translational_ic : float, optional
+            Initial translational displacement.
+        velocity_ic : float, optional
+            Initial translational velocity.
+        mu_dyn_trans : float, optional
+            Dynamic friction coefficient (translational).
+        mu_stat_trans : float, optional
+            Static friction coefficient (translational).
+        max_fric_trans : float, optional
+            Maximum friction force allowed (translational).
+        height : float, optional
+            Joint height used in the friction calculation.
+        width : float, optional
+            Joint width used in the friction calculation.
+        preload_x : float, optional
+            Preload force in the x direction.
+        preload_y : float, optional
+            Preload force in the y direction.
+        """
         ...
 
     def createRevolute(self,
@@ -652,6 +708,54 @@ class ConstraintManager(Manager.SubclassManager):
                        mu_stat_rot: float = None,
                        max_fric_rot: float = None,
                        **kwargs) -> RevoluteJoint:
+        """Create a revolute (pin/hinge) joint between two parts.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the joint.
+        i_part : Part, optional
+            I-part. When provided with ``j_part``, Adams auto-creates I/J markers
+            at ``location``. Mutually exclusive with ``i_marker``/``i_marker_name``.
+        j_part : Part, optional
+            J-part. Mutually exclusive with ``j_marker``/``j_marker_name``.
+        i_marker : Marker, optional
+            Explicit I-marker.
+        j_marker : Marker, optional
+            Explicit J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        location : list of float, optional
+            [x, y, z] coordinates for auto-generated markers.
+        orientation : list of float, optional
+            [psi, theta, phi] Euler angles defining the joint axis orientation.
+        in_plane_orientation : list of float, optional
+            Three-component vector in the joint plane.
+        along_axis_orientation : list of float, optional
+            Three-component vector along the joint axis.
+        relative_to : Object, optional
+            Reference object for ``location`` and orientation vectors.
+        comments : str, optional
+            Descriptive comments.
+        adams_id : int, optional
+            Adams numeric ID.
+        maximum_deformation : float, optional
+            Maximum deformation allowed before joint locks.
+        delta_v : float, optional
+            Velocity threshold below which friction model switches to static.
+        rotational_ic : float, optional
+            Initial rotational displacement (degrees).
+        angular_velocity_ic : float, optional
+            Initial angular velocity.
+        mu_dyn_rot : float, optional
+            Dynamic friction coefficient (rotational).
+        mu_stat_rot : float, optional
+            Static friction coefficient (rotational).
+        max_fric_rot : float, optional
+            Maximum torsional friction torque permitted.
+        """
         ...
 
     def createCylindrical(self,
@@ -674,6 +778,51 @@ class ConstraintManager(Manager.SubclassManager):
                           rotational_ic: float = None,
                           angular_velocity_ic: float = None,
                           **kwargs) -> CylindricalJoint:
+        """Create a cylindrical joint between two parts.
+
+        A cylindrical joint permits both translation and rotation along/about a
+        common axis (2 DOF).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the joint.
+        i_part : Part, optional
+            I-part. When provided with ``j_part``, Adams auto-creates I/J markers
+            at ``location``. Mutually exclusive with ``i_marker``/``i_marker_name``.
+        j_part : Part, optional
+            J-part.
+        i_marker : Marker, optional
+            Explicit I-marker.
+        j_marker : Marker, optional
+            Explicit J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        location : list of float, optional
+            [x, y, z] coordinates for auto-generated markers.
+        orientation : list of float, optional
+            [psi, theta, phi] Euler angles defining the joint axis.
+        in_plane_orientation : list of float, optional
+            Three-component vector in the joint plane.
+        along_axis_orientation : list of float, optional
+            Three-component vector along the joint axis.
+        relative_to : Object, optional
+            Reference object for ``location`` and orientation vectors.
+        comments : str, optional
+            Descriptive comments.
+        adams_id : int, optional
+            Adams numeric ID.
+        translational_ic : float, optional
+            Initial translational displacement.
+        velocity_ic : float, optional
+            Initial translational velocity.
+        rotational_ic : float, optional
+            Initial rotational displacement (degrees).
+        angular_velocity_ic : float, optional
+            Initial angular velocity.
+        """
         ...
 
     def createUniversal(self,
@@ -692,6 +841,44 @@ class ConstraintManager(Manager.SubclassManager):
                         comments: str = None,
                         adams_id: int = None,
                         **kwargs):
+        """Create a universal (Cardan/Hooke) joint between two parts.
+
+        A universal joint transmits rotation between two shafts whose axes
+        intersect at a point and allows angular misalignment (2 rotational DOF
+        removed, 1 relative rotation permitted per shaft).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the joint.
+        i_part : Part, optional
+            I-part. When provided with ``j_part``, Adams auto-creates I/J markers
+            at ``location``. Mutually exclusive with ``i_marker``/``i_marker_name``.
+        j_part : Part, optional
+            J-part.
+        i_marker : Marker, optional
+            Explicit I-marker.
+        j_marker : Marker, optional
+            Explicit J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        location : list of float, optional
+            [x, y, z] coordinates for auto-generated markers.
+        orientation : list of float, optional
+            [psi, theta, phi] Euler angles.
+        in_plane_orientation : list of float, optional
+            Three-component vector in the joint plane.
+        along_axis_orientation : list of float, optional
+            Three-component vector along the joint axis.
+        relative_to : Object, optional
+            Reference object for ``location`` and orientation vectors.
+        comments : str, optional
+            Descriptive comments.
+        adams_id : int, optional
+            Adams numeric ID.
+        """
         ...
 
     def createSpherical(self,
@@ -710,6 +897,43 @@ class ConstraintManager(Manager.SubclassManager):
                         comments: str = None,
                         adams_id: int = None,
                         **kwargs):
+        """Create a spherical (ball) joint between two parts.
+
+        A spherical joint permits all three rotational DOF while constraining
+        all three translational DOF (3 DOF removed).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the joint.
+        i_part : Part, optional
+            I-part. When provided with ``j_part``, Adams auto-creates I/J markers
+            at ``location``. Mutually exclusive with ``i_marker``/``i_marker_name``.
+        j_part : Part, optional
+            J-part.
+        i_marker : Marker, optional
+            Explicit I-marker.
+        j_marker : Marker, optional
+            Explicit J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        location : list of float, optional
+            [x, y, z] coordinates for auto-generated markers.
+        orientation : list of float, optional
+            [psi, theta, phi] Euler angles.
+        in_plane_orientation : list of float, optional
+            Three-component vector in the joint plane.
+        along_axis_orientation : list of float, optional
+            Three-component vector along the joint axis.
+        relative_to : Object, optional
+            Reference object for ``location`` and orientation vectors.
+        comments : str, optional
+            Descriptive comments.
+        adams_id : int, optional
+            Adams numeric ID.
+        """
         ...
 
     def createPlanar(self,
@@ -728,6 +952,43 @@ class ConstraintManager(Manager.SubclassManager):
                      comments: str = None,
                      adams_id: int = None,
                      **kwargs):
+        """Create a planar joint between two parts.
+
+        A planar joint constrains motion to a plane, permitting two translational
+        and one rotational DOF (3 DOF removed).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the joint.
+        i_part : Part, optional
+            I-part. When provided with ``j_part``, Adams auto-creates I/J markers
+            at ``location``. Mutually exclusive with ``i_marker``/``i_marker_name``.
+        j_part : Part, optional
+            J-part.
+        i_marker : Marker, optional
+            Explicit I-marker.
+        j_marker : Marker, optional
+            Explicit J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        location : list of float, optional
+            [x, y, z] coordinates for auto-generated markers.
+        orientation : list of float, optional
+            [psi, theta, phi] Euler angles.
+        in_plane_orientation : list of float, optional
+            Three-component vector in the joint plane.
+        along_axis_orientation : list of float, optional
+            Three-component vector along the joint axis.
+        relative_to : Object, optional
+            Reference object for ``location`` and orientation vectors.
+        comments : str, optional
+            Descriptive comments.
+        adams_id : int, optional
+            Adams numeric ID.
+        """
         ...
 
     def createConvel(self,
@@ -746,6 +1007,43 @@ class ConstraintManager(Manager.SubclassManager):
                      comments: str = None,
                      adams_id: int = None,
                      **kwargs):
+        """Create a constant velocity (convel) joint between two parts.
+
+        A constant velocity joint transmits rotation between two shafts at a
+        constant angular velocity ratio regardless of the shaft angle.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the joint.
+        i_part : Part, optional
+            I-part. When provided with ``j_part``, Adams auto-creates I/J markers
+            at ``location``. Mutually exclusive with ``i_marker``/``i_marker_name``.
+        j_part : Part, optional
+            J-part.
+        i_marker : Marker, optional
+            Explicit I-marker.
+        j_marker : Marker, optional
+            Explicit J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        location : list of float, optional
+            [x, y, z] coordinates for auto-generated markers.
+        orientation : list of float, optional
+            [psi, theta, phi] Euler angles.
+        in_plane_orientation : list of float, optional
+            Three-component vector in the joint plane.
+        along_axis_orientation : list of float, optional
+            Three-component vector along the joint axis.
+        relative_to : Object, optional
+            Reference object for ``location`` and orientation vectors.
+        comments : str, optional
+            Descriptive comments.
+        adams_id : int, optional
+            Adams numeric ID.
+        """
         ...
 
     def createFixed(self,
@@ -764,6 +1062,42 @@ class ConstraintManager(Manager.SubclassManager):
                     comments: str = None,
                     adams_id: int = None,
                     **kwargs) -> FixedJoint:
+        """Create a fixed joint between two parts.
+
+        A fixed joint rigidly connects two parts, removing all 6 relative DOF.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the joint.
+        i_part : Part, optional
+            I-part. When provided with ``j_part``, Adams auto-creates I/J markers
+            at ``location``. Mutually exclusive with ``i_marker``/``i_marker_name``.
+        j_part : Part, optional
+            J-part.
+        i_marker : Marker, optional
+            Explicit I-marker.
+        j_marker : Marker, optional
+            Explicit J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        location : list of float, optional
+            [x, y, z] coordinates for auto-generated markers.
+        orientation : list of float, optional
+            [psi, theta, phi] Euler angles.
+        in_plane_orientation : list of float, optional
+            Three-component vector in the joint plane.
+        along_axis_orientation : list of float, optional
+            Three-component vector along the joint axis.
+        relative_to : Object, optional
+            Reference object for ``location`` and orientation vectors.
+        comments : str, optional
+            Descriptive comments.
+        adams_id : int, optional
+            Adams numeric ID.
+        """
         ...
 
     def createHooke(self,
@@ -772,7 +1106,26 @@ class ConstraintManager(Manager.SubclassManager):
                     j_marker: Marker.Marker = None,
                     i_marker_name: str = None,
                     j_marker_name: str = None,
-                    **kwargs): ...
+                    **kwargs) -> HookeJoint:
+        """Create a Hooke (universal) joint.
+
+        .. deprecated::
+            Use :meth:`createUniversal` instead.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the joint.
+        i_marker : Marker, optional
+            I-marker.
+        j_marker : Marker, optional
+            J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createRackpin(self,
                       name: str = None,
@@ -781,7 +1134,29 @@ class ConstraintManager(Manager.SubclassManager):
                       i_marker_name: str = None,
                       j_marker_name: str = None,
                       diameter_of_pitch: float = None,
-                      **kwargs) -> RackpinJoint: ...
+                      **kwargs) -> RackpinJoint:
+        """Create a rack-and-pinion joint.
+
+        Relates the rotational motion of a pinion (revolute joint) to the
+        translational motion of a rack (translational joint).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the joint.
+        i_marker : Marker, optional
+            I-marker (on the pinion part).
+        j_marker : Marker, optional
+            J-marker (on the rack part).
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        diameter_of_pitch : float, optional
+            Pitch diameter of the pinion that relates one full revolution to
+            the translational displacement of the rack.
+        """
+        ...
 
     def createScrew(self,
                     name: str = None,
@@ -791,7 +1166,29 @@ class ConstraintManager(Manager.SubclassManager):
                     i_marker_name: str = None,
                     j_marker_name: str = None,
                     pitch: float = None,
-                    **kwargs) -> ScrewJoint: ...
+                    **kwargs) -> ScrewJoint:
+        """Create a screw joint.
+
+        A screw joint couples translation and rotation along a common axis
+        such that one full revolution equals a translational displacement of
+        ``pitch``.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the joint.
+        i_marker : Marker, optional
+            I-marker.
+        j_marker : Marker, optional
+            J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        pitch : float, optional
+            Translational displacement per full revolution of the screw.
+        """
+        ...
 
     def createAtPoint(self,
                       name: str = None,
@@ -800,7 +1197,26 @@ class ConstraintManager(Manager.SubclassManager):
                       j_marker: Marker.Marker = None,
                       i_marker_name: str = None,
                       j_marker_name: str = None,
-                      **kwargs) -> AtPointJPrim: ...
+                      **kwargs) -> AtPointJPrim:
+        """Create an at-point (JPRIM) constraint.
+
+        Constrains the origin of the I-marker to coincide with the origin of
+        the J-marker (3 translational DOF removed).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker.
+        j_marker : Marker, optional
+            J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createInline(self,
                      name: str = None,
@@ -809,7 +1225,29 @@ class ConstraintManager(Manager.SubclassManager):
                      j_marker: Marker.Marker = None,
                      i_marker_name: str = None,
                      j_marker_name: str = None,
-                     **kwargs) -> InLineJPrim: ...
+                     **kwargs) -> InLineJPrim:
+        """Create an in-line (JPRIM) constraint.
+
+        Constrains the origin of the I-marker to lie on the z-axis of the
+        J-marker (2 translational DOF removed).
+
+        .. deprecated::
+            Use :meth:`createInLine` instead.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker.
+        j_marker : Marker, optional
+            J-marker (its z-axis defines the line).
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createInLine(self,
                      name: str = None,
@@ -818,7 +1256,26 @@ class ConstraintManager(Manager.SubclassManager):
                      j_marker: Marker.Marker = None,
                      i_marker_name: str = None,
                      j_marker_name: str = None,
-                     **kwargs) -> InLineJPrim: ...
+                     **kwargs) -> InLineJPrim:
+        """Create an in-line (JPRIM) constraint.
+
+        Constrains the origin of the I-marker to lie on the z-axis of the
+        J-marker (2 translational DOF removed).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker.
+        j_marker : Marker, optional
+            J-marker (its z-axis defines the line).
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createInPlane(self,
                       name: str = None,
@@ -827,7 +1284,26 @@ class ConstraintManager(Manager.SubclassManager):
                       j_marker: Marker.Marker = None,
                       i_marker_name: str = None,
                       j_marker_name: str = None,
-                      **kwargs) -> InPlaneJPrim: ...
+                      **kwargs) -> InPlaneJPrim:
+        """Create an in-plane (JPRIM) constraint.
+
+        Constrains the origin of the I-marker to lie in the x-y plane of the
+        J-marker (1 translational DOF removed).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker.
+        j_marker : Marker, optional
+            J-marker (its x-y plane defines the constraint plane).
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createOrientation(self,
                           name: str = None,
@@ -836,7 +1312,26 @@ class ConstraintManager(Manager.SubclassManager):
                           j_marker: Marker.Marker = None,
                           i_marker_name: str = None,
                           j_marker_name: str = None,
-                          **kwargs) -> OrientationJPrim: ...
+                          **kwargs) -> OrientationJPrim:
+        """Create an orientation (JPRIM) constraint.
+
+        Constrains the orientation of the I-marker axes to match those of the
+        J-marker (3 rotational DOF removed).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker.
+        j_marker : Marker, optional
+            J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createParallel(self,
                        name: str = None,
@@ -845,7 +1340,26 @@ class ConstraintManager(Manager.SubclassManager):
                        j_marker: Marker.Marker = None,
                        i_marker_name: str = None,
                        j_marker_name: str = None,
-                       **kwargs) -> ParallelJPrim: ...
+                       **kwargs) -> ParallelJPrim:
+        """Create a parallel-axes (JPRIM) constraint.
+
+        Constrains the z-axis of the I-marker to remain parallel to the z-axis
+        of the J-marker (2 rotational DOF removed).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker.
+        j_marker : Marker, optional
+            J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createPerpendicular(self,
                             name: str = None,
@@ -854,7 +1368,26 @@ class ConstraintManager(Manager.SubclassManager):
                             j_marker: Marker.Marker = None,
                             i_marker_name: str = None,
                             j_marker_name: str = None,
-                            **kwargs) -> PerpendicularJPrim: ...
+                            **kwargs) -> PerpendicularJPrim:
+        """Create a perpendicular-axes (JPRIM) constraint.
+
+        Constrains the z-axis of the I-marker to remain perpendicular to the
+        z-axis of the J-marker (1 rotational DOF removed).
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker.
+        j_marker : Marker, optional
+            J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createPointPoint(self,
                          name: str = None,
@@ -863,7 +1396,26 @@ class ConstraintManager(Manager.SubclassManager):
                          j_marker: Marker.Marker = None,
                          i_marker_name: str = None,
                          j_marker_name: str = None,
-                         **kwargs) -> PointPointJPrim: ...
+                         **kwargs) -> PointPointJPrim:
+        """Create a point-to-point distance (JPRIM) constraint.
+
+        Constrains the distance between the origins of the I-marker and
+        J-marker to a constant value.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker.
+        j_marker : Marker, optional
+            J-marker.
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createPointLine(self,
                         name: str = None,
@@ -872,7 +1424,26 @@ class ConstraintManager(Manager.SubclassManager):
                         j_marker: Marker.Marker = None,
                         i_marker_name: str = None,
                         j_marker_name: str = None,
-                        **kwargs) -> PointLineConstraint: ...
+                        **kwargs) -> PointLineConstraint:
+        """Create a point-to-line distance (JPRIM) constraint.
+
+        Constrains the perpendicular distance from the origin of the I-marker
+        to the z-axis of the J-marker to a constant value.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker (point).
+        j_marker : Marker, optional
+            J-marker (its z-axis defines the line).
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createPointPlane(self,
                          name: str = None,
@@ -881,7 +1452,26 @@ class ConstraintManager(Manager.SubclassManager):
                          j_marker: Marker.Marker = None,
                          i_marker_name: str = None,
                          j_marker_name: str = None,
-                         **kwargs) -> PointPlaneConstraint: ...
+                         **kwargs) -> PointPlaneConstraint:
+        """Create a point-to-plane distance (JPRIM) constraint.
+
+        Constrains the perpendicular distance from the origin of the I-marker
+        to the x-y plane of the J-marker to a constant value.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker (point).
+        j_marker : Marker, optional
+            J-marker (its x-y plane defines the constraint plane).
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createLineLine(self,
                        name: str = None,
@@ -890,7 +1480,26 @@ class ConstraintManager(Manager.SubclassManager):
                        j_marker: Marker.Marker = None,
                        i_marker_name: str = None,
                        j_marker_name: str = None,
-                       **kwargs) -> LineLineConstraint: ...
+                       **kwargs) -> LineLineConstraint:
+        """Create a line-to-line distance (JPRIM) constraint.
+
+        Constrains the perpendicular distance between the z-axes of the
+        I-marker and J-marker to a constant value.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker (its z-axis defines the first line).
+        j_marker : Marker, optional
+            J-marker (its z-axis defines the second line).
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createLinePlane(self,
                         name: str = None,
@@ -899,7 +1508,26 @@ class ConstraintManager(Manager.SubclassManager):
                         j_marker: Marker.Marker = None,
                         i_marker_name: str = None,
                         j_marker_name: str = None,
-                        **kwargs) -> LinePlaneConstraint: ...
+                        **kwargs) -> LinePlaneConstraint:
+        """Create a line-to-plane distance (JPRIM) constraint.
+
+        Constrains the perpendicular distance from the z-axis of the I-marker
+        to the x-y plane of the J-marker to a constant value.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker (its z-axis defines the line).
+        j_marker : Marker, optional
+            J-marker (its x-y plane defines the constraint plane).
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createPlanePlane(self,
                          name: str = None,
@@ -908,7 +1536,26 @@ class ConstraintManager(Manager.SubclassManager):
                          j_marker: Marker.Marker = None,
                          i_marker_name: str = None,
                          j_marker_name: str = None,
-                         **kwargs) -> PlanePlaneConstraint: ...
+                         **kwargs) -> PlanePlaneConstraint:
+        """Create a plane-to-plane distance (JPRIM) constraint.
+
+        Constrains the perpendicular distance between the x-y planes of the
+        I-marker and J-marker to a constant value.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker (its x-y plane defines the first plane).
+        j_marker : Marker, optional
+            J-marker (its x-y plane defines the second plane).
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        """
+        ...
 
     def createPointCurve(self,
                          name: str = None,
@@ -924,7 +1571,42 @@ class ConstraintManager(Manager.SubclassManager):
                          ic_ref_marker: Marker.Marker = None,
                          curve_name: str = None,
                          curve: DataElement.CurveData = None,
-                         **kwargs) -> PointCurveConstraint: ...
+                         **kwargs) -> PointCurveConstraint:
+        """Create a point-on-curve constraint.
+
+        Constrains the origin of the I-marker to remain on a specified curve.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_marker : Marker, optional
+            I-marker (the constrained point).
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_floating_marker : Marker, optional
+            Floating J-marker that tracks the contact point on the curve.
+        j_floating_marker_name : str, optional
+            Full name of the floating J-marker.
+        ref_marker : Marker, optional
+            Reference marker that defines the curve coordinate system.
+            If omitted, Adams derives it from the curve data.
+        ref_marker_name : str, optional
+            Full name of the reference marker.
+        displacement_ic : float, optional
+            Initial x, y, z coordinates of the contact point on the curve.
+        velocity_ic : float, optional
+            Initial velocity along the curve.
+        ic_ref_marker : Marker, optional
+            Reference marker for initial conditions.
+        ic_ref_marker_name : str, optional
+            Full name of the IC reference marker.
+        curve : CurveData, optional
+            Curve data element object.
+        curve_name : str, optional
+            Full name of the curve data element.
+        """
+        ...
 
     def createCurveCurve(self,
                          name: str = None,
@@ -948,7 +1630,59 @@ class ConstraintManager(Manager.SubclassManager):
                          j_ic_ref_marker_name: str = None,
                          j_displacement_ic: float = None,
                          j_velocity_ic: float = None,
-                         **kwargs) -> CurveCurveConstraint: ...
+                         **kwargs) -> CurveCurveConstraint:
+        """Create a curve-on-curve constraint.
+
+        Constrains a point on the I-side curve to remain in contact with a
+        point on the J-side curve.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the constraint.
+        i_curve : CurveData, optional
+            I-side curve data element object.
+        i_curve_name : str, optional
+            Full name of the I-side curve data element.
+        i_floating_marker : Marker, optional
+            Floating I-marker that tracks the contact point on the I-side curve.
+        i_floating_marker_name : str, optional
+            Full name of the floating I-marker.
+        i_ref_marker : Marker, optional
+            Reference marker for the I-side curve coordinate system.
+            If omitted, Adams derives it from the curve data.
+        i_ref_marker_name : str, optional
+            Full name of the I-side reference marker.
+        i_ic_ref_marker : Marker, optional
+            Reference marker for I-side initial conditions.
+        i_ic_ref_marker_name : str, optional
+            Full name of the I-side IC reference marker.
+        i_displacement_ic : float, optional
+            Initial contact point coordinates on the I-side curve.
+        i_velocity_ic : float, optional
+            Initial velocity along the I-side curve.
+        j_curve : CurveData, optional
+            J-side curve data element object.
+        j_curve_name : str, optional
+            Full name of the J-side curve data element.
+        j_floating_marker : Marker, optional
+            Floating J-marker that tracks the contact point on the J-side curve.
+        j_floating_marker_name : str, optional
+            Full name of the floating J-marker.
+        j_ref_marker : Marker, optional
+            Reference marker for the J-side curve coordinate system.
+        j_ref_marker_name : str, optional
+            Full name of the J-side reference marker.
+        j_ic_ref_marker : Marker, optional
+            Reference marker for J-side initial conditions.
+        j_ic_ref_marker_name : str, optional
+            Full name of the J-side IC reference marker.
+        j_displacement_ic : float, optional
+            Initial contact point coordinates on the J-side curve.
+        j_velocity_ic : float, optional
+            Initial velocity along the J-side curve.
+        """
+        ...
 
     def createUserDefined(self,
                           name: str = None,

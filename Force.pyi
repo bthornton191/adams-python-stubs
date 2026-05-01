@@ -515,7 +515,31 @@ class ForceManager(Manager.SubclassManager):
                                         stiffness: float = None,
                                         damping: float = None,
                                         displacement_at_preload: float = None,
-                                        **kwargs) -> TranslationalSpringDamper: ...
+                                        **kwargs) -> TranslationalSpringDamper:
+        """Create a translational spring-damper force.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the translational spring-damper.
+        i_marker : Marker, optional
+            Action marker.
+        j_marker : Marker, optional
+            Reaction marker.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_marker_name : str, optional
+            Full name of the reaction marker.
+        force_preload : float, optional
+            Force preload value.
+        stiffness : float, optional
+            Linear stiffness coefficient.
+        damping : float, optional
+            Linear damping coefficient.
+        displacement_at_preload : float, optional
+            Length at which the preload acts.
+        """
+        ...
 
     def createBushing(self,
                       i_marker: Marker = None,
@@ -528,7 +552,33 @@ class ForceManager(Manager.SubclassManager):
                       tdamping: List[float] = None,
                       tstiffness: List[float] = None,
                       torque_preload: List[float] = None,
-                      **kwargs) -> Bushing: ...
+                      **kwargs) -> Bushing:
+        """Create a bushing (six-component spring-damper) force.
+
+        Parameters
+        ----------
+        i_marker : Marker, optional
+            Action marker.
+        j_marker : Marker, optional
+            Reaction marker.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_marker_name : str, optional
+            Full name of the reaction marker.
+        force_preload : list of float, optional
+            Translational force preload [fx, fy, fz].
+        stiffness : list of float, optional
+            Translational stiffness coefficients [kx, ky, kz].
+        damping : list of float, optional
+            Translational damping coefficients [cx, cy, cz].
+        tdamping : list of float, optional
+            Torsional damping coefficients [ctx, cty, ctz].
+        tstiffness : list of float, optional
+            Torsional stiffness coefficients [ktx, kty, ktz].
+        torque_preload : list of float, optional
+            Torsional torque preload [tx, ty, tz].
+        """
+        ...
 
     def createSingleComponentForce(self,
                                    name: str,
@@ -546,7 +596,43 @@ class ForceManager(Manager.SubclassManager):
                                    orientation: List[float] = None,
                                    type_of_freedom: str = 'translational',
                                    relative_to: Marker = None,
-                                   **kwargs) -> SingleComponentForce: ...
+                                   **kwargs) -> SingleComponentForce:
+        """Create a single-component force or torque.
+
+        Parameters
+        ----------
+        name : str
+            Name of the force.
+        function : str, optional
+            Expression defining the force/torque magnitude.
+        i_marker : Marker, optional
+            Action marker. Mutually exclusive with ``i_part``.
+        j_marker : Marker, optional
+            Reaction marker. Mutually exclusive with ``j_part``.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_marker_name : str, optional
+            Full name of the reaction marker.
+        i_part : Part, optional
+            Action part (Adams auto-creates marker). Mutually exclusive with ``i_marker``.
+        j_part : Part, optional
+            Reaction part. Mutually exclusive with ``j_marker``.
+        i_part_name : str, optional
+            Full name of the action part.
+        j_part_name : str, optional
+            Full name of the reaction part.
+        action_only : bool, optional
+            If True, force acts on the I-part only (no reaction on J).
+        location : list of float, optional
+            [x, y, z] coordinates for auto-created markers.
+        orientation : list of float, optional
+            [psi, theta, phi] Euler angles for auto-created markers.
+        type_of_freedom : str, optional
+            ``'translational'`` (default) or ``'rotational'``.
+        relative_to : Marker, optional
+            Reference frame for ``location`` and ``orientation``.
+        """
+        ...
 
     def createAppliedTorque(self,
                             name: str = None,
@@ -614,7 +700,50 @@ class ForceManager(Manager.SubclassManager):
                    y_shear_area_ratio: float = None,
                    z_shear_area_ratio: float = None,
                    formulation: str = None,
-                   **kwargs) -> Beam: ...
+                   **kwargs) -> Beam:
+        """Create a linear beam force element (BEAM).
+
+        Represents the elastic compliance of a slender beam using Euler-Bernoulli
+        or Timoshenko beam theory.
+
+        Parameters
+        ----------
+        name : str
+            Name of the beam element.
+        i_marker : Marker, optional
+            I-marker (attached to the I-end of the beam).
+        j_marker : Marker, optional
+            J-marker (attached to the J-end of the beam).
+        i_marker_name : str, optional
+            Full name of the I-marker.
+        j_marker_name : str, optional
+            Full name of the J-marker.
+        length : float, optional
+            Unstressed length of the beam. Defaults to the I-J marker distance.
+        damping_ratio : float, optional
+            Damping ratio. Mutually exclusive with ``matrix_of_damping_terms``.
+        matrix_of_damping_terms : list of float, optional
+            36-element damping matrix.
+        shear_modulus : float, optional
+            Shear modulus (G).
+        youngs_modulus : float, optional
+            Young's modulus (E).
+        ixx : float, optional
+            Area moment of inertia about the x-axis (torsion).
+        iyy : float, optional
+            Area moment of inertia about the y-axis (bending).
+        izz : float, optional
+            Area moment of inertia about the z-axis (bending).
+        area_of_cross_section : float, optional
+            Cross-sectional area.
+        y_shear_area_ratio : float, optional
+            Ratio of shear area to total area for y-direction shear.
+        z_shear_area_ratio : float, optional
+            Ratio of shear area to total area for z-direction shear.
+        formulation : str, optional
+            ``'timoshenko'`` (includes shear deformation) or ``'euler'`` (default).
+        """
+        ...
 
     def createField(self,
                     name: str = None,
@@ -714,7 +843,33 @@ class ForceManager(Manager.SubclassManager):
                          scale_function: str = None,
                          load_case=None,
                          force_function: str = None,
-                         **kwargs) -> ModalForce: ...
+                         **kwargs) -> ModalForce:
+        """Create a modal force element on a flexible body.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the modal force.
+        flexible_body : FlexBody, optional
+            Flexible body to apply the force to.
+        flexible_body_name : str, optional
+            Full name of the flexible body.
+        reaction_part : FloatingMarker, optional
+            Reaction part or floating marker.
+        reaction_part_name : str, optional
+            Full name of the reaction part.
+        user_function : str, optional
+            Values passed to the user subroutine.
+        routine : str, optional
+            Name of the user subroutine.
+        scale_function : str, optional
+            Expression to scale the modal force.
+        load_case : optional
+            Load case object or identifier.
+        force_function : str, optional
+            Expression defining the force magnitude.
+        """
+        ...
 
     def createGeneralForce(self,
                            name: str,
@@ -732,7 +887,46 @@ class ForceManager(Manager.SubclassManager):
                            xyz_force_function: str = None,
                            user_function: str = None,
                            routine: str = None,
-                           **kwargs) -> ForceVector: ...
+                           **kwargs) -> ForceVector:
+        """Create a general force vector element.
+
+        Specify either component functions (``x/y/z_force_function``) or a
+        single vector function (``xyz_force_function``), but not both.
+
+        Parameters
+        ----------
+        name : str
+            Name of the general force.
+        adams_id : int
+            Adams ID.
+        comments : str
+            Comments for the force element.
+        i_marker : Marker, optional
+            Action marker.
+        i_marker_name : str, optional
+            Full name of the action marker.
+        j_floating_marker : Marker, optional
+            Reaction floating marker.
+        j_floating_marker_name : str, optional
+            Full name of the reaction floating marker.
+        ref_marker : Marker, optional
+            Reference frame marker for component resolution.
+        ref_marker_name : str, optional
+            Full name of the reference marker.
+        x_force_function : str, optional
+            Expression for the x-component of force.
+        y_force_function : str, optional
+            Expression for the y-component of force.
+        z_force_function : str, optional
+            Expression for the z-component of force.
+        xyz_force_function : str, optional
+            Single expression for the full force vector.
+        user_function : str, optional
+            User function values.
+        routine : str, optional
+            Name of the user subroutine.
+        """
+        ...
 
     def createMultiPointForce(self,
                               name: str = None,

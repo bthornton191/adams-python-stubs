@@ -421,7 +421,71 @@ class PartManager(Manager.SubclassManager):
                        bdf_file_name: str = None,
                        generalized_damping: Literal['off', 'full', 'internal_only'] = None,
                        representation: Literal['rigid', 'modal', 'nonlinear', 'nforce'] = None,
-                       **kwargs) -> FlexBody: ...
+                       **kwargs) -> FlexBody:
+        """Create a flexible body part from a modal neutral file or BDF file.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the flexible body.
+        vx, vy, vz : float, optional
+            Initial translational velocity components.
+        wx, wy, wz : float, optional
+            Initial angular velocity components.
+        vm : float or Marker, optional
+            Reference marker for initial translational velocities.
+        vm_name : str, optional
+            Full name of the translational velocity reference marker.
+        wm : float or Marker, optional
+            Reference marker for initial angular velocities.
+        wm_name : str, optional
+            Full name of the angular velocity reference marker.
+        md_db_file_name : str, optional
+            Path to an MSC Nastran or modal database (.mdb/.mnf) file.
+        index_in_database : int, optional
+            Index of the component in the modal database.
+        damping_ratio : str, optional
+            Modal damping ratio expression.
+        damping_user_function : list of float or int, optional
+            User function values for damping.
+        damping_routine : str, optional
+            User subroutine name for damping.
+        dynamic_limit : float, optional
+            Maximum modal displacement for stability.
+        exact_x, exact_y, exact_z : float, optional
+            Constrain specific translational DOF during IC analysis.
+        exact_psi, exact_theta, exact_phi : float, optional
+            Constrain specific rotational DOF during IC analysis.
+        invariants : list of bool, optional
+            Which modal invariants to use during simulation.
+        characteristic_length : float, optional
+            Reference length for geometric stiffness (default: auto).
+        stability_factor : float, optional
+            Multiplier on the geometric stiffness matrix.
+        exact_coordinates : list of int, optional
+            Generalized coordinates held fixed during IC analysis.
+        selected_modes : list of int, optional
+            Mode numbers to include (default: all).
+        modal_exact_coordinates : list of int, optional
+            Modal coordinates held fixed during IC analysis.
+        initial_modal_displacements : list of float, optional
+            Initial modal displacement values.
+        initial_modal_velocities : list of float, optional
+            Initial modal velocity values.
+        node_count : int, optional
+            Number of nodes (informational).
+        mode_count : int, optional
+            Number of modes included.
+        modal_neutral_file_name : str, optional
+            Path to a modal neutral file (.mnf).
+        bdf_file_name : str, optional
+            Path to a Nastran BDF file for CMS flexible body creation.
+        generalized_damping : str, optional
+            ``'off'``, ``'full'``, or ``'internal_only'``.
+        representation : str, optional
+            ``'rigid'``, ``'modal'``, ``'nonlinear'``, or ``'nforce'``.
+        """
+        ...
 
     def createPointMass(self,
                         name: str = None,
