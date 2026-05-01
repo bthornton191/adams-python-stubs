@@ -12,6 +12,7 @@ from typing import ItemsView, Iterable, KeysView, List, Literal, Optional, Tuple
 class GeometryModelManager(Manager.SubclassManager):
     type_map: dict
     def __init__(self, managedClass, parent) -> None: ...
+
     def createSpringDamper(self,
                            name: str = None,
                            i_marker: Marker = None,
@@ -35,15 +36,16 @@ class GeometryModelManager(Manager.SubclassManager):
             Full name of the second endpoint marker.
         """
         ...
+
     def createForce(self,
                     name: str = None,
                     applied_at_marker: Marker = None,
                     applied_at_marker_name: str = None,
-                    force_element = None,
-                    joint = None,
-                    jprim = None,
-                    point_curve = None,
-                    curve_curve = None,
+                    force_element=None,
+                    joint=None,
+                    jprim=None,
+                    point_curve=None,
+                    curve_curve=None,
                     **kwargs) -> GeometryForce:
         """Create a force graphic.
 
@@ -67,9 +69,10 @@ class GeometryModelManager(Manager.SubclassManager):
             Curve-curve constraint to visualize.
         """
         ...
+
     def createGContact(self,
                        name: str = None,
-                       contact_element = None,
+                       contact_element=None,
                        contact_element_name: str = None,
                        adams_id: int = None,
                        **kwargs) -> GeometryGContact:

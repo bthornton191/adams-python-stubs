@@ -465,6 +465,7 @@ class ForceManager(Manager.SubclassManager):
             Name of the user subroutine.
         """
         ...
+
     def createRotationalSpringDamper(self,
                                      name: str = None,
                                      i_marker: Marker = None,
@@ -548,12 +549,12 @@ class ForceManager(Manager.SubclassManager):
                                    **kwargs) -> SingleComponentForce: ...
 
     def createAppliedTorque(self,
-                           name: str = None,
-                           i_marker: Marker = None,
-                           j_marker: Marker = None,
-                           i_marker_name: str = None,
-                           j_marker_name: str = None,
-                           **kwargs) -> AppliedTorque:
+                            name: str = None,
+                            i_marker: Marker = None,
+                            j_marker: Marker = None,
+                            i_marker_name: str = None,
+                            j_marker_name: str = None,
+                            **kwargs) -> AppliedTorque:
         """Create an applied torque force.
 
         Parameters
@@ -570,6 +571,7 @@ class ForceManager(Manager.SubclassManager):
             Full name of the reaction marker.
         """
         ...
+
     def createAppliedForce(self,
                            name: str = None,
                            i_marker: Marker = None,
@@ -670,6 +672,7 @@ class ForceManager(Manager.SubclassManager):
             Rotational preload offset [x, y, z] in degrees.
         """
         ...
+
     def createFriction(self,
                        name: str = None,
                        joint: 'Constraint' = None,

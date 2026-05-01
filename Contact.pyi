@@ -144,6 +144,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def createPointToCurve(self, name: str = None, **kwargs) -> Contact:
         """Create a point-to-curve contact.
 
@@ -153,6 +154,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def createPointToPlane(self, name: str = None, **kwargs) -> Contact:
         """Create a point-to-plane contact.
 
@@ -162,6 +164,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def createCurveToPlane(self, name: str = None, **kwargs) -> Contact:
         """Create a curve-to-plane contact.
 
@@ -171,6 +174,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def createSphereToPlane(self, name: str = None, **kwargs) -> Contact:
         """Create a sphere-to-plane contact.
 
@@ -180,6 +184,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def createSphereToSphere(self, name: str = None, **kwargs) -> Contact:
         """Create a sphere-to-sphere contact.
 
@@ -189,6 +194,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def createCylinderToCylinder(self, name: str = None, **kwargs) -> Contact:
         """Create a cylinder-to-cylinder contact.
 
@@ -198,6 +204,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def createFlexToFlex(self, name: str = None, **kwargs) -> Contact:
         """Create a flex-to-flex contact.
 
@@ -207,6 +214,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def createFlexEdgeToCurve(self, name: str = None, **kwargs) -> Contact:
         """Create a flex-edge-to-curve contact.
 
@@ -216,6 +224,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def createFlexEdgeToFlexEdge(self, name: str = None, **kwargs) -> Contact:
         """Create a flex-edge-to-flex-edge contact.
 
@@ -225,6 +234,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def createFlexEdgeToPlane(self, name: str = None, **kwargs) -> Contact:
         """Create a flex-edge-to-plane contact.
 
@@ -234,6 +244,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def createFlexToSolid(self, name: str = None, **kwargs) -> Contact:
         """Create a flex-to-solid contact.
 
@@ -243,6 +254,7 @@ class ContactManager(Manager.AdamsManager):
             Name of the contact.
         """
         ...
+
     def __getitem__(self, name) -> Contact: ...
     def __iter__(self, *args) -> Iterable[str]: ...
     def items(self) -> ItemsView[str, Contact]: ...

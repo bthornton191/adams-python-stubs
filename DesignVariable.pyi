@@ -63,6 +63,7 @@ class DesignVariableManager(Manager.SubclassManager):
     rDv: str
     sDv: str
     oDv: str
+
     def createInteger(self,
                       name: str = None,
                       value: Union[int, List[int]] = None,
@@ -89,6 +90,7 @@ class DesignVariableManager(Manager.SubclassManager):
             Whether to enforce the allowed values constraint.
         """
         ...
+
     def createReal(self,
                    name: str = None,
                    value: Union[float, List[float]] = None,

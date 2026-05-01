@@ -446,6 +446,7 @@ class PartManager(Manager.SubclassManager):
             Mass of the point mass.
         """
         ...
+
     def createExternalSystem(self,
                              name: str = None,
                              location: List[float] = None,
@@ -466,16 +467,17 @@ class PartManager(Manager.SubclassManager):
             Reference frame for location and orientation.
         """
         ...
+
     def createFEPart(self,
                      name: str = None,
-                     i_location = None,
-                     j_location = None,
-                     ref_curve = None,
+                     i_location=None,
+                     j_location=None,
+                     ref_curve=None,
                      coordinates: List[float] = None,
                      cratiok: float = 1.0,
                      cratiom: float = 1.0,
-                     material_type = None,
-                     section_label = None,
+                     material_type=None,
+                     section_label=None,
                      **kwargs) -> FEPart:
         """Create a finite element part.
 
@@ -504,6 +506,7 @@ class PartManager(Manager.SubclassManager):
             Cross-section definition.
         """
         ...
+
     def __getitem__(self, name) -> Part: ...
     def __iter__(self, *args) -> Iterable[str]: ...
     def items(self) -> ItemsView[str, Part]: ...

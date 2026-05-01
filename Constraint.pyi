@@ -432,6 +432,7 @@ class ConstraintManager(Manager.SubclassManager):
             ``'rotational'``. Required if any joint is Cylindrical.
         """
         ...
+
     def createGear(self,
                    name: str = None,
                    joint_1: Joint = None,
@@ -462,6 +463,7 @@ class ConstraintManager(Manager.SubclassManager):
             Full name of the common velocity marker.
         """
         ...
+
     def createGeneral(self,
                       name: str = None,
                       i_marker: Marker.Marker = None,
@@ -506,15 +508,15 @@ class ConstraintManager(Manager.SubclassManager):
         """
 
     def createPointMotion(self,
-                         name: str = None,
-                         i_marker: Marker.Marker = None,
-                         j_marker: Marker.Marker = None,
-                         i_marker_name: str = None,
-                         j_marker_name: str = None,
-                         axis: Literal['x', 'y', 'z', 'b1', 'b2', 'b3'] = None,
-                         time_derivative: Literal['displacement', 'velocity', 'acceleration'] = None,
-                         function: str = '',
-                         **kwargs) -> PointMotion:
+                          name: str = None,
+                          i_marker: Marker.Marker = None,
+                          j_marker: Marker.Marker = None,
+                          i_marker_name: str = None,
+                          j_marker_name: str = None,
+                          axis: Literal['x', 'y', 'z', 'b1', 'b2', 'b3'] = None,
+                          time_derivative: Literal['displacement', 'velocity', 'acceleration'] = None,
+                          function: str = '',
+                          **kwargs) -> PointMotion:
         """Create a point motion constraint.
 
         Parameters
@@ -583,6 +585,7 @@ class ConstraintManager(Manager.SubclassManager):
             Name of the motion.
         """
         ...
+
     def createMotionR(self, name: str = None, **kwargs) -> JointMotion:
         """Create a rotational joint motion.
 
@@ -964,6 +967,7 @@ class ConstraintManager(Manager.SubclassManager):
             Name of the user subroutine.
         """
         ...
+
     def createAngle(self,
                     name: str = None,
                     i_marker: Marker.Marker = None,
@@ -990,6 +994,7 @@ class ConstraintManager(Manager.SubclassManager):
             Angle offset in degrees.
         """
         ...
+
     def switch_type(self, **kwargs): ...
     def items(self) -> ItemsView[str, Constraint]: ...
     def values(self) -> ValuesView[Constraint]: ...

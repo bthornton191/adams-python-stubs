@@ -24,6 +24,7 @@ class FeatureManager(Manager.SubclassManager):
             Coordinates in multiples of 3 defining shell locations.
         """
         ...
+
     def createHole(self,
                    name: str = None,
                    radius: float = None,
@@ -50,6 +51,7 @@ class FeatureManager(Manager.SubclassManager):
             Hole depth (default 0.0).
         """
         ...
+
     def createBlend(self,
                     name: str = None,
                     radius1: float = None,

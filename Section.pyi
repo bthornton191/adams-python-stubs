@@ -26,6 +26,7 @@ class SectionManager(Manager.SubclassManager):
             Auto-calculate section properties (default True).
         """
         ...
+
     def createCircular(self,
                        name: str = None,
                        cyl_radius: float = 10.0,
@@ -46,6 +47,7 @@ class SectionManager(Manager.SubclassManager):
             Auto-calculate section properties (default True).
         """
         ...
+
     def createIBeam(self,
                     name: str = None,
                     ib_height: float = 50.0,
@@ -72,6 +74,7 @@ class SectionManager(Manager.SubclassManager):
             Auto-calculate section properties (default True).
         """
         ...
+
     def createEllipse(self,
                       name: str = None,
                       major_radius: float = 100.0,
@@ -98,6 +101,7 @@ class SectionManager(Manager.SubclassManager):
             Auto-calculate section properties (default True).
         """
         ...
+
     def createFromProperties(self,
                              name: str = None,
                              iyy: float = None,

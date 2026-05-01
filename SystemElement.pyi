@@ -184,18 +184,19 @@ class SystemElementManager(Manager.SubclassManager):
             Values passed to the user subroutine.
         """
         ...
+
     def createLinearStateEquation(self,
                                   name: str = None,
-                                  x_state_array = None,
+                                  x_state_array=None,
                                   x_state_array_name: str = None,
-                                  a_state_matrix = None,
+                                  a_state_matrix=None,
                                   a_state_matrix_name: str = None,
-                                  b_input_matrix = None,
-                                  c_output_matrix = None,
-                                  d_feedforward_matrix = None,
-                                  u_input_array = None,
-                                  y_output_array = None,
-                                  ic_array = None,
+                                  b_input_matrix=None,
+                                  c_output_matrix=None,
+                                  d_feedforward_matrix=None,
+                                  u_input_array=None,
+                                  y_output_array=None,
+                                  ic_array=None,
                                   **kwargs):
         """Create a linear state equation (LSE).
 
@@ -225,13 +226,14 @@ class SystemElementManager(Manager.SubclassManager):
             Initial condition array.
         """
         ...
+
     def createTransferFunction(self,
                                name: str = None,
-                               x_state_array = None,
+                               x_state_array=None,
                                x_state_array_name: str = None,
-                               y_output_array = None,
+                               y_output_array=None,
                                y_output_array_name: str = None,
-                               u_input_array = None,
+                               u_input_array=None,
                                u_input_array_name: str = None,
                                num_coeff: List[float] = None,
                                den_coeff: List[float] = None,

@@ -221,9 +221,9 @@ class MeasureManager(Manager.SubclassManager):
                     name: str = None,
                     characteristic: str = None,
                     component: str = None,
-                    from_point = None,
+                    from_point=None,
                     from_point_name: str = None,
-                    to_point = None,
+                    to_point=None,
                     to_point_name: str = None,
                     legend: str = None,
                     create_measure_display: bool = True,
@@ -253,13 +253,14 @@ class MeasureManager(Manager.SubclassManager):
             If True, creates a strip chart display (default True).
         """
         ...
+
     def createAngle(self,
                     name: str = None,
-                    first_point = None,
+                    first_point=None,
                     first_point_name: str = None,
-                    middle_point = None,
+                    middle_point=None,
                     middle_point_name: str = None,
-                    last_point = None,
+                    last_point=None,
                     last_point_name: str = None,
                     legend: str = None,
                     create_measure_display: bool = True,
@@ -288,6 +289,7 @@ class MeasureManager(Manager.SubclassManager):
             If True, creates a strip chart display (default True).
         """
         ...
+
     def createComputed(self,
                        name: str = None,
                        text_of_expression: str = None,
@@ -311,13 +313,14 @@ class MeasureManager(Manager.SubclassManager):
             If True, creates a strip chart display (default True).
         """
         ...
+
     def createOrient(self,
                      name: str = None,
                      characteristic: str = None,
                      component: str = None,
-                     to_frame = None,
+                     to_frame=None,
                      to_frame_name: str = None,
-                     from_frame = None,
+                     from_frame=None,
                      from_frame_name: str = None,
                      legend: str = None,
                      create_measure_display: bool = True,
@@ -346,11 +349,12 @@ class MeasureManager(Manager.SubclassManager):
             If True, creates a strip chart display (default True).
         """
         ...
+
     def createPoint(self,
                     name: str = None,
                     characteristic: str = None,
                     component: str = None,
-                    point = None,
+                    point=None,
                     point_name: str = None,
                     legend: str = None,
                     create_measure_display: bool = True,
@@ -375,6 +379,7 @@ class MeasureManager(Manager.SubclassManager):
             If True, creates a strip chart display (default True).
         """
         ...
+
     def createRange(self,
                     name: str = None,
                     range_measure_type: str = None,

@@ -152,6 +152,7 @@ class DataElementManager(Manager.SubclassManager):
     def __getitem__(self, name) -> DataElement: ...
     def values(self, *args) -> ValuesView[DataElement]: ...
     def items(self, *args) -> ItemsView[str, DataElement]: ...
+
     def createCurveData(self,
                         name: str = None,
                         closed: bool = None,
@@ -206,6 +207,7 @@ class DataElementManager(Manager.SubclassManager):
             Name of the X state array.
         """
         ...
+
     def createYOutputArray(self,
                            name: str = None,
                            **kwargs) -> YOutputArray:
@@ -217,6 +219,7 @@ class DataElementManager(Manager.SubclassManager):
             Name of the Y output array.
         """
         ...
+
     def createUInputArray(self,
                           name: str = None,
                           variables: List = None,
@@ -278,6 +281,7 @@ class DataElementManager(Manager.SubclassManager):
             Column indices for each value.
         """
         ...
+
     def createMatrixFile(self,
                          name: str = None,
                          file: str = None,
@@ -342,6 +346,7 @@ class DataElementManager(Manager.SubclassManager):
             Names of the state variables.
         """
         ...
+
     def createPState(self,
                      name: str = None,
                      variable: List = None,
