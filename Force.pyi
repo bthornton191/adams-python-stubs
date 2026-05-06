@@ -594,7 +594,7 @@ class ForceManager(Manager.SubclassManager):
                                    action_only: bool = None,
                                    location: List[float] = None,
                                    orientation: List[float] = None,
-                                   type_of_freedom: str = 'translational',
+                                   type_of_freedom: Literal['translational', 'rotational'] = 'translational',
                                    relative_to: Marker = None,
                                    **kwargs) -> SingleComponentForce:
         """Create a single-component force or torque.

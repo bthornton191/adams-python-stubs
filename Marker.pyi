@@ -74,9 +74,9 @@ class MarkerManager(Manager.AdamsManager):
     def setDefault(key, type, o_rf) -> None: ...
 
     def create(self,
-               name=None,
-               location=[0, 0, 0],
-               orientation=[0, 0, 0],
+               name:str=None,
+               location: List[float]=[0, 0, 0],
+               orientation: List[float]=[0, 0, 0],
                relative_to: Union[Marker, Part] = None,
                **kwargs) -> Marker:
         """Create a new marker object
