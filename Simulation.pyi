@@ -74,7 +74,7 @@ class Simulation(Object.ObjectComment):
     _mutually_exclusive: Any
     def __init__(self, _DBKey: Any) -> Any: ...
 
-    def simulate(self, analysis_name: Any = ...) -> Any:
+    def simulate(self, analysis_name: str = ...) -> Any:
         """
         Method runs simulations based on Adams View Settings -> Solver -> Executable
         """
