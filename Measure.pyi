@@ -489,12 +489,35 @@ class MeasureManager(Manager.SubclassManager):
         """
         ...
 
-    def createPt2pt(self, **kwargs): ...
-    def createAngle(self, **kwargs): ...
-    def createComputed(self, **kwargs): ...
-    def createOrient(self, **kwargs): ...
-    def createPoint(self, **kwargs): ...
-    def createRange(self, **kwargs): ...
+    def createRange(self,
+                    name: str = None,
+                    range_measure_type: str = None,
+                    of_measure_name: str = None,
+                    legend: str = None,
+                    create_measure_display: bool = True,
+                    **kwargs) -> RangeMeasure:
+        """Create a statistical range measure on an existing measure.
+
+        Parameters
+        ----------
+        name : str, optional
+            Name of the measure. Auto-generated as ``MEA_RANGE_n`` if not provided.
+        range_measure_type : str
+            Type of range calculation to perform (e.g. ``maximum``, ``minimum``,
+            ``average``, ``variation``).
+        of_measure_name : str
+            Full dot-path name of the existing measure to analyze.
+        legend : str, optional
+            Text to display at the top of the measure plot. Can only be set at creation time.
+        create_measure_display : bool, optional
+            If ``True``, creates a strip-chart display window in the GUI, by default ``True``.
+
+        Returns
+        -------
+        RangeMeasure
+            The newly created range measure.
+        """
+        ...
 
     def createFunction(self,
                        name: str = None,
