@@ -704,7 +704,7 @@ class ForceManager(Manager.SubclassManager):
         """Create a linear beam force element (BEAM).
 
         Represents the elastic compliance of a slender beam using Euler-Bernoulli
-        or Timoshenko beam theory.
+        or nonlinear beam theory.
 
         Parameters
         ----------
@@ -741,7 +741,7 @@ class ForceManager(Manager.SubclassManager):
         z_shear_area_ratio : float, optional
             Ratio of shear area to total area for z-direction shear.
         formulation : str, optional
-            ``'timoshenko'`` (includes shear deformation) or ``'euler'`` (default).
+            ``'linear'`` (default), ``'nonlinear'``, or ``'string'``.
         """
         ...
 
