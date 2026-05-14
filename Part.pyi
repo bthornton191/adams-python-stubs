@@ -2,10 +2,11 @@ import Manager
 import Object
 from DBAccess import set_locori_expression as set_locori_expression
 from Marker import MarkerManager, Marker
-from DesignPoint import DesignPointManager
+from DesignPoint import DesignPoint, DesignPointManager
 from Geometry import GeometryManager
 from Expression import AdamsExpr as AdamsExpr
-from typing import Any, ItemsView, Iterable, KeysView, List, Literal, Optional, ValuesView
+from Section import Section
+from typing import Any, ItemsView, Iterable, KeysView, List, Literal, Optional, Union, ValuesView
 
 
 class Part(Object.Object):
@@ -239,32 +240,221 @@ class ExternalSystem(Part):
 
 
 class FEPart(Part):
-    def addNode(self, s, **kwargs) -> None: ...
-    def addNodeXYZ(self, x, y, z, **kwargs) -> None: ...
-    def setUniformSection(self, sec) -> None: ...
-    def setUniformAngle(self, ang) -> None: ...
-    def evenlyDistributeNodes(self) -> None: ...
-    def getNumNodes(self): ...
-    def getNodeIndex(self, s): ...
-    def modifyNode(self, index, **kwargs) -> None: ...
-    def modifyNodeIC(self, index, **kwargs) -> None: ...
-    def removeNode(self, index): ...
-    i_location: Marker
-    j_location: Marker
+    """A geometrically non-linear finite element beam part.
+
+    .. note::
+        The CMD ``nodes_at_curve_points`` option (which parameterizes node S-values
+        to the reference curve's control points) has no Python API equivalent.
+        FEParts created via Python always behave as if ``nodes_at_curve_points=no``:
+        node locations are fixed at creation and are not automatically updated when
+        the reference curve's control points change.
+    """
+
+    def addNode(self,
+                s: float,
+                name: str = None,
+                label: int = None,
+                angle: float = 0.0,
+                section_label: Section = None,
+                tessellate: bool = True) -> None:
+        """Add a node on the FEPart at the given centerline parameter ``s``.
+
+        Parameters
+        ----------
+        s : float
+            Position along the centerline (0.0 = start, 1.0 = end).
+        name : str, optional
+            Name of the new node. Auto-generated if not provided.
+        label : int, optional
+            Integer label for the node.
+        angle : float, optional
+            Twist angle about the centerline x-axis, in degrees (default 0.0).
+        section_label : Section, optional
+            Cross-section object to assign to the node.
+        tessellate : bool, optional
+            If True (default), updates FEPart geometry after node addition.
+        """
+        ...
+
+    def addNodeXYZ(self,
+                   x: float,
+                   y: float,
+                   z: float,
+                   name: str = None,
+                   label: int = None,
+                   index: int = None,
+                   angle: float = 0.0,
+                   section_label: Section = None,
+                   tessellate: bool = True) -> None:
+        """Add a node at the given x, y, z coordinates.
+
+        Only valid when ``coordinates=True`` was set on the FEPart.
+
+        Parameters
+        ----------
+        x : float
+            X coordinate of the node.
+        y : float
+            Y coordinate of the node.
+        z : float
+            Z coordinate of the node.
+        name : str, optional
+            Name of the new node. Auto-generated if not provided.
+        label : int, optional
+            Integer label for the node.
+        index : int, optional
+            Insertion index for the node in the node list.
+        angle : float, optional
+            Twist angle about the centerline x-axis, in degrees (default 0.0).
+        section_label : Section, optional
+            Cross-section object to assign to the node.
+        tessellate : bool, optional
+            If True (default), updates FEPart geometry after node addition.
+        """
+        ...
+
+    def setUniformSection(self, sec: Section) -> None:
+        """Set a uniform section object on all nodes of the FEPart.
+
+        Parameters
+        ----------
+        sec : Section
+            Existing Section object to apply to all nodes.
+        """
+        ...
+
+    def setUniformAngle(self, ang: float) -> None:
+        """Set a uniform twist angle on all nodes of the FEPart.
+
+        Parameters
+        ----------
+        ang : float
+            Twist angle in degrees to apply to all nodes.
+        """
+        ...
+
+    def evenlyDistributeNodes(self) -> None:
+        """Redistribute all existing nodes equally along the FEPart centerline."""
+        ...
+
+    def getNumNodes(self) -> int:
+        """Return the number of nodes in the FEPart."""
+        ...
+
+    def getNodeIndex(self, s: float) -> int:
+        """Return the index of the node at the given centerline parameter ``s``.
+
+        Parameters
+        ----------
+        s : float
+            The s-value of the node to find.
+        """
+        ...
+
+    def modifyNode(self,
+                   index: int,
+                   s: float = None,
+                   name: str = None,
+                   label: int = None,
+                   angle: float = None,
+                   section_label: Section = None,
+                   location: List[float] = None,
+                   tessellate: bool = True) -> None:
+        """Modify the node at the given index.
+
+        Parameters
+        ----------
+        index : int
+            Zero-based index of the node to modify (in sorted-s order).
+        s : float, optional
+            New centerline parameter value for the node.
+        name : str, optional
+            New name for the node.
+        label : int, optional
+            New integer label for the node.
+        angle : float, optional
+            New twist angle about the centerline x-axis, in degrees.
+        section_label : Section, optional
+            New cross-section object to assign to the node.
+        location : List[float], optional
+            New [x, y, z] location for the node (coordinate-mode FEParts only).
+        tessellate : bool, optional
+            If True (default), updates FEPart geometry after modification.
+        """
+        ...
+
+    def modifyNodeIC(self,
+                     index: int,
+                     vx: float = 0.0,
+                     vy: float = 0.0,
+                     vz: float = 0.0,
+                     wx: float = 0.0,
+                     wy: float = 0.0,
+                     wz: float = 0.0) -> None:
+        """Modify the initial conditions of the node at the given index.
+
+        Parameters
+        ----------
+        index : int
+            Zero-based index of the node (in sorted-s order).
+        vx : float, optional
+            Initial translational velocity in the x direction (default 0.0).
+        vy : float, optional
+            Initial translational velocity in the y direction (default 0.0).
+        vz : float, optional
+            Initial translational velocity in the z direction (default 0.0).
+        wx : float, optional
+            Initial angular velocity about the x axis (default 0.0).
+        wy : float, optional
+            Initial angular velocity about the y axis (default 0.0).
+        wz : float, optional
+            Initial angular velocity about the z axis (default 0.0).
+        """
+        ...
+
+    def removeNode(self, index: int) -> None:
+        """Remove the node at the given index.
+
+        Parameters
+        ----------
+        index : int
+            Zero-based index of the node to remove (in sorted-s order).
+        """
+        ...
+    i_location: Union[Marker, DesignPoint]
+    """Along with ``j_location``, specifies the already created marker/point as reference to define the centerline for the FEPart."""
+    j_location: Union[Marker, DesignPoint]
+    """Along with ``i_location``, specifies the already created marker/point as reference to define the centerline for the FEPart."""
     material_type: Object.Object
+    """Material type for the FEPart."""
     ref_curve: Object.Object
+    """Already created B-spline curve to be used as the reference centerline for the FEPart."""
     cratiok: float
+    """Fraction of the stiffness matrix that contributes to the damping matrix."""
     cratiom: float
+    """Fraction of the mass matrix that contributes to the damping matrix."""
     faceting_tolerance: float
-    fepart_type: str
+    """Faceting tolerance for the FEPart geometry."""
+    fepart_type: Literal['3DBeam', '2DBeamXY', '2DBeamYZ', '2DBeamZX']
+    """Formulation type of the FEPart. Valid values: ``'3DBeam'``, ``'2DBeamXY'``, ``'2DBeamYZ'``, ``'2DBeamZX'``."""
     num_nodes: int
+    """Read-only. Number of nodes in the FEPart."""
     sorted_s: List[float]
-    preload: bool
+    """Read-only. Sorted s-values of the nodes of the FEPart."""
+    preload: str
+    """Path to a file containing preloaded conditions information for this FEPart."""
     vm: Optional[Marker]
+    """Marker object along whose axes initial velocities are specified."""
     vm_name: str
+    """Full name of the marker along whose axes initial velocities are specified."""
     wm: Optional[Marker]
+    """Marker object about which initial angular velocities are specified."""
     wm_name: str
-    coordinates: List[float]
+    """Full name of the marker about which initial angular velocities are specified."""
+    coordinates: bool
+    """If True, the FEPart centerline is created by specifying node x,y,z coordinates. Mutually exclusive with ``i_location``/``j_location`` and ``ref_curve``."""
+    external: bool
+    """If True, external geometry is used for the FEPart. Only external geometry will be rendered."""
     Geometries: GeometryManager
     def __init__(self, _DBKey) -> None: ...
 
@@ -534,40 +724,74 @@ class PartManager(Manager.SubclassManager):
 
     def createFEPart(self,
                      name: str = None,
-                     i_location=None,
-                     j_location=None,
-                     ref_curve=None,
-                     coordinates: List[float] = None,
+                     i_location: Union[Marker, DesignPoint] = None,
+                     j_location: Union[Marker, DesignPoint] = None,
+                     ref_curve: Object.Object = None,
+                     coordinates: bool = None,
                      cratiok: float = 1.0,
                      cratiom: float = 1.0,
-                     material_type=None,
-                     section_label=None,
+                     material_type: Object.Object = None,
+                     section_label: Object.Object = None,
+                     fepart_type: Literal['3DBeam', '2DBeamXY', '2DBeamYZ', '2DBeamZX'] = None,
+                     external: bool = None,
+                     vm: Optional[Marker] = None,
+                     vm_name: str = None,
+                     wm: Optional[Marker] = None,
+                     wm_name: str = None,
+                     faceting_tolerance: float = None,
                      **kwargs) -> FEPart:
         """Create a finite element part.
 
         Provide one of: (``i_location`` and ``j_location``), ``ref_curve``,
-        or ``coordinates``.
+        or ``coordinates=True`` (then add nodes via ``addNodeXYZ``).
+
+        .. note::
+            The CMD ``nodes_at_curve_points`` option is not available in the Python
+            API. Node S-values are always fixed at creation regardless of the
+            reference curve's control points (equivalent to ``nodes_at_curve_points=no``).
+            To re-mesh, manually call ``addNode()``, ``modifyNode()``, or
+            ``evenlyDistributeNodes()`` after modifying the curve.
 
         Parameters
         ----------
         name : str, optional
             Name of the FE part.
-        i_location : DesignPoint, optional
-            Start point of the beam.
-        j_location : DesignPoint, optional
-            End point of the beam.
-        ref_curve : Geometry, optional
-            Reference curve defining the beam path.
-        coordinates : List[float], optional
-            Node coordinates defining the beam path.
+        i_location : Marker or DesignPoint, optional
+            Start marker/point of the beam centerline. Required with ``j_location``
+            when not using ``ref_curve`` or ``coordinates``.
+        j_location : Marker or DesignPoint, optional
+            End marker/point of the beam centerline. Required with ``i_location``
+            when not using ``ref_curve`` or ``coordinates``.
+        ref_curve : Object, optional
+            Already created B-spline curve to use as the reference centerline.
+        coordinates : bool, optional
+            If True, the centerline is defined by x,y,z node coordinates added
+            via ``addNodeXYZ()``. Mutually exclusive with ``i_location``/``j_location``
+            and ``ref_curve``.
         cratiok : float, optional
-            Stiffness ratio (default 1.0).
+            Fraction of the stiffness matrix contributing to damping (default 1.0).
         cratiom : float, optional
-            Mass ratio (default 1.0).
-        material_type : Material, optional
-            Material defining section properties.
-        section_label : Section, optional
-            Cross-section definition.
+            Fraction of the mass matrix contributing to damping (default 1.0).
+        material_type : Object, optional
+            Material object defining section properties.
+        section_label : Object, optional
+            Default Section object applied to all initial nodes.
+        fepart_type : str, optional
+            Formulation type. One of ``'3DBeam'``, ``'2DBeamXY'``, ``'2DBeamYZ'``,
+            ``'2DBeamZX'``. Default is ``'3DBeam'``.
+        external : bool, optional
+            If True, external geometry is used for rendering. Only external geometry
+            will be rendered.
+        vm : Marker, optional
+            Marker along whose axes initial translational velocities are specified.
+        vm_name : str, optional
+            Full name of the translational velocity reference marker.
+        wm : Marker, optional
+            Marker about which initial angular velocities are specified.
+        wm_name : str, optional
+            Full name of the angular velocity reference marker.
+        faceting_tolerance : float, optional
+            Faceting tolerance for the FEPart geometry.
         """
         ...
 
