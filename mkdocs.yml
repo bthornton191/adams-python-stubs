@@ -1,0 +1,111 @@
+site_name: Adams Python API Reference
+docs_dir: src
+site_dir: docs
+use_directory_urls: false
+
+theme:
+  name: material
+  font: false
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+plugins:
+  - search:
+      separator: '[\s\-\.]'
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [.]
+          options:
+            allow_inspection: false
+            show_source: false
+            show_root_heading: false
+            show_root_full_path: false
+            show_category_heading: true
+            show_if_no_docstring: true
+            members_order: source
+            group_by_category: true
+            heading_level: 2
+            docstring_style: numpy
+            docstring_section_style: table
+            merge_init_into_class: true
+            show_signature_annotations: true
+            separate_signature: true
+            signature_crossrefs: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+
+nav:
+  - Home: index.md
+  - Session:
+    - Adams: adams.md
+    - Model: model.md
+  - Bodies:
+    - Part: part.md
+    - Marker: marker.md
+    - Geometry: geometry.md
+    - Section: section.md
+    - Feature: feature.md
+  - Forces & Constraints:
+    - Constraint: constraint.md
+    - Force: force.md
+    - Contact: contact.md
+  - Data & Parameterization:
+    - DataElement: dataelement.md
+    - DesignVariable: designvariable.md
+    - DesignPoint: designpoint.md
+    - Expression: expression.md
+    - RuntimeFunction: runtimefunction.md
+    - Measure: measure.md
+    - Sensor: sensor.md
+  - Simulation:
+    - Simulation: simulation.md
+    - Analysis: analysis.md
+  - Settings:
+    - Defaults: defaults.md
+    - Settings: settings.md
+    - AppearanceSettings: appearancesettings.md
+    - Color: color.md
+    - Material: material.md
+    - Units: units.md
+  - System:
+    - SystemElement: systemelement.md
+    - Solver: solver.md
+    - Group: group.md
+    - Library: library.md
+    - Libraries: libraries.md
+    - UDE: ude.md
+    - Femdata: femdata.md
+    - Adams View Main: aview_main.md
+  - Base Classes:
+    - Object: object.md
+    - Manager: manager.md
+  - SDK (Internal):
+    - SDKTypes: sdktypes.md
+    - SDKObjectIds: sdkobjectids.md
+    - DatabaseIds: databaseids.md
+    - DBAccess: dbaccess.md
+    - AttributeIds: attributeids.md
+    - EntityTypes: entitytypes.md
+    - TypeResolution: typeresolution.md
+    - DbtFieldNameDict: dbtfieldnamedict.md
+    - msc_SecAPI: msc_secapi.md
